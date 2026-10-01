@@ -1,0 +1,12 @@
+Network,Matching,Ordering M_phi,D_10k / D_1000k,Blur penalty B_phi,Parameters
+Pixel L1 (reference),-,1.0000,5.7366,0.8861,0
+VGG-19 relu3_2,pointwise,1.0000,2.6057,1.5091,"1,145,408"
+LPIPS-VGG,pointwise,0.9984,2.4252,1.4826,-
+DISTS,statistics,0.9835,2.7510,1.4495,-
+RadImageNet ResNet-50,pointwise,0.9995,7.2219,1.1735,"25,557,032"
+DINOv2-S,pointwise,0.9978,7.7106,1.7517,"22,056,576"
+DINOv2-S,statistics,0.9973,2.3665,1.2603,"22,056,576"
+DINOv2-B,pointwise,0.9973,6.2701,1.6693,"86,580,480"
+DINOv2-L,pointwise,0.9956,6.8855,1.8737,"304,368,640"
+CLIP ViT-B/16,pointwise,0.9956,2.7333,1.5709,"85,799,424"
+MedSigLIP-448,pointwise,0.9995,3.2544,1.5345,"428,565,440"
