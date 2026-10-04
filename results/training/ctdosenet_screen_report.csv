@@ -1,0 +1,3 @@
+Configuration,Ordering M_phi,D_10k / D_1000k,Blur penalty B_phi,Parameters
+C9 (CTDoseNet Pointwise),0.7505,7.5038,0.2450,"1,175,142"
+C10 (CTDoseNet Statistics),0.6780,2.6151,0.6782,"1,175,142"
