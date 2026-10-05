@@ -7,7 +7,10 @@ from src.feature_nets import FeatureNet
 
 
 def normalize_channels(feature: torch.Tensor, eps: float = 1e-10) -> torch.Tensor:
-    return feature / (feature.pow(2).sum(dim=1, keepdim=True).sqrt() + eps)
+    # return feature / (feature.pow(2).sum(dim=1, keepdim=True)).sqrt() + eps)
+
+    # Moved `eps` inside the square root to prevent sqrt(0) gradient issues
+    return feature / (feature.pow(2).sum(dim=1, keepdim=True) + eps).sqrt()
 
 
 def pointwise_distance(predicted: list[torch.Tensor], reference: list[torch.Tensor]) -> torch.Tensor:
@@ -16,7 +19,11 @@ def pointwise_distance(predicted: list[torch.Tensor], reference: list[torch.Tens
 
 def local_stats(feature: torch.Tensor, window: int) -> tuple[torch.Tensor, torch.Tensor]:
     mean = F.avg_pool2d(feature, window)
-    variance = (F.avg_pool2d(feature.pow(2), window) - mean.pow(2)).clamp(min=0)
+    
+    #variance = (F.avg_pool2d(feature.pow(2), window) - mean.pow(2)).clamp(min=0)
+    # Changed the clamp minimum to a small epsilon (1e-8) instead of 0
+    variance = (F.avg_pool2d(feature.pow(2), window) - mean.pow(2)).clamp(min=1e-8)
+    
     return mean, variance.sqrt()
 
 

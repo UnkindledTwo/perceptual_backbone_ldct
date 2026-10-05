@@ -43,7 +43,16 @@ class ResNetFeatures(FeatureNet):
     def __init__(self, weights_path: Path) -> None:
         super().__init__(224, IMAGENET)  # TODO: RadImageNet normalization from the weights source
         self.body = resnet50(weights=None)
-        self.body.load_state_dict(torch.load(weights_path, map_location="cpu"), strict=False)
+        #self.body.load_state_dict(torch.load(weights_path, map_location="cpu"), strict=False)
+
+        names = {"0": "conv1", "1": "bn1", "4": "layer1", "5": "layer2", "6": "layer3", "7": "layer4"}
+        state = {}
+        for key, value in torch.load(weights_path, map_location="cpu").items():
+            index, rest = key.removeprefix("backbone.").split(".", 1)
+            state[f"{names[index]}.{rest}"] = value
+        result = self.body.load_state_dict(state, strict=False)
+        if result.missing_keys != ["fc.weight", "fc.bias"] or result.unexpected_keys:
+            raise RuntimeError(f"RadImageNet weights did not load cleanly: {result}")
 
     def features(self, image: torch.Tensor) -> list[torch.Tensor]:
         b = self.body

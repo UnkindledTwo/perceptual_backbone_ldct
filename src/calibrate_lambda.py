@@ -10,8 +10,8 @@ from src.distances import shared_crop
 
 @torch.no_grad()
 def calibrate_weight(model: nn.Module, distance: nn.Module, loader: DataLoader, device: torch.device,
-                     target_influence: float = 0.95, crop_size: int = 224) -> float:
-    torch.manual_seed(42)
+                     target_influence: float = 0.95, crop_size: int = 224, seed: int = 42) -> float:
+    torch.manual_seed(seed)
     model.eval()
     pixel_sum, feature_sum = 0.0, 0.0
     for noisy, clean, _ in tqdm(loader, desc="calibrate", leave=False):
