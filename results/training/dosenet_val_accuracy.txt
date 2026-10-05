@@ -1,1 +1,1 @@
-Final Validation Accuracy: 81.80%
+Final Validation Accuracy: 79.49%
