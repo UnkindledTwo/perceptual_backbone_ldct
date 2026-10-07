@@ -1,0 +1,19 @@
+Network,Matching,distance_at_equality,zero_at_equality,gradient_reaches_prediction,ms_per_batch_of_8,Parameters,trained
+VGG-19 relu3_2,pointwise,0.0,True,True,11.103884799922525,1145408,True
+VGG-19 relu3_2,statistics,0.0,True,True,11.900821000017459,1145408,False
+LPIPS-VGG,pointwise,0.0,True,True,27.096777999986443,14714688,True
+DISTS,statistics,1.7881393432617188e-07,True,True,26.368321200061473,14714688,True
+RadImageNet ResNet-50,pointwise,0.0,True,True,20.631800400042266,25557032,True
+RadImageNet ResNet-50,statistics,0.0,True,True,22.72772619994612,25557032,False
+DINOv2-S,pointwise,0.0,True,True,31.48554960007459,22056576,True
+DINOv2-S,statistics,0.0,True,True,28.87349540001196,22056576,True
+DINOv2-B,pointwise,0.0,True,True,79.4488602000456,86580480,True
+DINOv2-B,statistics,0.0,True,True,80.05609919991912,86580480,False
+DINOv2-L,pointwise,0.0,True,True,250.10106279996762,304368640,False
+DINOv2-L,statistics,0.0,True,True,251.47932919994673,304368640,False
+CLIP ViT-B/16,pointwise,0.0,True,True,59.687273000008645,85799424,False
+CLIP ViT-B/16,statistics,0.0,True,True,58.935672399957184,85799424,False
+MedSigLIP-448,pointwise,0.0,True,True,1370.4593960000238,428565440,True
+MedSigLIP-448,statistics,0.0,True,True,1372.8978505999748,428565440,False
+CT dose network,pointwise,0.0,True,True,8.704761599983613,1175142,True
+CT dose network,statistics,0.0,True,True,11.590011200132722,1175142,True

@@ -1,0 +1,6 @@
+{
+  "screen_pretrained": 824.0768537440001,
+  "ct_dose_net_training": 399.29184468099993,
+  "screen_ct_dose_net": 32.366748868000286,
+  "calibration": 309.4702465810001
+}

@@ -1,0 +1,7 @@
+Check,Expected,Observed
+Train / val / test patients,disjoint,115 / 34 / 31
+Train / val / test slices,899 / 182 / 220,899 / 182 / 220
+Shared patients between splits,0,0
+Input and target range,"[0, 1]","[0.000, 1.000]"
+Metrics on identity input,"PSNR inf, SSIM 1, LPIPS 0, DISTS 0, R_H 1","PSNR inf, SSIM 1, LPIPS 0, DISTS 1.19e-07, R_H 1"
+"SSIM of noisy_clipped_100k vs gt_clipped, test mean",below the U-Net outputs,0.7423

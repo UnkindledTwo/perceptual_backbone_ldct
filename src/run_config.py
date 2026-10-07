@@ -9,7 +9,7 @@ from src.ct_dose_net import CTDoseNet, DoseNetFeatures
 from src.distances import FeatureDistance, PerceptualObjective, PiqDistance
 from src.feature_nets import build_feature_net
 from src.train import train_and_test
-from src.unet import UNet  # TODO: the lab U-Net shared with tissue_band_nps_loss
+from src.model import UNet  # the lab U-Net shared with tissue_band_nps_loss
 
 
 def build_objective(config: PerceptualConfig, dose_net_path: Path, radimagenet: Path | None) -> PerceptualObjective:
