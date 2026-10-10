@@ -1,0 +1,14 @@
+{
+  "val_accuracy": 0.7847985625267029,
+  "val_accuracy_clean_vs_1000k": 0.9052197933197021,
+  "train_seconds": 399.29184468099993,
+  "gpu_hours": 0.11091440130027776,
+  "parameters": 1175142,
+  "epochs": 10,
+  "train_patches": 21576,
+  "val_patches": 4368,
+  "mean_body_fraction_train": 0.9870822045110887,
+  "mean_body_fraction_val": 0.988811283321171,
+  "body_threshold": 0.05,
+  "min_body_fraction": 0.9
+}

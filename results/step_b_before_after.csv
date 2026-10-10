@@ -1,0 +1,5 @@
+Configuration,Run,lambda,PSNR,SSIM,LPIPS,DISTS,R_H,best epoch,non-finite steps
+"C8 (DINOv2-S, statistics)",before (clamp 1e-8),1.9658936196294308,30.5308 ± 1.8580,0.8660 ± 0.0753,0.0483 ± 0.0211,0.0602 ± 0.0144,0.8573 ± 0.1961,30.0,0.0
+"C8 (DINOv2-S, statistics)",after (variance fix),1.9659469513086878,30.5473 ± 1.9381,0.8666 ± 0.0800,0.0486 ± 0.0226,0.0600 ± 0.0134,0.8605 ± 0.2265,27.0,0.0
+"C10 (CT dose network v1, statistics)",before (clamp 1e-8): earlier output not found,,,,,,,,
+"C10 (CT dose network v1, statistics)",after (variance fix),2.910867317651397,29.8865 ± 1.8488,0.8373 ± 0.0831,0.0733 ± 0.0281,0.0997 ± 0.0176,0.8786 ± 0.2174,25.0,0.0

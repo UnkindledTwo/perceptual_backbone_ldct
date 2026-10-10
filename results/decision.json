@@ -1,0 +1,14 @@
+{
+  "adopt_v2": true,
+  "rule": "M(v2) > 0.8 for pointwise and statistics (validation screen)",
+  "M_v2": {
+    "pointwise": 0.9708791208791209,
+    "statistics": 0.8521978021978021
+  },
+  "M_v1": {
+    "pointwise": 0.724175824175824,
+    "statistics": 0.7120879120879119
+  },
+  "mode": "regression",
+  "smoke": false
+}

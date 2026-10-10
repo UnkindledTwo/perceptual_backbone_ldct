@@ -1,0 +1,15 @@
+{
+  "val_loss": 0.03650420904159546,
+  "val_accuracy": 0.7870879173278809,
+  "val_accuracy_clean_vs_1000k": 0.9223901033401489,
+  "val_mae_log10": 0.18323509395122528,
+  "mode": "regression",
+  "epochs": 10,
+  "best_epoch": 10,
+  "train_seconds": 495.66051591600035,
+  "gpu_hours": 0.13768347664333344,
+  "parameters": 1173857,
+  "feature_extractor_parameters": 287328,
+  "train_patches": 21576,
+  "val_patches": 4368
+}
