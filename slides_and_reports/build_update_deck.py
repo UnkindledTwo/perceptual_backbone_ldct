@@ -232,7 +232,7 @@ def build() -> None:
     table(fig, shown, [0.045, 0.3, 0.91, 0.56], 11.5, [0.08, 0.3, 0.12, 0.12, 0.09, 0.09, 0.09, 0.09])
     bullets(fig, [
         "CT dose network: 287,328 parameters are the three blocks the loss reads; the whole network with its head has 1,173,857.",
-        "λ and ms/step are those of the final runs. The Step 1.3 distance check was not rerun for the v2 dose network.",
+        "λ and ms/step are those of the final runs. Step 1.3 check rerun for v2: zero at equality, gradient reaches the prediction.",
         f"GPU hours: final seed-42 runs {budget['GPU hours of the final seed 42 U-Net runs (11 of 11)']}, superseded runs "
         f"{budget['GPU hours of the superseded seed 42 U-Net runs (4)']}, three-seed protocol about "
         f"{budget['Total GPU hours of the protocol (3 seeds of the final runs, plus the measured one-off parts)']} (A100 80 GB).",
@@ -257,12 +257,11 @@ def build() -> None:
 
 # Filled from slides_and_reports/c10_validation_instability.md.
 C10_BULLETS = [
-    "C10 (CT dose network v2, statistics): 8 of 30 epochs above twice the median validation L1 (largest 80,138 at epoch 3, "
-    "30,478 at epoch 29).",
-    "Training loss falls smoothly; 0 non-finite steps. Spikes also occur with LPIPS-VGG, MedSigLIP, RadImageNet and DISTS, never with L1.",
-    "Checked on CPU: the saved checkpoint reproduces the logged best validation L1 (5,717 against 5,716); epoch 17 is the right choice.",
-    "At its best epoch C10 looks like C0 (L1): no intensity offset, no failing slices, same sensitivity to the BatchNorm mode.",
-    "No bug found. The cause of the spikes is open: the GPU replay with per-slice diagnostics has not been run yet.",
+    "C10 (CT dose network v2, statistics): 8 of 30 epochs above twice the median validation L1 (80,138 at epoch 3, 30,478 at epoch 29).",
+    "GPU replay at commit 094e416: validation L1 identical at all 30 epochs, checkpoint byte-identical. The run is reproducible.",
+    "At a spike, 40 to 50 bright slices (17 patients) are predicted too bright in eval mode (mean 0.81 against 0.43 at epoch 29).",
+    "With BatchNorm on batch statistics the same weights show no spike: a train/eval mismatch, not a code bug.",
+    "Epoch 17 (saved) has no failing slice. Spikes also occur with LPIPS-VGG, MedSigLIP, RadImageNet and DISTS, never with L1.",
 ]
 
 if __name__ == "__main__":

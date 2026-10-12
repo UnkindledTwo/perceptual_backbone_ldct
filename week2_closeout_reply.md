@@ -1,6 +1,6 @@
 ## Week 2 closeout: reply
 
-Draft of the issue comment, 2026-10-12. Everything below is seed 42. The changes are in the working tree and are **not committed or pushed yet**; the paths resolve once they are.
+Draft of the issue comment, 2026-10-12. Everything below is seed 42. The closeout work is on `main` at [`094e416`](https://github.com/UnkindledTwo/perceptual_backbone_ldct/commit/094e41657c9ee5e63297fe24711e9dac36ba91a8); the GPU verification results described below were added after that commit.
 
 ### Key result and takeaway
 
@@ -53,7 +53,7 @@ Draft of the issue comment, 2026-10-12. Everything below is seed 42. The changes
 
 - CT dose network: 287,328 parameters are the three conv blocks the loss reads. The whole network with its regression head has 1,173,857.
 - lambda and ms per step are those of the final runs.
-- **The Step 1.3 distance check (zero at equality, gradient, ms per batch of 8) was not rerun for v2.** The existing rows are v1 and are labelled so in `results/week1_week2_tables.md`. The seeds notebook has an optional cell for it (`CHECK_DOSE_V2_DISTANCE`).
+- The Step 1.3 distance check was rerun for v2 on 2026-10-12 (`results/zoo_checks_v2.csv`): distance 0 at equality and the gradient reaches the prediction for both matchings; 8.7 ms (pointwise) and 10.9 ms (statistics) per batch of 8. The v1 rows are kept and labelled as the ablation.
 
 All tables come from `python -m src.tables`. Rerunning it reproduces the files byte for byte, and every final row was checked against its per-slice CSV, run summary and training log (220 slices, 31 patients, best epoch at the lowest validation L1).
 
@@ -61,27 +61,30 @@ All tables come from `python -m src.tables`. Rerunning it reproduces the files b
 
 - [x] **Tables regenerated.** `results/table1_seed42.csv`, `table2_feature_networks.csv`, `week1_week2_tables.md`; superseded runs in `table1_seed42_superseded.csv` and a labelled section.
 - [x] **Table 2 corrected** (above).
-- [ ] **Reproducibility records: written, links not accessible yet.** `results/provenance.json` gives, for each of the 15 runs, the notebook, the source revision, what was uncommitted, the settings and the sha256 of `best.pth`. Limits, stated in the file:
+- [x] **Reproducibility records.** `results/provenance.json` gives, for each of the 15 runs, the notebook, the source revision, what was uncommitted, the settings and the sha256 of `best.pth`.
   - C0 to C7: `d3916a2`, recorded by the notebook at run time.
-  - Final C8, C9, C10: **the revision was not recorded at run time.** The code was uncommitted when they ran; the first commit that contains it is `a7108c5`, made about two hours later. The exact diff at execution time cannot be recovered.
+  - Final C8, C9, C10: **the revision was not recorded at run time.** The code was uncommitted when they ran; the first commit that contains it is `a7108c5`, made about two hours later.
+  - What closes the gap for C9 and C10: on 2026-10-12 the committed code at `094e416` (no uncommitted source files) reproduced them exactly. One epoch of C9 (CT dose network v2, pointwise) matches the logged epoch 1 with a relative difference of 0.0, and a full 30-epoch replay of C10 (CT dose network v2, statistics) gives the same validation L1 at every epoch and a byte-identical `best.pth`. C8 and C0 to C7 were not replayed.
   - `environment.json` keeps `d3916a2` with a note that it covers the Week 1 and 2 notebook only.
-  - Frozen dose network v2: sha256 `69feb2a1bc7d23eb80f6bc88b57d99ea893f38284fed43876225df4b81581774`.
-  - Drive: `outputs_seed42.zip` (https://drive.google.com/file/d/1gNimi2rBrtxjnrhzT77L860NNdhTXRAG/view) and `outputs_ctdosenet_followup.zip` (https://drive.google.com/file/d/13hLIkRZY1C8lywfw5n1zEBtkloPsZSmH/view). **Both are still private to my account.** The v2 dose network is only inside the second archive; there is no standalone file. The hash of the v1 Drive copy was not checked.
-- [x] **Runner inconsistencies resolved; GPU check still open.**
+  - Drive, anyone with the link can view: `outputs_seed42.zip` (https://drive.google.com/file/d/1gNimi2rBrtxjnrhzT77L860NNdhTXRAG/view) and `outputs_ctdosenet_followup.zip` (https://drive.google.com/file/d/13hLIkRZY1C8lywfw5n1zEBtkloPsZSmH/view). They hold every `best.pth`; the hashes are in `provenance.json`.
+  - Frozen dose network v2: sha256 `69feb2a1bc7d23eb80f6bc88b57d99ea893f38284fed43876225df4b81581774`, inside the second archive and as a standalone file (https://drive.google.com/file/d/1bOQwp4mPKXNo0pEQYWPQ8huM6bg2LLAu/view, **still private to my account**). The hash of the v1 Drive copy was not checked.
+- [x] **Runner inconsistencies resolved and checked from a fresh kernel.**
   - `DOSE_BLOCK_SCALES` is on its own line again in the main notebook.
   - `src/run_config.py` loads the dose network through `load_dose_net`, which reads the head width from the checkpoint (6 for v1, 1 for v2).
   - `seeds_perceptual_backbone_ldct.ipynb` is the only entry point for new runs: frozen lambda values, dose network accepted only by its sha256, plain block sum, variance fix, provenance written into every `run_summary.json`. The two earlier notebooks are marked as records.
-  - Checked from a fresh Python process on CPU: all three notebooks parse, and the seeds notebook runs top to bottom in `SMOKE` mode for C0, C9 and C10 on synthetic slices with batch 2 (batch 8 does not fit in 16 GB of RAM). **It has not been run on Colab or on a GPU.** The built-in reproduction check (one epoch of C9 at seed 42 against the logged epoch 1) runs first on the A100, before any seed.
-- [x] **C10 validation instability investigated and documented; cause open.** `slides_and_reports/c10_validation_instability.md`.
+  - Fresh Colab kernel on the A100, clean clone of `094e416`: the built-in reproduction check passed (one epoch of C9 at seed 42 against the logged epoch 1, relative difference 0.0 for training loss and validation L1; `results/repro_seed42/repro_check.csv`). The dose network was accepted by its sha256. The full 11-configuration loop has not run yet; that is seed 123.
+- [x] **C10 validation instability investigated and documented: no bug.** `slides_and_reports/c10_validation_instability.md`, data in `results/seed42/diag_C10_v2/`. Validation split only.
   - Eight of 30 epochs are above twice the median validation L1 (80,138 at epoch 3, 30,478 at epoch 29), while the training loss falls smoothly.
-  - The same spikes occur in C2, C3, C4, C7 and C10 v1, and never in C0 (L1).
-  - The saved checkpoint reproduces the logged best validation L1 on CPU (5,717.0 against 5,716.1). At epoch 17 C10 looks like C0: no intensity offset, no failing slices.
-  - No bug found in the validation path. The mechanism cannot be decided from the saved files, because only best checkpoints exist. The replay with per-slice validation diagnostics is wired (`DIAGNOSE_C10`) and **not run yet**.
+  - The replay with per-slice diagnostics reproduces the committed log exactly, so the spikes are deterministic and not an artefact of the original session.
+  - At a spike, 40 to 50 of the 182 validation slices are predicted far too bright in eval mode (mean prediction 0.81 against a mean target of 0.43 at epoch 29). They are the same bright slices each time (43 fail in at least six of the eight spikes, from 17 patients) and carry 62 to 87% of the total L1. The other slices are unaffected.
+  - With BatchNorm on batch statistics the same weights show no spike (L1 falls steadily from 17,611 to 9,030). It is a train/eval BatchNorm mismatch on bright slices, which the training loss does not see.
+  - Epoch 17, the saved checkpoint, has no failing slice. The same kind of spike occurs in C2, C3, C4, C7 and C10 v1, and never in C0 (L1); those runs were not replayed.
+  - The Protocol is unchanged. The paper should say that the eval-mode validation L1 of C10 was unstable and that the checkpoint rule selected epoch 17, not that training was stable.
 - [x] **Fig 1 draft and presentation.** `figures/fig1_overview.py` writes `fig1_overview.svg`, `.pdf` and `.png` (a script in place of the `.drawio` file of the plan). `slides_and_reports/ldct_backbone_week_1_2_update.pdf` holds 10 corrected slides built from `results/`. The editable source of the original deck no longer exists, so the original PDF is kept and its result slides (6 to 12, 14, 15) are superseded by the update.
 - [x] **Adoption-rule disclosure preserved.** The threshold was first 0.9 and was lowered to 0.8 after seeing the validation screen, because statistics matching (0.852) missed 0.9. The rule is not prespecified. This is now stated the same way in the follow-up notebook, `results/decision.json` (the note fields were added by hand on 2026-10-12 and are marked as such), `results/ctdosenet_followup_tables.md`, `slides_and_reports/ctdosenet_v2.md` and the update deck.
 
-### Open before the seeds start
+### Still open
 
-1. Share the two Drive archives and upload the v2 dose network as a standalone file.
-2. Commit and push the working tree, so the seeds notebook records a clean revision.
-3. On the A100: `REPRO_CHECK`, then `DIAGNOSE_C10` and `CHECK_DOSE_V2_DISTANCE`, then seeds 123 and 456.
+1. The standalone v2 dose network file on Drive is private; the copy inside the shared archive is accessible.
+2. The verification outputs and the updated tables are not committed yet.
+3. C8 and C0 to C7 were not replayed from the committed code.

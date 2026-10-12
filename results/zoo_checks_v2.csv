@@ -1,0 +1,3 @@
+Network,Matching,distance_at_equality,zero_at_equality,gradient_reaches_prediction,ms_per_batch_of_8,Parameters,trained
+CT dose network v2 (regression),pointwise,0.0,True,True,8.663443199998255,287328,True
+CT dose network v2 (regression),statistics,0.0,True,True,10.898175399984211,287328,True

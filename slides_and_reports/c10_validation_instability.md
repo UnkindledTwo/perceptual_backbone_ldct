@@ -1,10 +1,10 @@
 # Validation instability of C10 (CT dose network v2, statistics), seed 42
 
-Written 2026-10-12. Only training and validation data are used here; the test split is not read.
+Written 2026-10-12, updated the same day with the GPU replay. Only training and validation data are used here; the test split is not read.
 
 ## Verdict
 
-**No bug was found, and the question is not closed.** The committed logs, a review of the validation path and a CPU re-evaluation of the saved checkpoints show that the validation number and the checkpoint choice are correct. They cannot show *why* the validation L1 jumps, because only the best checkpoint of each run was saved. The GPU replay in `seeds_perceptual_backbone_ldct.ipynb` (`DIAGNOSE_C10 = True`, about 10 minutes on the A100) records what is missing. It has not been run yet.
+**Not a bug, and the run is exactly reproducible.** The GPU replay of 2026-10-12 (commit `094e416`, A100) gives the committed validation L1 at all 30 epochs with a relative difference of 0.0, and its `best.pth` has the same sha256 as the original. The spikes are an eval-mode failure on the bright validation slices: at a spike epoch about 40 to 50 of the 182 slices are predicted far too bright when BatchNorm uses its running statistics, while the same weights give a normal error when BatchNorm uses batch statistics. The other slices are unaffected. Epoch 17, the saved checkpoint, has no failing slice.
 
 ## What the log shows
 
@@ -39,7 +39,7 @@ Epochs above twice the run median, epoch 1 left out (every perceptual run starts
 - C0 (L1) has none. The spikes come with the perceptual term, which is 95% of the loss at initialisation and leaves the L1 term a small share.
 - C10 v2 is the most affected run, in number and in size.
 
-## Checks made on 2026-10-12
+## CPU checks made before the replay
 
 1. **Validation path (code review).** `validation_l1` in `src/train.py` puts the model in eval mode, runs without gradients and without autocast, sums the absolute error and divides by the number of slices. The validation loader is not shuffled. The checkpoint is written only when the score improves. The notebook loop and the seeds notebook call the same function. Nothing here can produce a wrong number for a correct model.
 2. **Checkpoint against log (CPU, `python -m src.val_diagnostics`, outputs in `results/val_diagnostics/`).** The saved `best.pth` reproduces the logged best validation L1: C10 v2 5,717.0 against 5,716.1 logged, C0 4,560.1 against 4,560.6 logged. The logged value belongs to the saved weights.
@@ -57,28 +57,52 @@ Epochs above twice the run median, epoch 1 left out (every perceptual run starts
 
 At its best epoch C10 v2 looks like C0 with a higher level: no concentration in a few slices, no intensity offset, and the same sensitivity to the BatchNorm mode. The saved model shows no defect. Only C10 v2 and C0 were evaluated (about 18 CPU minutes per checkpoint); C8 and C9 were not.
 
-## What is not known
+## GPU replay (2026-10-12)
 
-The weights at the spike epochs were not saved, so these three explanations cannot be separated from the existing files:
+`DIAGNOSE_C10 = True` in `seeds_perceptual_backbone_ldct.ipynb`, outputs in `results/seed42/diag_C10_v2/` (`replay_check.csv`, `val_per_epoch.csv`, `val_per_slice.csv`). After every epoch it records, per validation slice, the L1, the mean signed error and the L1 with BatchNorm on batch statistics.
 
-- **BatchNorm running statistics lag behind the weights.** Training uses batch statistics, validation uses running averages. If the activations move quickly, the eval-mode output can be far off while the train-mode output is fine. The 1.7× gap in the last row above shows that this U-Net is sensitive to the BatchNorm mode even for C0.
-- **The weights really pass through bad states.** The statistics distance on the CT dose network barely penalises a constant offset or low-frequency error (0.39 to 0.61 of the white-noise distance at equal MSE, see `CLAUDE.md`), so an intensity drift costs little in the training loss.
-- **A few validation slices fail.** Less likely given the size of the mean (0.306 per pixel), but not excluded.
+**The replay is the same run.** Validation L1 is identical to the committed log at every epoch, the best epoch is 17 and the checkpoint is byte-identical to the original.
 
-## What the replay records and how to read it
+**Per epoch.** The L1 with batch statistics has no spikes: it falls steadily from 17,611 to 9,030 and is uncorrelated with the eval-mode L1 after epoch 3 (r = −0.08).
 
-`DIAGNOSE_C10 = True` in `seeds_perceptual_backbone_ldct.ipynb` retrains C10 at seed 42 and writes, per epoch and validation slice, the L1, the mean signed error and the L1 with BatchNorm on batch statistics (`val_per_slice.csv`, `val_per_epoch.csv`). It first compares its validation L1 with the committed log (`replay_check.csv`); if the largest relative difference is not small, the replay is a different run and says nothing about the logged spikes.
+| Epoch | Validation L1 (eval mode) | L1 with batch statistics | Median slice | Share of the 10 worst slices | Mean signed error | Share of L1 from a constant offset |
+|---|---|---|---|---|---|---|
+| 3 (spike) | 80,138 | 14,146 | 17,323 | 27% | +0.097 | 33% |
+| 17 (best) | 5,716 | 10,234 | 4,628 | 11% | +0.002 | 11% |
+| 19 (spike) | 27,094 | 10,227 | 5,056 | 36% | +0.078 | 76% |
+| 27 (spike) | 30,298 | 9,539 | 5,308 | 31% | +0.094 | 82% |
+| 29 (spike) | 30,478 | 9,175 | 5,241 | 33% | +0.093 | 81% |
+| 30 | 5,940 | 9,030 | 4,565 | 13% | +0.002 | 11% |
 
-| At a spike epoch | Reading |
-|---|---|
-| `val_l1_batch_statistics` stays near its usual level | Running statistics lag. Not a code bug. The checkpoint rule already avoids these epochs. |
-| Both L1 values jump and `share_of_l1_from_offset` is large | The weights drift in intensity: a property of this loss. Report it with C10. |
-| `share_of_worst_10_slices` is large | A slice-specific failure. Inspect those slices. |
-| The replay does not show the spikes at all | The original run is not reproducible. Treat this as a bug and stop before the seeds. |
+**Per slice.** A slice is called failing when its L1 is above three times its own median over the quiet epochs.
+
+| Spike epoch | Failing slices (of 182) | Patients (of 34) | Their share of the total L1 | Their mean signed error | Mean signed error of the others | Their L1, eval mode | Their L1, batch statistics | L1 of the others |
+|---|---|---|---|---|---|---|---|---|
+| 2 | 50 | 18 | 84% | +0.274 | +0.004 | 85,501 | 30,753 | 6,133 |
+| 3 | 115 | 29 | 95% | +0.154 | +0.001 | 120,397 | 17,028 | 11,037 |
+| 8 | 38 | 15 | 73% | +0.231 | +0.008 | 66,487 | 21,158 | 6,480 |
+| 9 | 43 | 16 | 83% | +0.073 | +0.005 | 82,056 | 22,253 | 5,362 |
+| 12 | 30 | 14 | 62% | +0.214 | +0.010 | 64,862 | 24,483 | 7,857 |
+| 19 | 44 | 16 | 86% | +0.323 | 0.000 | 96,909 | 20,964 | 4,834 |
+| 27 | 46 | 17 | 87% | +0.363 | +0.003 | 104,141 | 19,813 | 5,321 |
+| 29 | 44 | 17 | 86% | +0.376 | +0.004 | 108,414 | 19,182 | 5,628 |
+
+- **The same slices fail each time.** 43 slices fail in at least six of the eight spikes. They come from 17 patients, so this is not one patient.
+- **They are the bright slices.** Their mean target intensity is 0.41 to 0.45 against 0.16 to 0.18 for the others (0.27 at epoch 3, where 115 slices fail).
+- **The error is a brightness offset.** At epoch 29 their mean prediction is 0.81 against a mean target of 0.43. At the late spikes a constant offset explains about 80% of the total L1.
+- **The weights are not the problem on their own.** With batch statistics the same slices have an L1 of about 20,000, three to five times lower than in eval mode.
+- **Quiet epochs are not perfectly clean.** Epochs 5, 10, 13 and 15 have 9 to 18 failing slices, below the spike threshold. Epochs 16 to 18 and 28 to 30 except 29 have none.
+
+## Reading
+
+Training runs BatchNorm on batch statistics, where the brightness of a batch is normalised away. Validation runs it on running averages, which are dominated by the darker majority of the training slices. For a bright slice the two modes disagree, and at some epochs the disagreement turns into a strongly positive output offset. The training loss does not see this state: it is computed in batch-statistics mode, and the statistics distance on the CT dose network weighs a constant offset at only 0.43 to 0.61 of white noise at equal MSE (`CLAUDE.md`), with the L1 term at a small share of the loss. This explains why C0 (L1) never spikes and why C10 (CT dose network v2, statistics) spikes most.
+
+Not tested here: whether the spikes in C2, C3, C4, C7 and C10 v1 hit the same slices (their checkpoints at spike epochs do not exist either), and whether a different BatchNorm momentum or normalisation removes them.
 
 ## Consequences for the paper
 
-- The C10 row is the epoch-17 checkpoint, chosen by the Protocol rule. It is valid as reported.
-- Do not write that training was stable because no step was non-finite. Write that the validation L1 of C10 (CT dose network v2, statistics) was unstable (8 of 30 epochs above twice the median) and that the checkpoint rule selected epoch 17.
-- The Protocol is not changed for one configuration. Saving checkpoints at spike epochs, or a different BatchNorm momentum, would need a rerun of every row.
-- Seeds 123 and 456 will show whether the instability and the early best epoch of C10 repeat.
+- The C10 row is the epoch-17 checkpoint, chosen by the Protocol rule. It has no failing validation slice and is valid as reported.
+- Do not write that training was stable because no step was non-finite. Write that the eval-mode validation L1 of C10 (CT dose network v2, statistics) was unstable (8 of 30 epochs above twice the median), that the cause is a BatchNorm train/eval mismatch on bright slices, and that the checkpoint rule selected epoch 17.
+- The Protocol is not changed for one configuration. A different normalisation, BatchNorm momentum or checkpoint rule would need a rerun of every row.
+- The learning-rate scheduler reads the eval-mode validation L1, so the spikes also delayed and then triggered the halving at epoch 28. This is part of the Protocol and applies to every row.
+- Seeds 123 and 456 will show whether the instability and the early best epoch of C10 repeat. The test split is in eval mode too, so a C10 checkpoint taken at a bad epoch would fail on bright test slices; the validation-based rule is what protects the reported row.

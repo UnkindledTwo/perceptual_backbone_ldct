@@ -110,8 +110,9 @@ def dose_reports() -> dict[str, dict]:
 def distance_checks() -> pd.DataFrame:
     """Step 1.3 checks. The dose-network rows are the v1 run unless zoo_checks_v2.csv (seeds notebook) exists."""
     checks = pd.read_csv(RESULTS / "zoo_checks.csv")
-    checks["Network"] = checks["Network"].replace("CT dose network", "CT dose network v1 (check not rerun for v2)")
     path = RESULTS / "zoo_checks_v2.csv"
+    v1_label = "CT dose network v1 (ablation)" if path.exists() else "CT dose network v1 (check not rerun for v2)"
+    checks["Network"] = checks["Network"].replace("CT dose network", v1_label)
     return pd.concat([checks, pd.read_csv(path)], ignore_index=True) if path.exists() else checks
 
 
@@ -274,7 +275,9 @@ def main() -> None:
         ("Table 2: values per trained feature network", df_table2,
          "Parameters: weights the loss reads. For the CT dose network this is the feature extractor (three conv blocks); "
          "Parameters_with_head adds the regression head, which the loss does not use. lambda and ms_per_step are those of the final runs. "
-         "ms_per_batch_of_8 comes from the Step 1.3 check, which was not rerun for the v2 dose network."),
+         "ms_per_batch_of_8 comes from the Step 1.3 check" + (
+             " (v2 dose network: rerun on 2026-10-12 with the seeds notebook, zoo_checks_v2.csv)."
+             if (RESULTS / "zoo_checks_v2.csv").exists() else ", which was not rerun for the v2 dose network.")),
         ("Compute Budget", budget, ""),
         *[(title, frame, "") for title, frame in provenance_tables()],
     ]

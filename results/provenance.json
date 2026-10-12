@@ -272,7 +272,8 @@
       "file": "seed42/ct_dose_net_v2_regression/ct_dose_net.pt",
       "status": "frozen, used by C9 and C10 for every seed",
       "sha256": "69feb2a1bc7d23eb80f6bc88b57d99ea893f38284fed43876225df4b81581774",
-      "link": "inside outputs_ctdosenet_followup.zip"
+      "link": "https://drive.google.com/file/d/1bOQwp4mPKXNo0pEQYWPQ8huM6bg2LLAu/view (standalone, 4,722,741 bytes, private to the owner on 2026-10-12); also inside outputs_ctdosenet_followup.zip",
+      "hash_check": "accepted by sha256 in the seeds notebook on Colab on 2026-10-12 (reproduction check and C10 replay loaded it)"
     },
     {
       "file": "seed42/ct_dose_net_v1/ct_dose_net.pt",
@@ -293,15 +294,22 @@
       "link": "https://drive.google.com/file/d/1gNimi2rBrtxjnrhzT77L860NNdhTXRAG/view",
       "uploaded": "2026-10-07",
       "contents": "Week 1 and 2 outputs: C0 to C7, pre-fix C8, v1 C9 and C10, v1 dose network",
-      "access": "private to the owner's Google account on 2026-10-12; sharing has to be enabled before others can open it"
+      "access": "anyone with the link can view (shared by the owner on 2026-10-12)"
     },
     {
       "file": "outputs_ctdosenet_followup.zip",
       "link": "https://drive.google.com/file/d/13hLIkRZY1C8lywfw5n1zEBtkloPsZSmH/view",
       "uploaded": "2026-10-10",
       "contents": "follow-up outputs: C8 and C10 v1 after the variance fix, dose network v2 (regression), C9 and C10 v2",
-      "access": "private to the owner's Google account on 2026-10-12; sharing has to be enabled before others can open it"
+      "access": "anyone with the link can view (shared by the owner on 2026-10-12)"
     }
   ],
-  "not_final": "The loose best_c0.pth to best_c10.pth files in the same Drive folder are the Oct 4 and 5 runs of the old notebook (results/OLDRUNS). They are not the final checkpoints."
+  "not_final": "The loose best_c0.pth to best_c10.pth files in the same Drive folder are the Oct 4 and 5 runs of the old notebook (results/OLDRUNS). They are not the final checkpoints.",
+  "verification_2026_10_12": {
+    "runner": "seeds_perceptual_backbone_ldct.ipynb at commit 094e41657c9ee5e63297fe24711e9dac36ba91a8, no uncommitted src files, A100 80 GB, torch 2.11.0+cu130",
+    "reproduction_check": "one epoch of C9 (CT dose network v2, pointwise) at seed 42: train loss 2.792584854782092 and validation L1 9280.567372081045, relative difference 0.0 to the logged epoch 1 (results/repro_seed42/repro_check.csv)",
+    "c10_replay": "30 epochs of C10 (CT dose network v2, statistics) at seed 42: validation L1 identical to the committed log at every epoch, best epoch 17, best validation L1 5716.148448231456 (results/seed42/diag_C10_v2/replay_check.csv); the replayed best.pth has the same sha256 as the original (a5c8482c…2b66)",
+    "meaning": "the committed src/ at 094e416 reproduces the final C9 and C10 seed-42 runs exactly, although their revision was not recorded at run time",
+    "not_covered": "C8 (DINOv2-S, statistics) and C0 to C7 were not replayed"
+  }
 }

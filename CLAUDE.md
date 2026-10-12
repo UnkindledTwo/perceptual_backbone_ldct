@@ -61,7 +61,7 @@ Adopted network is **v2** (log10-dose regression target, standardised, smooth L1
 - Validation screen M (pointwise / statistics): v1 0.724 / 0.712, v2 0.971 / 0.852. B stays below 1 (0.34 / 0.86).
 - The screen gain did not carry over: C9 (CT dose network v2, pointwise) PSNR 30.40, DISTS 0.097; C10 (CT dose network v2, statistics) PSNR 29.71, DISTS 0.102, best R_H of all (0.912). Both stay below C0 on PSNR and SSIM and far behind C8 (DINOv2-S, statistics) on DISTS (0.060).
 - v2 was adopted under a threshold changed after seeing the screen (0.9 to 0.8, recorded in `results/decision.json`). Disclose this in the paper.
-- C10 v2 validation L1 is unstable: 8 of 30 epochs above twice the median (80,138 at epoch 3, 30,478 at epoch 29), best epoch 17. No bug found (checkpoint reproduces the logged value on CPU; at its best epoch it looks like C0), cause open until the GPU replay (`DIAGNOSE_C10` in the seeds notebook) is run. Spikes also occur in C2, C3, C4, C7 and C10 v1, never in C0. See `slides_and_reports/c10_validation_instability.md`.
+- C10 v2 validation L1 is unstable: 8 of 30 epochs above twice the median (80,138 at epoch 3, 30,478 at epoch 29), best epoch 17. Not a bug: the GPU replay (2026-10-12, `results/seed42/diag_C10_v2/`) reproduces the log exactly and shows a BatchNorm train/eval mismatch. At a spike 40 to 50 bright validation slices (17 patients) are predicted far too bright in eval mode, while BatchNorm on batch statistics shows no spike; epoch 17 has no failing slice. Spikes also occur in C2, C3, C4, C7 and C10 v1 (not replayed), never in C0. Report it in the paper as unstable eval-mode validation, not as stable training. See `slides_and_reports/c10_validation_instability.md`.
 - The dose network v2 best epoch was 10 of 10, so its training was probably cut short.
 
 **Diagnosis (CPU, 2026-10-10, 30 val slices, v2 regression weights, same MSE as the 100k noisy image).** The loss is nearly blind to structure and low-frequency error. Distance relative to white noise at equal MSE, pointwise blocks 1/2/3/4: blur 0.41/0.50/0.58/0.71, constant offset 0.16/0.25/0.32/0.35, low-frequency noise 0.16/0.23/0.26/0.25. Statistics matching: offset 0.43 to 0.61, low-frequency noise 0.39 to 0.49. Cause: receptive field about 23 px at block 3 (three conv blocks), and the network was only trained to rank noise levels on 128×128 patches. M cannot detect this (pretrained networks all score about 0.99), so the screen needs a structure term (blur, offset, low-frequency ratios) before it predicts C9/C10. Block 4 (the head's first conv block, `head[0]`, unused by the loss) gives M 0.913 pointwise and 0.843 statistics, a small gain only. Statistics block 1 alone has M 0.50. The diagnostic script is in the scratchpad, not in the repo.
@@ -74,18 +74,29 @@ Adopted network is **v2** (log10-dose regression target, standardised, smooth L1
 - `DoseNetFeatures` ignores `prepare()`; `input_size` and the mean/std buffers are unused. Inputs are raw 1-channel crops, consistent with training but different from the plan text ("resized to the network's input size").
 - Parameter counts include the classifier head; the feature extractor (three blocks) has 287,328.
 - No augmentation in dose-net training.
-- The Step 1.3 distance check was not rerun for v2.
+- The Step 1.3 distance check was rerun for v2 on 2026-10-12 (`results/zoo_checks_v2.csv`): zero at equality, gradient reaches the prediction, 8.7 / 10.9 ms per batch of 8.
 
 ## Other open items
 
-- `results/environment.json` records commit `d3916a2` (Week 1 and 2 notebook only). The revision of the follow-up runs (final C8, C9, C10) was not recorded at run time; `results/provenance.json` states what is known per run.
-- The Drive archives with the checkpoints (`outputs_seed42.zip`, `outputs_ctdosenet_followup.zip`) are private to the owner's account; the v2 dose network has no standalone Drive file.
-- Not yet run on the GPU: the fresh-kernel reproduction check of the seeds notebook (`REPRO_CHECK`), the C10 replay (`DIAGNOSE_C10`) and the Step 1.3 check for v2 (`CHECK_DOSE_V2_DISTANCE`).
+- `results/environment.json` records commit `d3916a2` (Week 1 and 2 notebook only). The revision of the follow-up runs (final C8, C9, C10) was not recorded at run time; `results/provenance.json` states what is known per run. Commit `094e416` reproduces C9 (epoch 1) and C10 (all 30 epochs, byte-identical checkpoint) exactly; C8 and C0 to C7 were not replayed.
+- The Drive archives with the checkpoints (`outputs_seed42.zip`, `outputs_ctdosenet_followup.zip`) are shared as "anyone with the link can view" since 2026-10-12. The standalone v2 dose network file on Drive is still private to the owner.
 - The Step 1.2 audit table of earlier runs (#208, #261) is not in the outputs.
 - `RADIMAGENET_STATS` is `None` (ImageNet statistics used); confirm against the weights source before the freeze.
 - The plan mentions `scripts/` and `src/unet.py`; the actual files are in `src/` (`run_config.py`, `model.py`). The "GPU hours available" cell in the compute budget is still blank.
 - `src/__pycache__/` is tracked by git; ignore it.
 
+## Before Week 3 starts (state on 2026-10-12)
+
+The Week 2 closeout work is on `main` at `094e416`. On top of it, uncommitted: the GPU verification outputs (`results/repro_seed42/`, `results/seed42/diag_C10_v2/`, `results/zoo_checks_v2.csv`), the regenerated tables, and the updated provenance, reply, instability report, deck and this file.
+
+Done on the A100 from a fresh kernel and a clean clone of `094e416`: the reproduction check (`REPRO_CHECK`, relative difference 0.0), the C10 replay (`DIAGNOSE_C10`) and the v2 distance check (`CHECK_DOSE_V2_DISTANCE`). The v2 dose network is on Drive as `MyDrive/BIAI/ISBI2027_WEIGHTS/ct_dose_net_v2_regression.pt` and was accepted by sha256.
+
+Open:
+
+1. Commit and push the files listed above (the seeds notebook records the commit and the dirty flag of `src/`).
+2. Post `week2_closeout_reply.md` on the GitHub issue (not posted yet; issue number not known here) and tick the Week 2 boxes.
+3. Start `SEED = 123`, then `SEED = 456`. The full 11-configuration loop of the seeds notebook has not run yet; seed 123 is its first run.
+
 ## Deliverables
 
-Week 3 (Oct 12 to Oct 18): seeds 123 and 456, Wilcoxon tests with Holm correction (families A and B), screen-versus-outcome Spearman tests, figures, results freeze on Oct 18. Draft Oct 23, deadline Oct 26. `slides_and_reports/ldct_backboone_week_1_2.pdf` is the Weeks 1 and 2 presentation; the CT dose network reports and follow-up notebook are in the same folder.
+Week 3 (Oct 12 to Oct 18): seeds 123 and 456, Wilcoxon tests with Holm correction (families A and B), screen-versus-outcome Spearman tests, figures, results freeze on Oct 18. Draft Oct 23, deadline Oct 26. `slides_and_reports/ldct_backboone_week_1_2.pdf` is the Weeks 1 and 2 presentation; its result slides (6 to 12, 14, 15) are superseded by `ldct_backbone_week_1_2_update.pdf`. The CT dose network reports and follow-up notebook are in the same folder.
