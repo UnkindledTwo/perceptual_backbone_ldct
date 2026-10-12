@@ -1,5 +1,7 @@
 {
   "adopt_v2": true,
+  "rule_met": true,
+  "override": false,
   "rule": "M(v2) > 0.8 for pointwise and statistics (validation screen)",
   "M_v2": {
     "pointwise": 0.9708791208791209,
@@ -10,5 +12,7 @@
     "statistics": 0.7120879120879119
   },
   "mode": "regression",
-  "smoke": false
+  "smoke": false,
+  "note": "The threshold was first set to 0.9 and lowered to 0.8 by Arda Sahin on 2026-10-10 after seeing the validation screen, because statistics matching (0.852) missed 0.9. The rule is therefore not prespecified.",
+  "edited_by_hand": "rule_met, override and note were added on 2026-10-12 to match the fields the follow-up notebook now writes; adopt_v2, rule, M_v2, M_v1, mode and smoke are the values written by the run."
 }

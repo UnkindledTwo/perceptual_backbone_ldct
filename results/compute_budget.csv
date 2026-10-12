@@ -2,14 +2,15 @@ Item,Value
 Trained configurations,11
 Seeds,3
 Full U-Net runs,33
-"CT dose network pretraining, GPU hours (measured)",0.111
-"Screen (Step 1.4), GPU hours (measured)",0.238
-"Calibration (Step 2.1), GPU hours (measured)",0.086
-"GPU hours per U-Net run, C0 (measured in Step 1.2)",0.155
-"GPU hours per U-Net run, C7 MedSigLIP (measured in Step 2.3)",1.445
-GPU hours of the seed 42 U-Net runs (11 of 11),3.259
-GPU hours used in Weeks 1 and 2,3.694
-"Total GPU hours of the protocol (3 seeds, from the seed 42 runs)",10.211
+"CT dose network pretraining, GPU hours (v1 / v2 regression)",0.111 / 0.138
+"Screen (Step 1.4), GPU hours (Week 1 run; the v2 validation screen was not timed)",0.238
+"Calibration (Step 2.1), GPU hours (Week 2 run; the C8, C9, C10 recalibrations were not timed)",0.086
+"GPU hours per U-Net run, C0 (L1)",0.155
+"GPU hours per U-Net run, C7 (MedSigLIP, pointwise)",1.445
+GPU hours of the final seed 42 U-Net runs (11 of 11),3.242
+GPU hours of the superseded seed 42 U-Net runs (4),0.693
+GPU hours used in Weeks 1 and 2 (measured parts),4.507
+"Total GPU hours of the protocol (3 seeds of the final runs, plus the measured one-off parts)",10.990
 GPU,NVIDIA A100-SXM4-80GB (79.3 GB)
-"Largest peak GPU memory of a run, GB",17.0
+"Largest recorded peak GPU memory of a run, GB (not recorded for the final C8, C9, C10 runs)",17.0
 GPU hours available in Weeks 1 to 3,fill in by hand

@@ -1,4 +1,6 @@
 # src/ct_dose_net.py
+from pathlib import Path
+
 import torch
 import torch.nn as nn
 
@@ -27,6 +29,14 @@ class CTDoseNet(nn.Module):
 
     def forward(self, image: torch.Tensor) -> torch.Tensor:
         return self.head(self.block_outputs(image)[-1])
+
+
+def load_dose_net(path: Path) -> CTDoseNet:
+    """Frozen dose network. The head width comes from the checkpoint: 6 for v1 (classes), 1 for v2 (log-dose)."""
+    state = torch.load(path, map_location="cpu")
+    network = CTDoseNet(state["head.3.weight"].shape[0])
+    network.load_state_dict(state)
+    return network
 
 
 class DoseNetFeatures(FeatureNet):

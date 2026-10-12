@@ -11,5 +11,6 @@
   "epochs": 30,
   "batch_size": 8,
   "crop_size": 224,
-  "target_influence": 0.95
+  "target_influence": 0.95,
+  "repo_commit_note": "Recorded by the Week 1 and 2 notebook on 2026-10-07. It is not the revision of the follow-up runs (final C8, C9, C10); see provenance.json for the revision of every run."
 }

@@ -22,6 +22,8 @@
 
 Decision: ADOPT v2 (rule: M(v2) > 0.8 for pointwise and statistics (validation screen)).
 
+Note added 2026-10-12: the threshold was first 0.9 and was lowered to 0.8 after seeing this validation screen, because statistics matching (0.852) missed 0.9. The rule is not prespecified (see `decision.json`).
+
 v2 training: validation accuracy 78.71%, clean vs 1000k 92.24%, MAE 0.183 log10 units, best epoch 10 of 10.
 
 ## Step D: C9 and C10 on v2 against v1

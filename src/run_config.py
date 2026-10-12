@@ -1,11 +1,11 @@
-# scripts/run_config.py
+# src/run_config.py
 from pathlib import Path
 
 import pandas as pd
 import torch
 
 from src.config import PerceptualConfig
-from src.ct_dose_net import CTDoseNet, DoseNetFeatures
+from src.ct_dose_net import DoseNetFeatures, load_dose_net
 from src.distances import FeatureDistance, PerceptualObjective, PiqDistance
 from src.feature_nets import build_feature_net
 from src.train import train_and_test
@@ -19,9 +19,7 @@ def build_objective(config: PerceptualConfig, dose_net_path: Path, radimagenet: 
     if config.feature_net in ("lpips_vgg", "dists"):
         return PerceptualObjective(PiqDistance(config.feature_net), config.loss_weight, config.crop_size)
     if config.feature_net == "ct_dose_net":
-        network = CTDoseNet()
-        network.load_state_dict(torch.load(dose_net_path, map_location="cpu"))
-        net = DoseNetFeatures(network)
+        net = DoseNetFeatures(load_dose_net(dose_net_path))
     else:
         net = build_feature_net(config.feature_net, radimagenet)
     return PerceptualObjective(FeatureDistance(net, config.matching, block_scales), config.loss_weight, config.crop_size)
