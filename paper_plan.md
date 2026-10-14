@@ -953,8 +953,8 @@ on Sun Oct 18.
 
 **Produces:** the ± std in Table 1; `outputs/perceptual_backbone/per_slice_metrics.csv`.
 
-- [ ] Run seeds 123 and 456 for C0 to C10 (the Step 2.1 weights stay fixed)
-- [ ] Concatenate every run's metrics into one per-slice CSV
+- [x] Run seeds 123 and 456 for C0 to C10 (the Step 2.1 weights stay fixed)
+- [x] Concatenate every run's metrics into one per-slice CSV
 
 ```python
 # scripts/run_all_seeds.py
@@ -999,13 +999,13 @@ def run_all_seeds(configurations: dict[str, PerceptualConfig],
 **Produces:** † marks in Table 1, the Family B table, Fig 4, the abstract
 number.
 
-- [ ] Family A: each of C1 to C10 vs C0 on PSNR, LPIPS and
+- [x] Family A: each of C1 to C10 vs C0 on PSNR, LPIPS and
       $\lvert 1 - R_H \rvert$, Holm over 30
-- [ ] Family B: C5 vs C8, C9 vs C10, C5 vs C6 on the same metrics, Holm over 9
-- [ ] Spearman correlation across the 10 trained networks between screen
+- [x] Family B: C5 vs C8, C9 vs C10, C5 vs C6 on the same metrics, Holm over 9
+- [x] Spearman correlation across the 10 trained networks between screen
       scores ($M_\phi$, $B_\phi$) and trained outcomes (DISTS, LPIPS,
       $\lvert 1 - R_H \rvert$), with a permutation p-value
-- [ ] Fix both families now; do not change them after seeing p-values
+- [x] Fix both families now; do not change them after seeing p-values
 
 $$
 W = \sum_{i=1}^{n} \mathrm{sgn}(d_i) R_i, \qquad r = \frac{\sum_{d_i > 0} R_i - \sum_{d_i < 0} R_i}{\sum_i R_i}
@@ -1067,20 +1067,27 @@ Add `r_h_error = abs(1 - r_h)` before calling. Family A pairs are
 
 | Family B comparison | Metric | Median difference | p (Holm over 9) | Effect size r |
 |---|---|---|---|---|
-| C8 vs C5 (statistics vs pointwise, DINOv2-S) | DISTS | - | - | - |
-| C8 vs C5 | $\lvert 1 - R_H \rvert$ | - | - | - |
-| C10 vs C9 (statistics vs pointwise, CT dose net) | DISTS | - | - | - |
-| C10 vs C9 | $\lvert 1 - R_H \rvert$ | - | - | - |
-| C6 vs C5 (base vs small) | DISTS | - | - | - |
-| C6 vs C5 | $\lvert 1 - R_H \rvert$ | - | - | - |
-| <remaining 3 rows (PSNR) stay in the CSV> | - | - | - | - |
+| C8 vs C5 (statistics vs pointwise, DINOv2-S) | PSNR (dB) | 0.0517 | 2.82e-03 | 0.263 |
+| C8 vs C5 (statistics vs pointwise, DINOv2-S) | LPIPS | 0.0003 | 8.69e-01 | -0.061 |
+| C8 vs C5 (statistics vs pointwise, DINOv2-S) | $\lvert 1 - R_H \rvert$ | -0.1429 | 5.63e-30 | -0.898 |
+| C10 vs C9 (statistics vs pointwise, CT dose network v2) | PSNR (dB) | -0.5742 | 6.82e-37 | -1.000 |
+| C10 vs C9 (statistics vs pointwise, CT dose network v2) | LPIPS | 0.0013 | 2.38e-02 | 0.206 |
+| C10 vs C9 (statistics vs pointwise, CT dose network v2) | $\lvert 1 - R_H \rvert$ | -0.0604 | 8.52e-12 | -0.551 |
+| C6 vs C5 (DINOv2-B vs DINOv2-S, pointwise) | PSNR (dB) | 0.0530 | 2.42e-05 | 0.355 |
+| C6 vs C5 (DINOv2-B vs DINOv2-S, pointwise) | LPIPS | 0.0005 | 8.69e-01 | 0.031 |
+| C6 vs C5 (DINOv2-B vs DINOv2-S, pointwise) | $\lvert 1 - R_H \rvert$ | -0.0342 | 1.03e-31 | -0.925 |
 
-| Screen score vs trained outcome (10 networks) | Spearman $\rho$ | Permutation p |
-|---|---|---|
-| $B_\phi$ vs $\lvert 1 - R_H \rvert$ | - | - |
-| $B_\phi$ vs DISTS | - | - |
-| $M_\phi$ vs $\lvert 1 - R_H \rvert$ | - | - |
-| Parameters vs DISTS | - | - |
+Filled from `results/week3/stats_family_b.csv` (seeds 42, 123, 456; difference is first minus second). The draft of this table listed
+DISTS rows, but Family B is defined on PSNR, LPIPS and $\lvert 1 - R_H \rvert$; DISTS was not added after seeing the results.
+
+| Screen score vs trained outcome | Spearman $\rho$ (10 networks) | Permutation p | $\rho$ without C2 and C3 (8) | Permutation p |
+|---|---|---|---|---|
+| $B_\phi$ vs $\lvert 1 - R_H \rvert$ | 0.842 | 0.0035 | 0.714 | 0.0590 |
+| $B_\phi$ vs DISTS | -0.055 | 0.8927 | -0.238 | 0.5854 |
+| $M_\phi$ vs $\lvert 1 - R_H \rvert$ | 0.529 | 0.1171 | 0.575 | 0.1439 |
+| Parameters vs DISTS | -0.128 | 0.7226 | -0.277 | 0.4932 |
+
+All 18 score and outcome pairs are in `results/week3/screen_vs_outcome.csv`; the p-values are not corrected for the number of rows.
 
 **Gotcha:** DISTS is circular for C3 and partly for C2; compute the screen
 correlation both with and without C2 and C3 and report both.
@@ -1090,14 +1097,14 @@ correlation both with and without C2 and C3 and report both.
 **Produces:** Fig 2, Fig 3, Fig 4, final Fig 1; Markdown and LaTeX for Table 1
 and Table 2.
 
-- [ ] Fig 2 (`scripts/make_fig2_screen.py`): (a) $D_\phi(d)$ normalized by
+- [x] Fig 2 (`scripts/make_fig2_screen.py`): (a) $D_\phi(d)$ normalized by
       $D_\phi(10k)$ against dose on a log axis, one line per network, pixel
       L1 dashed; (b) $B_\phi$ bars per network, pointwise and statistics side
       by side, a line at 1
 - [ ] Fig 3 (`scripts/make_fig3_qualitative.py`): LDCT, C0, C1, C3, C5, C7,
       C10, NDCT; the 2 test slices closest to the median C0 PSNR (not chosen
       by eye); one soft-tissue zoom; one error scale
-- [ ] Fig 4 (`scripts/make_fig4_screen_vs_outcome.py`): $B_\phi$ against
+- [x] Fig 4 (`scripts/make_fig4_screen_vs_outcome.py`): $B_\phi$ against
       trained $\lvert 1 - R_H \rvert$, marker size by parameter count,
       colour by family, DINOv2 S and B joined by a line, $\rho$ in the corner
 - [ ] Finalize Fig 1; export every figure as PDF

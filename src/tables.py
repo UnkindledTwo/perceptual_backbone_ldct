@@ -62,16 +62,16 @@ def to_markdown(frame: pd.DataFrame, digits: int = 4) -> str:
     return "\n".join(lines)
 
 
-def run_row(run: str, label: str) -> dict:
+def run_row(run: str, label: str, seed: int = SEED) -> dict:
     """One Table 1 row from the per-slice metrics; the means must agree with the run summary."""
-    summary = read_json(f"seed{SEED}", run, "run_summary.json")
-    frame = pd.read_csv(RESULTS / f"seed{SEED}" / run / "metrics.csv")
+    summary = read_json(f"seed{seed}", run, "run_summary.json")
+    frame = pd.read_csv(RESULTS / f"seed{seed}" / run / "metrics.csv")
     assert len(frame) == summary["n_test"] == 220, f"{run}: {len(frame)} test slices"
     for metric in METRICS:
         assert np.isclose(frame[metric].mean(), summary[f"{metric}_mean"], rtol=1e-9), f"{run}: {metric} differs from run_summary.json"
-    log = pd.read_csv(RESULTS / f"seed{SEED}" / run / "train_log.csv")
+    log = pd.read_csv(RESULTS / f"seed{seed}" / run / "train_log.csv")
     assert int(log.loc[log["val_l1"].idxmin(), "epoch"]) == summary["best_epoch"], f"{run}: best epoch is not the lowest validation L1"
-    return {"Configuration": label, "run": f"seed{SEED}/{run}",
+    return {"Configuration": label, "run": f"seed{seed}/{run}",
             **{m: frame[m].mean() for m in METRICS}, **{f"{m}_std": frame[m].std(ddof=1) for m in METRICS},
             "abs_1_minus_r_h": (1 - frame["r_h"]).abs().mean(), "ms_per_step": summary["ms_per_step"],
             "gpu_hours": summary["gpu_hours"], "peak_gpu_memory_gb": summary.get("peak_gpu_memory_gb", np.nan),

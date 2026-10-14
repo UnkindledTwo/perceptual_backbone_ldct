@@ -1,0 +1,355 @@
+{
+ "steps": {
+  "seeds_tables": {
+   "date": "2026-10-13",
+   "command": "python -m src.seeds_tables",
+   "python": "3.12.3",
+   "packages": {
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2"
+   },
+   "source": {
+    "repo_commit": "5bed4b614426bfe09b61bc973550227ed9ffabf5",
+    "uncommitted_or_new_py_files": [
+     "src/tables.py",
+     "figures/fig2_screen.py",
+     "figures/fig4_screen_vs_outcome.py",
+     "figures/style.py",
+     "src/record.py",
+     "src/seeds_tables.py",
+     "src/stats.py"
+    ],
+    "src_sha256": {
+     "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
+     "config.py": "9cf477642f03c177744f32e81228296b2d24342b29554a6581fecee884e755e5",
+     "ct_dose_net.py": "5430563ab70bbe4dbcdfa552a9519c691124181291dde5364975965aeeaa8295",
+     "data.py": "486e6d342af9d45092cac85e42ee4819ed09f41b034393d687c6d50561aa5293",
+     "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
+     "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
+     "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
+     "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
+     "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
+     "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
+     "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
+     "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
+     "seeds_tables.py": "8b3b4b36a673b3adf4646e21dc1cbd768f96d9cf5b4afa7ff4e00e6ff00da9b4",
+     "stats.py": "b1b63a09760ce0bb7f210db392d9477a9f27694622055e28f51ba0bc1eed105e",
+     "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
+     "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
+     "val_diagnostics.py": "8f97b46d75926abf5de8eb0932710a2ceb8bf2e712ec19754dc929fb7d978125"
+    }
+   },
+   "settings": {
+    "seeds": [
+     42,
+     123,
+     456
+    ],
+    "family_a": [
+     [
+      "C1",
+      "C0"
+     ],
+     [
+      "C2",
+      "C0"
+     ],
+     [
+      "C3",
+      "C0"
+     ],
+     [
+      "C4",
+      "C0"
+     ],
+     [
+      "C5",
+      "C0"
+     ],
+     [
+      "C6",
+      "C0"
+     ],
+     [
+      "C7",
+      "C0"
+     ],
+     [
+      "C8",
+      "C0"
+     ],
+     [
+      "C9",
+      "C0"
+     ],
+     [
+      "C10",
+      "C0"
+     ]
+    ],
+    "family_b": [
+     [
+      "C8",
+      "C5"
+     ],
+     [
+      "C10",
+      "C9"
+     ],
+     [
+      "C6",
+      "C5"
+     ]
+    ],
+    "test_metrics": [
+     "psnr",
+     "lpips",
+     "r_h_error"
+    ],
+    "permutations": 10000,
+    "permutation_seed": 42,
+    "spike_factor": 2.0,
+    "alpha": 0.05
+   },
+   "inputs_sha256": {
+    "results/baseline_metrics.csv": "381ffb492c9eacff842f03683dcb72853ee2968d718f6e0a86b8124b9b7c9886",
+    "results/seed123/train_C0/metrics.csv": "fc5564219400cf01315851c4cc37d1609e6675dbdce4e920afb1bac3d0b91cb3",
+    "results/seed123/train_C0/run_summary.json": "3945a7b11bb8f0313fbbea66df2652b864856fd50c963ca77fc27976be801a77",
+    "results/seed123/train_C0/train_log.csv": "acbf4cd7ff6140dc17205e8790090443842654590990273f6d8fe05128c60b90",
+    "results/seed123/train_C1/metrics.csv": "2b3d97c7ea95b5484d486589166d35cc1a24daeda7245e3085c10ec367eaee19",
+    "results/seed123/train_C1/run_summary.json": "631c86db6a23849852ba6ddbe81cc3d2cc8bc7cff649a424969ccf2df644d834",
+    "results/seed123/train_C1/train_log.csv": "d7e9ad04049c443e633873df75851e7289e071133e3838e68d749a45ac0f1b3b",
+    "results/seed123/train_C10/metrics.csv": "7e31e91f3b2721c3d2afb7ae1500d62ca6e3b1e49f1a44a8e4723fcc9e81af2b",
+    "results/seed123/train_C10/run_summary.json": "7228e974ffd409fb5d74353a44748726a83754bd4ed31a235f819387a654f5c7",
+    "results/seed123/train_C10/train_log.csv": "03797968dc9ae4d982ab0c41bc060cb541222f7e5ae53b7cc66cb86c791e0055",
+    "results/seed123/train_C2/metrics.csv": "6c003392caa989003f57a03b08b988442fdf342be0fb94dbad2d1a8ed5a4bc68",
+    "results/seed123/train_C2/run_summary.json": "28591835b0b6ba37b409c1a3d8ec7863e82521e9c9943cdb357a7107212b3dde",
+    "results/seed123/train_C2/train_log.csv": "c65d4bf09e6325488ab9a6ddfd2481d1ff811cc5dd8f78e886f3085216a93a44",
+    "results/seed123/train_C3/metrics.csv": "930d574d79b9aec874e1f0b8499503f16b998203bb154e0cba7f6113c154054e",
+    "results/seed123/train_C3/run_summary.json": "56ea3a32fedaee33eab73483a167869c3ec9ef9bd031d21b67f1498b114a2ec0",
+    "results/seed123/train_C3/train_log.csv": "7a65387695f6848c477621e26eb6ffb54e6ae569458dce056b0312dce819ee5d",
+    "results/seed123/train_C4/metrics.csv": "e21354e54736d11f57fe9a0bcb75faad24cd23a3dad2fc65a2b4871e8860698a",
+    "results/seed123/train_C4/run_summary.json": "915c35a5e216e25a70d275e448793d8cc0e96305cb1aabea46b7162f753980da",
+    "results/seed123/train_C4/train_log.csv": "ba8ff7b21e16a1d736181090c23a850dd226ba0e754ec7c7b408227d2e778c04",
+    "results/seed123/train_C5/metrics.csv": "32d4696a1b5c561393d408a9add974474782e2491c14bca898bf5bd5c5bea578",
+    "results/seed123/train_C5/run_summary.json": "137cd318b26f67d05148d3cfa5a0eaa7d93fd07be245ecc7340fb26064f1e22d",
+    "results/seed123/train_C5/train_log.csv": "6a56aa711a404559bb99b030691e6933b865f95490970a71210d6cf3b35b5872",
+    "results/seed123/train_C6/metrics.csv": "80f5fe2e6ac2d3d7e5aea548e184f5f1933ccce243afda0962f659491eb4dc2a",
+    "results/seed123/train_C6/run_summary.json": "487f31492baa740af40b27c8a266f67378406f94d59904af7e2f55f0ee17a96c",
+    "results/seed123/train_C6/train_log.csv": "3b009de92bcbf27b7f790b3a9eec9758a500b1cc3fb273dbef4d6e2113f6ce98",
+    "results/seed123/train_C7/metrics.csv": "05c92c9c10304694b99a900d30fed3dc742b37a0c42b9db73ae48b2beac44342",
+    "results/seed123/train_C7/run_summary.json": "f328038ee7d2ffcac0f28533817993819af257a609a7294afede0e278ae6287e",
+    "results/seed123/train_C7/train_log.csv": "bbc0f756c2f0d881518417f716ffbf765aafb9fe918330b7eb9e8634b7e4d349",
+    "results/seed123/train_C8/metrics.csv": "b1242da0b5f09cc46d38ba4ebd8b3b29c5e0bf0fa11c853f501d4196e4e90f26",
+    "results/seed123/train_C8/run_summary.json": "3066b939dd83f88bd332330d64f30130debc0f35dbb49b969c943d0f0bedcae3",
+    "results/seed123/train_C8/train_log.csv": "fd6785b103cd526188cc18c67e325a873eb0418f81c9b12970820bef86c0c55c",
+    "results/seed123/train_C9/metrics.csv": "e44df2b5a2067f5a7e623c2f403aa9692994c3df27030342bb8f47c3a9b2b6ea",
+    "results/seed123/train_C9/run_summary.json": "7877839d206dc5239aeea890dab8611b6b3375df14a167d579f6a38f6ab3bdfe",
+    "results/seed123/train_C9/train_log.csv": "5d2c0764e2f13841f102e0efef6a3dcc9f3fcf95d9a0dd4f47d13a97026c8b69",
+    "results/seed42/train_C0/metrics.csv": "a39df254a51dad912f2edfc5d6211b583e7b8052308d72c7733b3aec0c03b9e4",
+    "results/seed42/train_C0/run_summary.json": "6d67f472f779d6945e48e94f17f28067d69037155d623b955a3e4ad89fd433da",
+    "results/seed42/train_C0/train_log.csv": "4270b2c4973608f32476d9d7fb0625973b26a8218fe9aecfc85754c929037f3f",
+    "results/seed42/train_C1/metrics.csv": "a1a288245b98ed243f5684e2782f0dc8e4da316ae2e86bb4c40cbb51b9eedeed",
+    "results/seed42/train_C1/run_summary.json": "cc7f5c6d9623a101734cdc3d190c8bff0abe4ba628cb8b1bc469304d68eb561f",
+    "results/seed42/train_C1/train_log.csv": "063aa8d450fa5da42bbdd128960fe4dd45a1adc2824eda8f574c482ca456e8ca",
+    "results/seed42/train_C10_v2/metrics.csv": "d26dcb5c7cc6c0a5dd29a925a07f2a6b548d3599064b6d1825462707fdbc2211",
+    "results/seed42/train_C10_v2/run_summary.json": "80224e0921db343728b833b9d82eab81e25ea48949b1aa3dc32af52c10f6736a",
+    "results/seed42/train_C10_v2/train_log.csv": "942f37a8ce1937b0cfd84fb354d21be87993b95935179cf92ee06dcd40ba759e",
+    "results/seed42/train_C2/metrics.csv": "44337e68f84178b98751068d1aa509c03e29d4d8840b6aa4466f3e43a45eeac4",
+    "results/seed42/train_C2/run_summary.json": "f779753df1285db34d71ec5b148200e1aea7857fa2d8475f9f1108f4771a39f3",
+    "results/seed42/train_C2/train_log.csv": "14cb89ddb550393574cfccaeb85dc843bdab9bd8e6dbefa53279f660051463f0",
+    "results/seed42/train_C3/metrics.csv": "5ca75bcd1dfe83d60252ed2339035fd46a8dba5df160e5ebed3e4ad557f0e742",
+    "results/seed42/train_C3/run_summary.json": "7eefd90fcd621739573e72eac326d0c4760ecbd05d59ed890cbd5d6bed7455ed",
+    "results/seed42/train_C3/train_log.csv": "5c59b745505008daf3c80658fd754acdf59e09e3c72a398a9b8c712e7b63b491",
+    "results/seed42/train_C4/metrics.csv": "2e86282bdc52355ac0de83adad81f67f5781edec8eccce58636540d3e04dd84b",
+    "results/seed42/train_C4/run_summary.json": "563140df37f81b65d6ea307112732809940dc36b90569758191df1e7883ee371",
+    "results/seed42/train_C4/train_log.csv": "7ed9fa5624aedc31465cd0aaa1b4e575fed927cc7c5549a1047d44c222514ef1",
+    "results/seed42/train_C5/metrics.csv": "c43d01eec67d557baf757b5fb65216773c9abf2f01216115d4ccf86764668006",
+    "results/seed42/train_C5/run_summary.json": "7fb4160665d9129523ebce7747c6ea53281f01d9e73ba4b04b316bc52b8564f0",
+    "results/seed42/train_C5/train_log.csv": "8c7a946ffba895094cdc5086e12abf845915bf0523da2771420f26efcafaaae1",
+    "results/seed42/train_C6/metrics.csv": "5b8918f2b9ce1d156cfa1c64a8f31216feb4ea5f64a946fe914e4dbaf0f045c0",
+    "results/seed42/train_C6/run_summary.json": "f97fd22a167b29c1ba7aa8f0b59ea82c0d7d3c96b983e214e83a851051aa4d3c",
+    "results/seed42/train_C6/train_log.csv": "a7af9d72c9dafa1130e4b269136844022ce4c7f75f75863f8f6a3cf5bf8ecb24",
+    "results/seed42/train_C7/metrics.csv": "4d218af36be4e022a2318085877d7b21ba9cd22c875b9cad8257a45186d34053",
+    "results/seed42/train_C7/run_summary.json": "06162cfd26f7c920ae3fc22e9ee1da115b3a734e288445c146edab238dc99b53",
+    "results/seed42/train_C7/train_log.csv": "70f243741a151d2de8e32d805f7b4a6a9ff533667df726621132e2ac02912bdc",
+    "results/seed42/train_C8_varfix/metrics.csv": "f0747e748d4b84385e90458b913d0c94cf614cbafa46a2392d45fe5f5d243475",
+    "results/seed42/train_C8_varfix/run_summary.json": "d291bb966b3926a89844ed71d6ead60221340b67e1d97b2533ba2cd66ba4f1dd",
+    "results/seed42/train_C8_varfix/train_log.csv": "ee555f4563b4dc6ff7d450c7c36b59748be84322938d4741358272edbf153981",
+    "results/seed42/train_C9_v2/metrics.csv": "fe1bfbfdbb7ec0da0fb79405d1451dfd57d52862472d9e18873d925c17fbc67b",
+    "results/seed42/train_C9_v2/run_summary.json": "b57e89cc3fe793783bc95832da622115ab69f3c21d95fb90ac23847be200a9ef",
+    "results/seed42/train_C9_v2/train_log.csv": "1d3cfa99e70b8a963d0f2badefc2b86cc4e7a3879b8e93e62b9bf6a649b1e765",
+    "results/seed456/train_C0/metrics.csv": "273dc43173e7b563254e87d15dee489d02e031ec5e1af9a7d5fc001b16f9c259",
+    "results/seed456/train_C0/run_summary.json": "112d013b606afae4f333483e80ab13444284613f69db550f17935cb0eefd810c",
+    "results/seed456/train_C0/train_log.csv": "8d80958b55f78d7729cc43efa12cc9b1f8b8f99da8d3147f967b9c0f4221914e",
+    "results/seed456/train_C1/metrics.csv": "d6771085bf27c80285f5778eb64066eb53229d032248ec018da656668a2af714",
+    "results/seed456/train_C1/run_summary.json": "32e03e5b2de7dc53021ebf9fbabbe63dc746bcd406eb89e0637ddfa806821295",
+    "results/seed456/train_C1/train_log.csv": "615b8c86e1376a9621a9f440f8b3a7150f6115a8d739a2c183516ef96b42ac54",
+    "results/seed456/train_C10/metrics.csv": "5ddde1b8e28687d32bcb988fecd021b172e76381858ea017677ba99cf5c5750e",
+    "results/seed456/train_C10/run_summary.json": "1ec651bcc27524ef25d29d10512574a42d8a636d1b82260bcb1d05d38bb80bdd",
+    "results/seed456/train_C10/train_log.csv": "f7dfbd7e9d946fc370cd939a414093b8f46b78bb0225bb9e85fe299f493cc779",
+    "results/seed456/train_C2/metrics.csv": "31620b6a18b7bb5b77165142bacaaf8b4bc8f8c1efdd02b3d0bdbbadf5091d59",
+    "results/seed456/train_C2/run_summary.json": "e412fad737256f666a34d6c77058eac6897e0bd226fffb39e741b373672c08b3",
+    "results/seed456/train_C2/train_log.csv": "2c136a9bba04fd7de9105363fd9f8aed832b502e76a20c3c6c5ef35a37cdadba",
+    "results/seed456/train_C3/metrics.csv": "77a5ee3a07868c8111f82740f87592b90017601818aa8d829700b6e45dc439cc",
+    "results/seed456/train_C3/run_summary.json": "3ffa246868ab088fc289b7d2ed77dccdc99c36baea1a91a1a9390d59152189d3",
+    "results/seed456/train_C3/train_log.csv": "c67cfeef42adbec0085d50b74aac602489f9c585ac52847e1daadb2af59a4a4e",
+    "results/seed456/train_C4/metrics.csv": "1ddb9c45e8ab1d306445ef3ec30dab3ec65ba955cc800dcc9ec1b590749a79d9",
+    "results/seed456/train_C4/run_summary.json": "4ab9eb9e13d164f94664074a1d34a540c429a5e9ebf9be68b17ed8d0f0d25b1f",
+    "results/seed456/train_C4/train_log.csv": "ef79c0ef706cc3cb46d35aea2f04aa10f4400c0b03147aa7faa3bd49235585ae",
+    "results/seed456/train_C5/metrics.csv": "83add4f339e5e45b2e0047be5b1d19df2f2a39cbb084e2e9fdf7bec3b44deeae",
+    "results/seed456/train_C5/run_summary.json": "b64f163851f6bbb10a31caa534f36b44aa9ab3acb1e7ec8e01f14172652f7805",
+    "results/seed456/train_C5/train_log.csv": "1525fb5543ed842ea366fac02c06857b5b3a709033a58d456fd88bba252890c7",
+    "results/seed456/train_C6/metrics.csv": "7f2c8e3208b0f131635e1a6ac33281f99fb81e2c5bc93e2d4856781ff403f076",
+    "results/seed456/train_C6/run_summary.json": "9212fb04aba2e7fdaabb73529db49eb3c6ed862228d73d577ecf3f98006570d0",
+    "results/seed456/train_C6/train_log.csv": "ae7a00498c5eb87812bf1eca786b19456cf2ed52998c8b17b59986c1c8d9e36d",
+    "results/seed456/train_C7/metrics.csv": "e58f65afd4818bf606bf75299aa00bd654ae754c69181de066b603b64a51d93a",
+    "results/seed456/train_C7/run_summary.json": "b35c55f44d4efb2090df4d6363806c1a7cfcc14e59d5d9795f38c711ef69e31d",
+    "results/seed456/train_C7/train_log.csv": "cb370aa83c7390d99e37dec164a2149e09098deb9314e5dff76c629d4e38c87b",
+    "results/seed456/train_C8/metrics.csv": "4728ee9b50b34e8373c60b829f7127f72be771a29c640455ce7657db1a0edae7",
+    "results/seed456/train_C8/run_summary.json": "8f6365a7222dd2c89eac9ef00fcb745eb1a1b0bdea45f72c7c386b6d7105f316",
+    "results/seed456/train_C8/train_log.csv": "c2925675a0b9e68d17a8bfca20de3e528fb206e5a57faeab4a6c61249b15fa2d",
+    "results/seed456/train_C9/metrics.csv": "7aefb27b69afb312311d4a87e5e696568be1cc339edf8281967f08af42081e44",
+    "results/seed456/train_C9/run_summary.json": "8c84ffb791cdb0632a0fd28d6a9cccb36a94937f90f0a31addb35b45f9db43c1",
+    "results/seed456/train_C9/train_log.csv": "62f7cc69f179548d1a26b4b0959bf53ccd040f12c0573597329f96f36a650345",
+    "results/table1_seed123.csv": "611d6baca8bfb9916e81f54d7b235e43a59de6eedb7056c569ef357e8b8df73d",
+    "results/table1_seed42.csv": "02d83fff7775450d75ee38c8a0e0416654af58af5d50f71aba0ba7cf9f0b2a6f",
+    "results/table1_seed456.csv": "9c0a2882ec771916ad4ed32283073a59ba326c40e9ba57c8c487199aa7e9aac1",
+    "results/table2_feature_networks.csv": "49bdd8b8e576bf8415be985efc1a2dc57ee4d07304fa75d76a3c08e00dbfbaaa"
+   },
+   "outputs_sha256": {
+    "results/week3/fig3_slices.csv": "3cd17f55657614014820a25e8d83a442dbe1d3cb6c5e8f0940b7c3b8f7575609",
+    "results/week3/per_slice_metrics.csv": "c98bd47f66ae6d67a60f45bf986f7a7afba052f4ae90e7a78057097e246ffec0",
+    "results/week3/provenance_seeds.json": "fd85f84bdf349aee5cf03b82956fbb725337fa379a62e58d09baee34c6f7737a",
+    "results/week3/screen_vs_outcome.csv": "e053c4ac81e1871597a014931a10fdf364b2d684c0f55c7f2f5f0c2d90ee4bb2",
+    "results/week3/stats_family_a.csv": "e4623107d389121cb13a99db1ea85e2f85c57a0c52e8845722f06b49a81212ac",
+    "results/week3/stats_family_b.csv": "7c448649aac7138e111fac2ca4f7d00fba559d05894ebf6c32f2e0aac621976d",
+    "results/week3/table1_per_seed.csv": "3e08bcfd541d0d0d5e5e00bb5917a8741a1c56b7ea8b7ffd2df9077975bd6441",
+    "results/week3/table1_three_seeds.csv": "8bda32ae27def61fac1e02ff797f929ae16dd817bb87c9d4986c3d1d01532654",
+    "results/week3/validation_spikes.csv": "d3326fd3d6ddaeb84f91f445cbcd826fd46d0541844ee84e1d8f2d699c74296d",
+    "results/week3/week3_tables.md": "edbf8baa1f6fecb87b4adc8b83272ff51ffa79a854a5fd8dd330df334abe8af6"
+   }
+  },
+  "fig2_screen": {
+   "date": "2026-10-13",
+   "command": "python -m figures.fig2_screen",
+   "python": "3.12.3",
+   "packages": {
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2"
+   },
+   "source": {
+    "repo_commit": "5bed4b614426bfe09b61bc973550227ed9ffabf5",
+    "uncommitted_or_new_py_files": [
+     "src/tables.py",
+     "figures/fig2_screen.py",
+     "figures/fig4_screen_vs_outcome.py",
+     "figures/style.py",
+     "src/record.py",
+     "src/seeds_tables.py",
+     "src/stats.py"
+    ],
+    "src_sha256": {
+     "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
+     "config.py": "9cf477642f03c177744f32e81228296b2d24342b29554a6581fecee884e755e5",
+     "ct_dose_net.py": "5430563ab70bbe4dbcdfa552a9519c691124181291dde5364975965aeeaa8295",
+     "data.py": "486e6d342af9d45092cac85e42ee4819ed09f41b034393d687c6d50561aa5293",
+     "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
+     "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
+     "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
+     "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
+     "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
+     "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
+     "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
+     "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
+     "seeds_tables.py": "8b3b4b36a673b3adf4646e21dc1cbd768f96d9cf5b4afa7ff4e00e6ff00da9b4",
+     "stats.py": "b1b63a09760ce0bb7f210db392d9477a9f27694622055e28f51ba0bc1eed105e",
+     "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
+     "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
+     "val_diagnostics.py": "8f97b46d75926abf5de8eb0932710a2ceb8bf2e712ec19754dc929fb7d978125"
+    }
+   },
+   "settings": {},
+   "inputs_sha256": {
+    "results/screen/ct_dose_net_pointwise_v2_regression_val.csv": "b65da25913c49a47b0b25d8b5574197f3359175cdedbb6c8cb4ad9a00b05a329",
+    "results/screen/ct_dose_net_statistics_v2_regression_val.csv": "217c22aa485b5f8f91297cd66feeb4d14ad4583d9842a62a215715ca050f6033",
+    "results/table2_feature_networks.csv": "49bdd8b8e576bf8415be985efc1a2dc57ee4d07304fa75d76a3c08e00dbfbaaa",
+    "results/zoo_screen_report.csv": "6d9173c41592c649d8c7865e0f5f3718b505d87f80e81fd7c6756ff2465e2714"
+   },
+   "outputs_sha256": {
+    "figures/fig2_screen.pdf": "67f9a0846af00a653a4ea9f3e4038aaf80b960a52b1aaaa1b0800976acee4a8e",
+    "figures/fig2_screen.png": "5e00819a47a93c3d95a23381e170af324b21f3b37862459346dcd0f39e1aa183",
+    "figures/fig2_screen.svg": "b18cf03d0b2542014680d17a10d92d429893bdca4d8d07981685527dc9a7c181"
+   }
+  },
+  "fig4_screen_vs_outcome": {
+   "date": "2026-10-13",
+   "command": "python -m figures.fig4_screen_vs_outcome",
+   "python": "3.12.3",
+   "packages": {
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2"
+   },
+   "source": {
+    "repo_commit": "5bed4b614426bfe09b61bc973550227ed9ffabf5",
+    "uncommitted_or_new_py_files": [
+     "src/tables.py",
+     "figures/fig2_screen.py",
+     "figures/fig4_screen_vs_outcome.py",
+     "figures/style.py",
+     "src/record.py",
+     "src/seeds_tables.py",
+     "src/stats.py"
+    ],
+    "src_sha256": {
+     "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
+     "config.py": "9cf477642f03c177744f32e81228296b2d24342b29554a6581fecee884e755e5",
+     "ct_dose_net.py": "5430563ab70bbe4dbcdfa552a9519c691124181291dde5364975965aeeaa8295",
+     "data.py": "486e6d342af9d45092cac85e42ee4819ed09f41b034393d687c6d50561aa5293",
+     "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
+     "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
+     "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
+     "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
+     "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
+     "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
+     "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
+     "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
+     "seeds_tables.py": "8b3b4b36a673b3adf4646e21dc1cbd768f96d9cf5b4afa7ff4e00e6ff00da9b4",
+     "stats.py": "b1b63a09760ce0bb7f210db392d9477a9f27694622055e28f51ba0bc1eed105e",
+     "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
+     "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
+     "val_diagnostics.py": "8f97b46d75926abf5de8eb0932710a2ceb8bf2e712ec19754dc929fb7d978125"
+    }
+   },
+   "settings": {
+    "score": "B_phi",
+    "outcome": "r_h_error",
+    "marker_area": "14 + 22 * (log10(parameters) - 5) points^2"
+   },
+   "inputs_sha256": {
+    "results/table2_feature_networks.csv": "49bdd8b8e576bf8415be985efc1a2dc57ee4d07304fa75d76a3c08e00dbfbaaa",
+    "results/week3/screen_vs_outcome.csv": "e053c4ac81e1871597a014931a10fdf364b2d684c0f55c7f2f5f0c2d90ee4bb2",
+    "results/week3/table1_three_seeds.csv": "8bda32ae27def61fac1e02ff797f929ae16dd817bb87c9d4986c3d1d01532654"
+   },
+   "outputs_sha256": {
+    "figures/fig4_screen_vs_outcome.pdf": "f7b58a2b10e8f2c45c963cb33980889f4764288615ad33194021146016a9bc4b",
+    "figures/fig4_screen_vs_outcome.png": "c9499ddb5b3a67347436c04e3017130b85425435defa6f9bd9c3adf77fadfb6b",
+    "figures/fig4_screen_vs_outcome.svg": "bb26fcee668cc7a33d48ad5969d2fccea0052f50f0ef23ee0ed5622b54660105"
+   }
+  }
+ },
+ "results_before_week3_unchanged": {
+  "date": "2026-10-13",
+  "snapshot": "results/week3/results_before_week3.sha256",
+  "snapshot_sha256": "f6101c2da58aeef2a3e521d6050addbf98db6923ce3d566746fb6af5dd63aa7f",
+  "files_in_snapshot": 347,
+  "changed_or_missing": [],
+  "unchanged": true
+ }
+}

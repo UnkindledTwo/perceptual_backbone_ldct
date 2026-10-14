@@ -21,14 +21,18 @@ The full plan is `paper_plan.md` (protocol, steps, tables, statistics). Results 
   - `screen.py`: training-free screen (dose ordering M, equal-MSE blur penalty B).
   - `calibrate_lambda.py`: lambda from a 95% perceptual share at initialisation.
   - `train.py`, `run_config.py`: reference loop and wiring (`load_dose_net` reads the head width from the checkpoint, so v1 and v2 both load). The notebooks have their own timed copy of the loop; keep them consistent.
-  - `tables.py`: `python -m src.tables` rebuilds `table1_seed42.csv`, `table1_seed42_superseded.csv`, `table2_feature_networks.csv`, the compute CSVs and `week1_week2_tables.md` from `results/` (no GPU).
+  - `tables.py`: `python -m src.tables` rebuilds `table1_seed42.csv`, `table1_seed42_superseded.csv`, `table2_feature_networks.csv`, the compute CSVs and `week1_week2_tables.md` from `results/` (no GPU). It rewrites those older files, so do not run it as part of the Week 3 analysis.
+  - `seeds_tables.py`: `python -m src.seeds_tables` builds everything in `results/week3/` from the 33 runs (per-slice CSV, per-seed and three-seed Table 1, statistics, validation spikes, Fig 3 slice ids, `week3_tables.md`, `provenance_seeds.json`). Reuses `run_row` and `FINAL_RUNS` of `tables.py`; seed 42 folders are `train_C8_varfix`, `train_C9_v2`, `train_C10_v2`, other seeds `train_C{k}`.
+  - `stats.py`: Step 3.2 statistics (Holm, rank-biserial, paired Wilcoxon families A and B, screen-versus-outcome Spearman with permutation p). The families are fixed; do not add comparisons.
+  - `record.py`: `guarded()` (refuses writes outside `results/week3/` and `figures/`), sha256 helpers, `results/week3/manifest.json`; `python -m src.record results/week3/results_before_week3.sha256` checks that the older result files are unchanged.
   - `val_diagnostics.py`: per-slice validation diagnostics (L1, signed error, BatchNorm on batch statistics); `python -m src.val_diagnostics DATA_ROOT train_C10_v2 ...` evaluates saved best checkpoints on CPU.
   - `model.py`: the U-Net used for all runs.
-- `README.md`: public overview (configurations, protocol, layout, seed-42 results). Update it when results change.
+- `README.md`: public overview (three-seed Table 1, how to rebuild Week 3, layout). It was empty until 2026-10-13. Update it when results change.
 - `slides_and_reports/`: presentation and CT dose network reports. `build_update_deck.py` builds `ldct_backbone_week_1_2_update.pdf` (corrected seed-42 slides) from `results/`; the editable source of `ldct_backboone_week_1_2.pdf` no longer exists.
 - `figures/fig1_overview.py`: Fig 1 draft (writes `.svg`, `.pdf`, `.png`). The plan names a `.drawio` file; the script replaces it.
+- `figures/fig2_screen.py`, `figures/fig4_screen_vs_outcome.py`, `figures/style.py`: Fig 2 and Fig 4 from `results/` (`python -m figures.fig2_screen`, run from the repository root). Fig 3 is not built yet: it needs the predictions exported by the `EXPORT_FIG3` cell of the seeds notebook (slice ids in `results/week3/fig3_slices.csv`).
 - `UNet/`: legacy standalone U-Net scripts. Not used by the pipeline.
-- `results/`: CSV/JSON outputs. `week1_week2_tables.md` is the generated summary; `OLDRUNS/` holds superseded runs; `seed42/train_C*/` hold per-run `metrics.csv`, `train_log.csv`, `run_summary.json`; `screen/` holds per-slice screen CSVs; `provenance.json` holds the source revision, settings and checkpoint hash of every run; `val_diagnostics/` holds best-checkpoint validation diagnostics.
+- `results/`: CSV/JSON outputs. `week1_week2_tables.md` is the generated summary; `OLDRUNS/` holds superseded runs; `seed42/train_C*/` hold per-run `metrics.csv`, `train_log.csv`, `run_summary.json`; `screen/` holds per-slice screen CSVs; `provenance.json` holds the source revision, settings and checkpoint hash of every run; `val_diagnostics/` holds best-checkpoint validation diagnostics. `seed123/` and `seed456/` hold the runs of the seeds notebook (`train_C0` to `train_C10`); `week3/` holds the three-seed analysis with `manifest.json` (commands, versions, input and output hashes) and `provenance_seeds.json` (seeds 123 and 456; `provenance.json` covers seed 42 only).
 - Weights (`*.pt`, `*.pth`) are gitignored, so `ct_dose_net.pt` and every `best.pth` are not in the repo. This is permanent: model weights are never pushed to GitHub, so never add them to git or change `.gitignore`. Weights move between machines through Google Drive or manual upload (Colab).
 
 ## Environment
@@ -41,7 +45,7 @@ Python 3.13, torch 2.11 (CUDA), torchvision, lpips, piq, scikit-image, scipy, pa
 - AdamW lr 1e-4, batch 8, 30 epochs, `ReduceLROnPlateau(factor=0.5)`, AMP. Checkpoint with the lowest validation L1. The perceptual term runs in float32.
 - One shared random 224×224 crop per batch for prediction and target.
 - lambda per network so the perceptual term is 95% of the initial loss (`calibrate_weight`, seed 42). Never tune lambda per network. If one config diverges, lower the target influence for all and recalibrate.
-- Seeds 42, 123, 456. Only seed 42 is complete (Weeks 1 and 2).
+- Seeds 42, 123, 456. All three are complete (33 runs).
 - 11 configurations C0 to C10 (see the plan table). DINOv2-L and CLIP are screen only.
 - The screen is a prediction, not a filter: every C1 to C10 network is trained regardless of its score.
 
@@ -51,7 +55,7 @@ Python 3.13, torch 2.11 (CUDA), torchvision, lpips, piq, scikit-image, scipy, pa
 - Always pass `data_range=1.0` to SSIM.
 - Per-slice metrics go to CSV (`configuration`, `seed`, `slice_id`, `patient_id`, metrics). Statistics use seed-averaged per-slice values.
 - When an in-text mention names a configuration ID (C8), also give the network and matching: `C8 (DINOv2-S, statistics)`.
-- Do not use git unless asked. Do not delete or overwrite `results/` without being asked.
+- Do not use git unless asked. Do not delete or overwrite `results/` without being asked. New analysis outputs go to a new folder (Week 3: `results/week3/`); existing result files are never overwritten, and every generated file is recorded with its inputs and hashes in a manifest. The CPU analysis environment is `~/.venvs/ldct-analysis` (`requirements-analysis.txt`); the system Python has no numpy.
 
 ## CT dose network (C9 and C10): status and known issues
 
@@ -85,18 +89,42 @@ Adopted network is **v2** (log10-dose regression target, standardised, smooth L1
 - The plan mentions `scripts/` and `src/unet.py`; the actual files are in `src/` (`run_config.py`, `model.py`). The "GPU hours available" cell in the compute budget is still blank.
 - `src/__pycache__/` is tracked by git; ignore it.
 
-## Before Week 3 starts (state on 2026-10-12)
+## Three-seed results (2026-10-13, not frozen)
 
-The Week 2 closeout work is on `main` at `094e416`. On top of it, uncommitted: the GPU verification outputs (`results/repro_seed42/`, `results/seed42/diag_C10_v2/`, `results/zoo_checks_v2.csv`), the regenerated tables, and the updated provenance, reply, instability report, deck and this file.
+Source: `results/week3/week3_tables.md` (generated; seeds 42, 123, 456; ± is the standard deviation over the three per-seed means).
 
-Done on the A100 from a fresh kernel and a clean clone of `094e416`: the reproduction check (`REPRO_CHECK`, relative difference 0.0), the C10 replay (`DIAGNOSE_C10`) and the v2 distance check (`CHECK_DOSE_V2_DISTANCE`). The v2 dose network is on Drive as `MyDrive/BIAI/ISBI2027_WEIGHTS/ct_dose_net_v2_regression.pt` and was accepted by sha256.
+**Supported by the numbers.**
+- Perceptual losses trade PSNR for perception. Every C1 to C10 loses PSNR against C0 (L1) (Family A, median 0.5 to 2.4 dB). The best trade-offs, C1 (VGG-19, pointwise), C2 (LPIPS-VGG, pointwise) and C8 (DINOv2-S, statistics), roughly halve LPIPS (0.104 to about 0.058) for 0.5 to 0.7 dB. This is the safest abstract number.
+- Statistics matching improves grain fidelity for DINOv2-S: C8 against C5 (DINOv2-S, pointwise) is 0.195 ± 0.013 against 0.333 ± 0.044 on |1 − R_H| (Family B, r = −0.90). It is the only Family B effect clearly larger than the seed spread.
+- Medical pretraining does not help. C4 (RadImageNet, pointwise) has the worst PSNR (28.70) and no LPIPS gain over C0 (Holm p = 0.09). C7 (MedSigLIP, pointwise) is smoother than C0 (R_H 0.53 against 0.66, |1 − R_H| significantly worse) at about ten times the compute.
+- The CT dose network is a negative result on texture: C9 (CT dose network v2, pointwise) and C10 (CT dose network v2, statistics) stay at DISTS 0.097 to 0.098 against about 0.065 for the best group, while C10 has the best |1 − R_H| (0.167 ± 0.026). Consistent with "matches grain statistics, blind to structure".
+- Seed spread is larger with a perceptual term: PSNR varies by 0.07 dB over seeds for C0 and by 0.2 to 0.5 dB for C1 to C8.
 
-Open:
+**Do not claim.**
+- A ranking inside the top DISTS group: C2 0.0645 ± 0.0024, C8 0.0654 ± 0.0047, C3 (DISTS, statistics) 0.0664 ± 0.0014, C1 0.0668 ± 0.0023. The seed-42 lead of C8 does not hold, and DISTS is in neither test family.
+- Small effects on the strength of their p-values. The Wilcoxon tests treat 220 slices as independent, but they come from 31 patients, and seed-averaging hides seed variance. C6 (DINOv2-B, pointwise) against C5 on PSNR is +0.05 dB with a Holm p of 2e-5 while the seed spread is 0.5 dB. C10 against C9 on |1 − R_H| (0.167 against 0.203) is about 1.4 seed spreads. Report effect sizes and seed spread next to every p-value.
+- That VGG-family losses are best on texture without the circularity caveat: DISTS is VGG-based and LPIPS is an ImageNet-CNN metric, so C1 to C3 are scored partly in their own feature space (C2 on LPIPS and C3 on DISTS are marked * in Table 1).
+- Mean R_H as "closest to 1". C10 has mean R_H 0.951 ± 0.058 but scatters on both sides of 1 (seed 456: 1.017); use |1 − R_H|. R_H measures the amount of high-frequency energy, not whether the texture is right.
 
-1. Commit and push the files listed above (the seeds notebook records the commit and the dirty flag of `src/`).
-2. Post `week2_closeout_reply.md` on the GitHub issue (not posted yet; issue number not known here) and tick the Week 2 boxes.
-3. Start `SEED = 123`, then `SEED = 456`. The full 11-configuration loop of the seeds notebook has not run yet; seed 123 is its first run.
+**Screen versus outcome.** M cannot discriminate (pretrained networks all about 0.99). B against trained |1 − R_H| has rho = +0.84 (p = 0.0035, n = 10; +0.71, p = 0.059 without C2 and C3), the opposite sign to the screen's premise; B and M do not predict DISTS or LPIPS; parameter count against |1 − R_H| has rho 0.77. The p-values are uncorrected over 18 rows. Interpretation, not a tested result: B is probably confounded with the matching rule, since the three statistics configurations (C3, C8, C10) have low B and the best R_H. A hand calculation on the seven pointwise networks alone gives rho of about 0.64 (not significant at n = 7); it is post hoc and not in the result files. The statement for the paper is that the screen as designed does not predict the trained outcome.
+
+**Other observations.**
+- Validation spikes (seeds 42/123/456): C2 4/4/6, C3 2/5/3, C7 3/3/0, C10 8/0/1, C6 and C9 none. The seed spread probably ties to these spikes and to checkpoint selection on a noisy validation L1 (not tested).
+- Two unexplained SSIM dips at normal PSNR: C3 at seed 42 (0.804 against 0.849 and 0.844) and C9 at seed 123 (0.827 against 0.858 and 0.869). Not investigated.
+- The plan's draft Family B table listed DISTS rows, but the family is defined on PSNR, LPIPS and |1 − R_H|; the definition was kept and DISTS was not added after seeing results.
+
+**Runs.** Seeds 123 and 456 are done (`results/seed123/` on clean `094e416`, `results/seed456/` on clean `5bed4b6`; the two commits differ only in `src/tables.py`; same lambda values and dose network sha256 as seed 42; all 22 runs pass the integrity check: 220 slices, 30 epochs, checkpoint hashes, no non-finite steps).
+
+## Open before the freeze (Oct 18)
+
+1. Fig 3: run the `EXPORT_FIG3` cell of the seeds notebook on Colab for one seed (cell not run yet; seed not chosen), copy the folder to `results/week3/fig3/`, then write the figure script.
+2. Final Fig 1, LaTeX export of Table 1 and Table 2, Key Result and Takeaway in `paper_plan.md`.
+3. Optional, not decided: a patient-level sensitivity check (the tests on 31 patient means), reported next to the planned families, never instead of them; a look at the two SSIM dips.
+4. Commit and push. Uncommitted on top of `5bed4b6`: `results/seed123/`, `results/seed456/`, `results/week3/`, the Week 3 modules and figures, `README.md`, `paper_plan.md`, the seeds notebook (`NOTEBOOK_VERSION` 2026-10-13), `requirements-analysis.txt`, `week2_closeout_reply.md` and this file.
+5. Post `week2_closeout_reply.md` on the GitHub issue (not posted yet; issue number not known here) and tick the Week 2 boxes.
+
+Week 2 verification, for reference: done on the A100 from a fresh kernel and a clean clone of `094e416`: the reproduction check (`REPRO_CHECK`, relative difference 0.0), the C10 replay (`DIAGNOSE_C10`) and the v2 distance check (`CHECK_DOSE_V2_DISTANCE`). The v2 dose network is on Drive as `MyDrive/BIAI/ISBI2027_WEIGHTS/ct_dose_net_v2_regression.pt` and was accepted by sha256.
 
 ## Deliverables
 
-Week 3 (Oct 12 to Oct 18): seeds 123 and 456, Wilcoxon tests with Holm correction (families A and B), screen-versus-outcome Spearman tests, figures, results freeze on Oct 18. Draft Oct 23, deadline Oct 26. `slides_and_reports/ldct_backboone_week_1_2.pdf` is the Weeks 1 and 2 presentation; its result slides (6 to 12, 14, 15) are superseded by `ldct_backbone_week_1_2_update.pdf`. The CT dose network reports and follow-up notebook are in the same folder.
+Week 3 (Oct 12 to Oct 18): seeds 123 and 456 (done), Wilcoxon tests with Holm correction and screen-versus-outcome Spearman tests (done), Fig 2 and Fig 4 (drafted), Fig 3 and the table export (open), results freeze on Oct 18. Draft Oct 23, deadline Oct 26. `slides_and_reports/ldct_backboone_week_1_2.pdf` is the Weeks 1 and 2 presentation; its result slides (6 to 12, 14, 15) are superseded by `ldct_backbone_week_1_2_update.pdf`. The CT dose network reports and follow-up notebook are in the same folder.
