@@ -2,7 +2,7 @@
 
 2026-10-15. Thanks for the review. Below, each item of your list gets a short summary of what was done, where the output is, and what is still open. All new outputs are in `results/week3/`, and every number below is read from the generated files. The commands that rebuild everything are at the end.
 
-<!-- TODO before posting: commit, re-run the commands below on the clean commit, and put its hash here: `XXXXXXX` -->
+Code: [`a9aaa30`](https://github.com/UnkindledTwo/perceptual_backbone_ldct/commit/a9aaa30). All outputs were rebuilt on that clean commit; `results/week3/manifest.json` records it for every step.
 
 ### Item by item
 
@@ -35,13 +35,15 @@
   3. **The source revision of the final seed-42 C8 run is closed by disclosure, without a replay.** The revision was not recorded at run time; the first commit with that code is `a7108c5`. The C8 runs at seeds 123 and 456 ran on clean recorded commits (`094e416`, `5bed4b6`), and the three seeds are shown side by side. It goes into the paper as a limitation: one of the 33 runs has no recorded revision.
   4. The eval-mode validation instability, with the spike counts per seed.
 
-- [ ] **Fig 3 (script ready, predictions not exported yet).** The figure shows one slice at all three seeds in one grid:
+- [x] **Fig 3** (`figures/fig3_qualitative.pdf`). The figure shows one slice at all three seeds in one grid:
   - Rows: seeds 42, 123 and 456, plus one row of |prediction − NDCT| at seed 42.
   - Columns: LDCT, C0, C1, C3, C5, C7, **C8** (next to C5), C10 and NDCT.
   - The slice is the first one in `fig3_slices.csv`, chosen by the median rule.
   - All images use the same grey range [0, 1], and all error maps the same scale (0 to 0.1).
 
-  The `EXPORT_FIG3` cell of the seeds notebook now exports all three seeds and refuses any checkpoint whose sha256 differs from the record. It also checks every prediction against the logged PSNR. `python -m figures.fig3_qualitative` then checks the file hashes and the PSNR again. What remains is one Colab run of that cell.
+  The predictions were exported on Colab from the clean commit `a9aaa30` (`results/week3/fig3/`). The export refuses any checkpoint whose sha256 differs from the record and checks every prediction against the logged PSNR. All 21 checkpoints match. `python -m figures.fig3_qualitative` checks the file hashes and the PSNR again before drawing.
+
+  At full-slice size, the grain differences between the perceptual losses are hard to see in print. The error row shows them more clearly than the images. A zoomed region would help if you want the texture to be visible; it is not done, because the region would have to be chosen by a rule, not by eye.
 
 - [x] **Fig 1 final, Table 2 final, LaTeX export.**
   - **Fig 1:** updated to the final protocol: CT dose network v2 with 0.29 M feature-extractor parameters, three seeds, and the per-slice and per-patient tests. It is now built reproducibly and recorded in the manifest.
@@ -53,7 +55,7 @@
     - M and B
   - **LaTeX:** `table1_final.tex`, `table2_final.tex` and `table_ablation_superseded.tex` use booktabs. They have not been compiled yet, because there is no LaTeX installation on the analysis machine.
 
-- [ ] **Attach Fig 2, Fig 3 and Fig 4** to the freeze comment, once Fig 3 is built.
+- [x] **Fig 2, Fig 3 and Fig 4** are attached below.
 
 <!-- Attach figures/fig2_screen.png, figures/fig3_qualitative.png and figures/fig4_screen_vs_outcome.png here. -->
 
