@@ -1,0 +1,10 @@
+screen_score,outcome,subset,n,spearman_rho,permutation_p,status
+B_phi,dists,"pointwise only (C1, C2, C4, C5, C6, C7, C9)",7,0.10714285714285716,0.8385,"post hoc, exploratory"
+B_phi,lpips,"pointwise only (C1, C2, C4, C5, C6, C7, C9)",7,0.4642857142857144,0.2983,"post hoc, exploratory"
+B_phi,r_h_error,"pointwise only (C1, C2, C4, C5, C6, C7, C9)",7,0.642857142857143,0.1371,"post hoc, exploratory"
+M_phi,dists,"pointwise only (C1, C2, C4, C5, C6, C7, C9)",7,-0.6785714285714287,0.1077,"post hoc, exploratory"
+M_phi,lpips,"pointwise only (C1, C2, C4, C5, C6, C7, C9)",7,-0.5357142857142858,0.237,"post hoc, exploratory"
+M_phi,r_h_error,"pointwise only (C1, C2, C4, C5, C6, C7, C9)",7,0.14285714285714288,0.7878,"post hoc, exploratory"
+Parameters,dists,"pointwise only (C1, C2, C4, C5, C6, C7, C9)",7,0.10714285714285716,0.8399,"post hoc, exploratory"
+Parameters,lpips,"pointwise only (C1, C2, C4, C5, C6, C7, C9)",7,0.39285714285714296,0.3884,"post hoc, exploratory"
+Parameters,r_h_error,"pointwise only (C1, C2, C4, C5, C6, C7, C9)",7,0.8928571428571429,0.0125,"post hoc, exploratory"

@@ -1,6 +1,6 @@
 ## Week 3: seeds, statistics and figures
 
-2026-10-14. All 33 runs are done (C0 to C10 at seeds 42, 123 and 456). The statistics and Fig 2 and Fig 4 are built from them. Results are **not frozen yet** (freeze Oct 18). The Week 3 work is not committed yet; it sits on top of [`5bed4b6`](https://github.com/UnkindledTwo/perceptual_backbone_ldct/commit/5bed4b6) and will be pushed as `<commit>`.
+2026-10-14. All 33 runs are done (C0 to C10 at seeds 42, 123 and 456). The statistics and Fig 2 and Fig 4 are built from them. Results are **not frozen yet** (freeze Oct 18). The work is on `main` at [`95a3842`](https://github.com/UnkindledTwo/perceptual_backbone_ldct/commit/95a3842) (on top of the Week 2 closeout `5bed4b6`).
 
 ### Summary
 
@@ -124,15 +124,10 @@ python -m src.record results/week3/results_before_week3.sha256   # older results
 - [ ] Fig 3 (export of predictions on Colab, then the figure script)
 - [ ] Final Fig 1; every figure as PDF
 - [ ] LaTeX export of Table 1 and Table 2
-- [ ] Results freeze (Oct 18) and push of the Week 3 commit
+- [x] Week 3 results pushed (`95a3842`)
+- [ ] Results freeze (Oct 18)
 
 ### Not done from the Week 2 proposals
 
 - **C8 replay at seed 42** was not run. The run-time revision of the seed-42 C8 (DINOv2-S, statistics) run is still unknown. The seed 123 and 456 C8 runs are on clean commits.
 - **Option B** (C2 replay with per-slice validation diagnostics) was not run, and the C10 diagnostics were not recorded for seeds 123 and 456. The spike counts above come from the training logs only.
-
-### Open questions
-
-1. **Patient-level sensitivity check.** Should I add the Family A and B tests on the 31 patient means, reported next to the planned slice-level tests (never in place of them)? It is cheap (CPU only) and addresses the independence problem above.
-2. **SSIM dips.** Worth a look before the freeze, or disclosed as unexplained?
-3. **Fig 3 seed.** I would export seed 42 unless you prefer another seed.

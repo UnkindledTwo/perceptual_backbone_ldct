@@ -33,15 +33,21 @@ def rank_biserial(differences: np.ndarray) -> float:
     return float((positive - negative) / (positive + negative)) if len(nonzero) else 0.0
 
 
-def seed_averaged(per_slice: pd.DataFrame, metrics: list[str]) -> pd.DataFrame:
-    return per_slice.groupby(["configuration", "slice_id"])[metrics].mean().reset_index()
+def seed_averaged(per_slice: pd.DataFrame, metrics: list[str], unit: str = "slice_id") -> pd.DataFrame:
+    """Seeds averaged per slice; with unit="patient_id" the slices of each patient are averaged after that."""
+    slices = per_slice.groupby(["configuration", "slice_id"])[metrics].mean().reset_index()
+    if unit == "slice_id":
+        return slices
+    patients = per_slice[["slice_id", "patient_id"]].drop_duplicates()
+    return slices.merge(patients, on="slice_id").groupby(["configuration", unit])[metrics].mean().reset_index()
 
 
-def paired_family(per_slice: pd.DataFrame, pairs: list[tuple[str, str]], metrics: list[str]) -> pd.DataFrame:
-    averaged = seed_averaged(per_slice, metrics)
+def paired_family(per_slice: pd.DataFrame, pairs: list[tuple[str, str]], metrics: list[str],
+                  unit: str = "slice_id") -> pd.DataFrame:
+    averaged = seed_averaged(per_slice, metrics, unit)
     rows = []
     for metric in metrics:
-        wide = averaged.pivot(index="slice_id", columns="configuration", values=metric)
+        wide = averaged.pivot(index=unit, columns="configuration", values=metric)
         for first, second in pairs:
             differences = (wide[first] - wide[second]).dropna().to_numpy()
             rows.append({"comparison": f"{first} vs {second}", "metric": metric, "n": len(differences),
@@ -50,6 +56,30 @@ def paired_family(per_slice: pd.DataFrame, pairs: list[tuple[str, str]], metrics
     result = pd.DataFrame(rows)
     result["p_holm"] = holm_adjust(result["p_raw"].tolist())
     return result
+
+
+def seed_spread(per_slice: pd.DataFrame, pairs: list[tuple[str, str]], metrics: list[str]) -> pd.DataFrame:
+    """Mean difference over slices of each pair at each seed, and its standard deviation over the seeds."""
+    means = per_slice.groupby(["configuration", "seed"])[metrics].mean()
+    rows = []
+    for metric in metrics:
+        for first, second in pairs:
+            per_seed = (means.loc[first, metric] - means.loc[second, metric]).sort_index()
+            rows.append({"comparison": f"{first} vs {second}", "metric": metric,
+                         **{f"mean_difference_seed{seed}": value for seed, value in per_seed.items()},
+                         "mean_difference_seed_mean": per_seed.mean(), "mean_difference_seed_std": per_seed.std(ddof=1)})
+    return pd.DataFrame(rows)
+
+
+def slice_and_patient(per_slice: pd.DataFrame, family: str, pairs: list[tuple[str, str]], alpha: float) -> pd.DataFrame:
+    """The planned slice-level family next to the same family on the patient means, with the seed spread of each difference."""
+    keys = ["comparison", "metric"]
+    levels = [paired_family(per_slice, pairs, TEST_METRICS, unit).set_index(keys).add_prefix(f"{level}_")
+              for level, unit in (("slice", "slice_id"), ("patient", "patient_id"))]
+    result = levels[0].join(levels[1]).join(seed_spread(per_slice, pairs, TEST_METRICS).set_index(keys)).reset_index()
+    for level in ("slice", "patient"):
+        result[f"significant_{level}"] = result[f"{level}_p_holm"] < alpha
+    return result.assign(family=family)[["family", *result.columns]]
 
 
 def screen_predicts_outcome(screen: pd.Series, outcome: pd.Series, permutations: int = PERMUTATIONS,

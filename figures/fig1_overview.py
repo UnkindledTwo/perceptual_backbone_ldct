@@ -1,9 +1,10 @@
 # figures/fig1_overview.py
-"""Fig 1 draft: overview of the benchmark (final regression-v2 protocol). No data, no GPU.
+"""Fig 1: overview of the benchmark (final protocol: CT dose network v2, three seeds). No data, no GPU.
 
-    python figures/fig1_overview.py
+    python -m figures.fig1_overview
 
-Writes fig1_overview.svg (editable), .pdf and .png next to this file.
+Writes fig1_overview.svg (editable), .pdf and .png to figures/ without timestamps and records them in
+results/week3/manifest.json.
 """
 from pathlib import Path
 
@@ -14,7 +15,10 @@ import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
 
-OUT = Path(__file__).resolve().parent / "fig1_overview"
+from figures.style import save
+from src.record import record
+from src.tables import FEATURE_EXTRACTOR_PARAMETERS
+
 INK, MUTED, RULE, PANEL = "#111111", "#5c5b57", "#c9c8c2", "#f5f4f0"
 BLUE, ORANGE, GREEN = "#2a78d6", "#d9622b", "#1b9a6c"
 W, H = 20.0, 10.6
@@ -26,7 +30,7 @@ ZOO = [
     ("Medical CNN", "RadImageNet ResNet-50", "C4"),
     ("Self-supervised ViT", "DINOv2-S · DINOv2-B", "C5, C8 · C6"),
     ("Medical vision-language", "MedSigLIP-448", "C7"),
-    ("Task-trained on CT (ours)", "CT dose network v2, 0.29 M", "C9, C10"),
+    ("Task-trained on CT (ours)", f"CT dose network v2, {FEATURE_EXTRACTOR_PARAMETERS / 1e6:.2f} M", "C9, C10"),
 ]
 
 
@@ -51,7 +55,7 @@ def arrow(ax: Axes, start: tuple[float, float], end: tuple[float, float], colour
 
 def draw() -> plt.Figure:
     plt.rcParams.update({"font.family": "DejaVu Sans", "mathtext.fontset": "dejavusans", "svg.fonttype": "none",
-                         "pdf.fonttype": 42})
+                         "svg.hashsalt": "ldctbackbone", "pdf.fonttype": 42})
     fig = plt.figure(figsize=(W / 2, H / 2))
     ax = fig.add_axes([0, 0, 1, 1])
     ax.set_xlim(0, W)
@@ -102,7 +106,7 @@ def draw() -> plt.Figure:
     # bottom: evaluation
     panel(ax, 0.2, 0.2, 19.6, 1.95, "Evaluation (test split, 220 slices, 31 patients, touched once per run)", INK)
     cells = ((0.45, 3.0, "Fidelity\nPSNR, SSIM"), (3.65, 3.0, "Perception\nLPIPS, DISTS"),
-             (12.4, 3.5, "Texture\nhigh-band NPS ratio $R_H$"), (16.1, 3.45, "Paired Wilcoxon, Holm\nper slice, seed-averaged"))
+             (12.4, 3.5, "Texture\nhigh-band NPS ratio $R_H$"), (16.1, 3.45, "Paired Wilcoxon, Holm\nper slice and per patient"))
     for x, width, text in cells:
         box(ax, x, 0.38, width, 0.95, text, 8)
     box(ax, 6.9, 0.38, 5.0, 0.95, "Does the screen predict the outcome?\nSpearman of $M_\\phi$, $B_\\phi$ with test metrics", 7.6,
@@ -116,7 +120,5 @@ def draw() -> plt.Figure:
 
 
 if __name__ == "__main__":
-    figure = draw()
-    for suffix in ("svg", "pdf", "png"):
-        figure.savefig(f"{OUT}.{suffix}", dpi=220)
-    print("written:", OUT.with_suffix(".svg"), OUT.with_suffix(".pdf"), OUT.with_suffix(".png"))
+    record("fig1_overview", "python -m figures.fig1_overview", [Path(__file__)], save(draw(), "fig1_overview"),
+           {"feature_extractor_parameters": FEATURE_EXTRACTOR_PARAMETERS})
