@@ -373,19 +373,49 @@ def fig3_slices(frame: pd.DataFrame, count: int = 2) -> pd.DataFrame:
     return psnr.sort_values(["distance_to_median", "slice_id"]).head(count).reset_index(drop=True)
 
 
+LATEX_NETWORK = {"none": "--", "VGG-19 relu3_2": "VGG-19", "RadImageNet ResNet-50": "RadImageNet",
+                 "MedSigLIP-448": "MedSigLIP", "CT dose network v2 (regression)": "CT dose net v2"}
+LATEX_MATCHING = {"pointwise": "point.", "statistics": "stat.", "-": "--"}
+FINAL_VARIANTS = {"v2": "final (dose net v2)", "varfix": "final (variance fix)"}
+LATEX_VARIANTS = {"seed42/train_C8": "before variance fix", "seed42/train_C9_v1": "dose net v1",
+                  "seed42/train_C10_v1": "dose net v1, no variance fix", "seed42/train_C10_varfix_v1": "dose net v1, variance fix"}
+
+
+def split_configuration(frame: pd.DataFrame, ids: list[str]) -> pd.DataFrame:
+    """The long configuration label as narrow ID, network and matching columns, so the LaTeX tables fit the page width."""
+    def parts(config_id: str) -> tuple[str, str, str]:
+        if config_id not in FINAL_RUNS:
+            return "", "LDCT input", ""
+        _, _, network, matching, _ = FINAL_RUNS[config_id]
+        return config_id, LATEX_NETWORK.get(network, network), LATEX_MATCHING[matching]
+
+    split = pd.DataFrame([parts(c) for c in ids], columns=["ID", "Network", "Matching"])
+    return pd.concat([split, frame.drop(columns=["Configuration"]).reset_index(drop=True)], axis=1)
+
+
 def latex_tables(three_seeds: pd.DataFrame, family_a: pd.DataFrame, freeze: dict[str, pd.DataFrame]) -> dict[str, str]:
-    marks = (f"Mean $\\pm$ standard deviation over seeds 42, 123 and 456 (220 test slices, 31 patients, 100k). Bold: best trained "
-             f"configuration. † significantly better and ‡ significantly worse than C0 (L1) (paired Wilcoxon on seed-averaged slices, "
-             f"Holm over 30 tests, p < {ALPHA}; PSNR, LPIPS and |1 − R_H| only). * scored with its own training metric.")
+    marks = (f"Test split (220 slices, 31 patients, 100k). Values: mean ± std over seeds 42, 123 and 456. Bold: best "
+             f"trained configuration. † significantly better and ‡ significantly worse than C0 (L1) (paired Wilcoxon on seed-averaged "
+             f"slices, Holm over 30 tests, p < {ALPHA}; PSNR, LPIPS and |1 − R_H| only). * scored with its own training metric. "
+             "point.: pointwise, stat.: local statistics matching.")
+    table2 = freeze["table2_final"]
+    networks = split_configuration(formatted_table2(table2).drop(columns=["Network", "Matching"]), table2["config"].tolist())
+    networks = networks.rename(columns={"Distance, ms per batch of 8": "Dist. (ms)", "Training step, ms": "Step (ms)"})
+    rows = freeze["table_ablation_superseded"]
+    ablation_frame = split_configuration(formatted_ablation(rows).drop(columns=["Status"]), rows["config"].tolist())
+    ablation_frame.insert(3, "Run", rows["run"].map(lambda run: LATEX_VARIANTS.get(run, FINAL_VARIANTS.get(run.rsplit("_", 1)[-1], "final"))).to_numpy())
+    ablation_frame = ablation_frame.drop(columns=["Network"])
     return {
-        "table1_final": booktabs(formatted_table1(three_seeds, family_a), marks, "tab:results", "l" + "c" * 6),
-        "table2_final": booktabs(formatted_table2(freeze["table2_final"]),
-                                 "Feature networks. † feature extractor of the CT dose network v2 (three conv blocks). λ: frozen loss "
-                                 "weight. Times: distance on a batch of 8, U-Net training step and GPU hours per run (mean over seeds). "
-                                 "M: dose ordering, B: blur penalty of the training-free screen.", "tab:networks", "lllrrrrrrr"),
-        "table_ablation_superseded": booktabs(formatted_ablation(freeze["table_ablation_superseded"]),
-                                              "Superseded seed-42 runs next to the final run of the same configuration (ablation).",
-                                              "tab:ablation", "llrrrrrrr"),
+        "table1_final": booktabs(split_configuration(formatted_table1(three_seeds, family_a), three_seeds["config"].tolist()),
+                                 marks, "tab:results", "lll" + "c" * 6),
+        "table2_final": booktabs(networks,
+                                 "Feature networks. † feature extractor of the CT dose network v2 (three conv blocks; "
+                                 f"{int(table2['Parameters_with_head'].dropna().iloc[0]):,} with the regression head). λ: frozen loss "
+                                 "weight. Dist.: distance on a batch of 8 (Step 1.3 check). Step: U-Net training step; Step and GPU h per "
+                                 "run are means over the three seeds. M: dose ordering, B: blur penalty of the training-free screen.",
+                                 "tab:networks", "lll" + "r" * 7),
+        "table_ablation_superseded": booktabs(ablation_frame, "Superseded seed-42 runs next to the final run of the same "
+                                              "configuration (ablation, not part of Table 1).", "tab:ablation", "lll" + "r" * 7),
     }
 
 

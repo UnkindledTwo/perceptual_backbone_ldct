@@ -11,8 +11,11 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "a9aaa30835501ea0d9c0dc1957a5502ac260f009",
-    "uncommitted_or_new_py_files": [],
+    "repo_commit": "66130ab85fb7607554f15b38ffae7fb219660df4",
+    "uncommitted_or_new_py_files": [
+     "src/latex.py",
+     "src/seeds_tables.py"
+    ],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
      "config.py": "9cf477642f03c177744f32e81228296b2d24342b29554a6581fecee884e755e5",
@@ -21,13 +24,13 @@
      "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
      "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
      "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
-     "latex.py": "36b79420348d83b586d5e5b71bf71d4f748c1292a9c4346ecce7960eb401c54f",
+     "latex.py": "5be402078ebf9ac749acbd7f9f735cf6c4d8d895414e7d8bf281a2a0b61bf341",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
-     "seeds_tables.py": "38446550a3c606c0914e10e755a3b3c244e38fb7c1381dc3a6bd34a9d78f8b53",
+     "seeds_tables.py": "e4720022c7f63d4b014139f85a025b36a6efb5791c7cc46fb0e7265650e40515",
      "stats.py": "d4816dc944f205607c2b5bbda3435312997a47f02398a6b6ec7d115192f2bcc8",
      "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
      "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
@@ -229,13 +232,13 @@
     "results/week3/stats_family_b.csv": "7c448649aac7138e111fac2ca4f7d00fba559d05894ebf6c32f2e0aac621976d",
     "results/week3/table1_deltas_vs_c0.csv": "abfe092edb895d7156c49cf23c68deffd67aa7b665198d0d9b69b86d563d6dce",
     "results/week3/table1_final.csv": "a149ece4a02792d56276950557ccaefba5041dec6ce3ceed4d7abbd5ec04535a",
-    "results/week3/table1_final.tex": "c60ded2ffa5d4520b82c7b1837a41c69c2fa5ce772f592277af14d152b3a4a43",
+    "results/week3/table1_final.tex": "b8ce7ba77f0579cd3485daa5bb23ad85e2e769e659f9f69da7ca7ea6a5814c10",
     "results/week3/table1_per_seed.csv": "3e08bcfd541d0d0d5e5e00bb5917a8741a1c56b7ea8b7ffd2df9077975bd6441",
     "results/week3/table1_three_seeds.csv": "8bda32ae27def61fac1e02ff797f929ae16dd817bb87c9d4986c3d1d01532654",
     "results/week3/table2_final.csv": "886886a1003c8c53d64d7f49f105afbcceaca488b5602cde87b9a032aa4d094f",
-    "results/week3/table2_final.tex": "90bc9d4f2176c993d3159679f703189202379d72a0c7acc8cae1bf4f5e8200b6",
+    "results/week3/table2_final.tex": "2e44bee9721cb2f14fc903553ed8da6815d0099f9f55ac657df3da2b92b36b41",
     "results/week3/table_ablation_superseded.csv": "efa95add8750dc6164d440779def73bff4918d06828df98482b41c073558e538",
-    "results/week3/table_ablation_superseded.tex": "547296c759d0d015a4e9d8055ecb2986ff20c425b1c6157ed3c491dec5f7669d",
+    "results/week3/table_ablation_superseded.tex": "eaf80897af012f43d85d9c1cf97ab02d7c40db2df71b9d3113b370b883149a60",
     "results/week3/validation_spikes.csv": "d3326fd3d6ddaeb84f91f445cbcd826fd46d0541844ee84e1d8f2d699c74296d",
     "results/week3/week3_tables.md": "7c8da8911e3fad82131e43cb94cba7803a32536ab418439c8df36665c5a0613d"
    }

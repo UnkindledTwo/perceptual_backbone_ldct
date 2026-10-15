@@ -52,4 +52,5 @@ of this step.
 - `results/`: per-run metrics, logs and summaries (`seed42/`, `seed123/`, `seed456/`), `week3/` for the three-seed analysis,
   `provenance.json` and `week3/provenance_seeds.json` for the source revision and checkpoint hash of every run.
 - `figures/`: figure scripts and their outputs.
+- `slides_and_reports/`: slide decks, CT dose network reports and the weekly GitHub issue comments.
 - Model weights (`*.pt`, `*.pth`) are not in the repository.
