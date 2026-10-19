@@ -4,7 +4,8 @@
     python -m figures.fig1_overview
 
 Writes fig1_overview.svg (editable), .pdf and .png to figures/ without timestamps and records them in
-results/week3/manifest.json.
+results/week3/manifest.json. fig1_overview_column is the one-column version for the 4-page paper (3.4 in wide,
+text at 6.5 pt or larger): same four parts, without the side notes.
 """
 from pathlib import Path
 
@@ -119,6 +120,70 @@ def draw() -> plt.Figure:
     return fig
 
 
+# configuration, network; the CT dose network row is marked as ours
+COLUMN_ZOO = [("C1", "VGG-19"), ("C2", "LPIPS-VGG"), ("C3", "DISTS"), ("C4", "RadImageNet"),
+              ("C5, C8", "DINOv2-S"), ("C6", "DINOv2-B"), ("C7", "MedSigLIP"), ("C9, C10", "CT dose net (ours)")]
+
+
+def column_panel(ax: Axes, x: float, y: float, w: float, h: float, title: str, colour: str) -> None:
+    ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0,rounding_size=0.05", fc=PANEL, ec=RULE, lw=0.6))
+    ax.add_patch(FancyBboxPatch((x, y + h - 0.17), w, 0.17, boxstyle="round,pad=0,rounding_size=0.05", fc=colour, ec="none"))
+    ax.text(x + 0.06, y + h - 0.085, title, fontsize=7, color="white", fontweight="bold", va="center")
+
+
+def column_arrow(ax: Axes, start: tuple[float, float], end: tuple[float, float], colour: str = INK, style: str = "-") -> None:
+    ax.add_patch(FancyArrowPatch(start, end, arrowstyle="-|>", mutation_scale=7, lw=0.8, color=colour, linestyle=style,
+                                 shrinkA=0, shrinkB=0))
+
+
+def draw_column() -> plt.Figure:
+    """One-column overview in inch coordinates (3.4 x 2.5)."""
+    plt.rcParams.update({"font.family": "DejaVu Sans", "mathtext.fontset": "dejavusans", "svg.fonttype": "none",
+                         "svg.hashsalt": "ldctbackbone", "pdf.fonttype": 42})
+    width, height = 3.4, 2.5
+    fig = plt.figure(figsize=(width, height))
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.set_xlim(0, width)
+    ax.set_ylim(0, height)
+    ax.axis("off")
+
+    # top: feature zoo, two columns of configuration and network
+    column_panel(ax, 0.03, 1.53, 3.34, 0.94, r"Frozen feature network $\phi$ (C0: L1 only)", BLUE)
+    for index, (config, network) in enumerate(COLUMN_ZOO):
+        x, y = 0.09 + 1.67 * (index // 4), 2.18 - 0.165 * (index % 4)
+        ours = "ours" in network
+        ax.text(x, y, config, fontsize=6.5, color=BLUE, fontweight="bold", va="center")
+        ax.text(x + 0.5, y, network, fontsize=6.5, color=ORANGE if ours else INK, fontweight="bold" if ours else "normal",
+                va="center")
+
+    # middle left: training-free screen
+    column_panel(ax, 0.03, 0.72, 1.3, 0.73, "Screen (no training)", GREEN)
+    ax.text(0.09, 1.0, "$M_\\phi$: dose ordering\n$B_\\phi$: equal-MSE\nblur penalty\n182 val. slices", fontsize=6.5, color=INK,
+            va="center", linespacing=1.25)
+
+    # middle right: matched training
+    column_panel(ax, 1.41, 0.72, 1.96, 0.73, r"$\Psi$-matched U-Net training", ORANGE)
+    ax.text(2.39, 1.13, "$\\|\\hat{x} - x\\|_1 + \\lambda_\\phi d_\\phi(\\mathrm{crop}(\\hat{x}), \\mathrm{crop}(x))$", fontsize=6.5,
+            color=INK, ha="center", va="center")
+    ax.text(2.39, 0.88, "pointwise or local statistics\n$\\lambda_\\phi$: 95% share at start; 3 seeds", fontsize=6.5,
+            color=INK, ha="center", va="center", linespacing=1.25)
+
+    # bottom: evaluation
+    column_panel(ax, 0.03, 0.03, 3.34, 0.61, "Test: 220 slices, 31 patients", INK)
+    ax.text(0.09, 0.24, "PSNR, SSIM, LPIPS, DISTS, $R_H$\nWilcoxon + Holm vs. L1", fontsize=6.5, color=INK, va="center",
+            linespacing=1.25)
+    ax.text(2.0, 0.24, "Screen predicts\noutcome? (Spearman)", fontsize=6.5, color=GREEN, fontweight="bold", va="center",
+            linespacing=1.25)
+
+    column_arrow(ax, (0.68, 1.53), (0.68, 1.45))
+    column_arrow(ax, (2.39, 1.53), (2.39, 1.45))
+    column_arrow(ax, (1.33, 1.0), (1.41, 1.0))
+    column_arrow(ax, (2.39, 0.72), (2.39, 0.64))
+    column_arrow(ax, (0.68, 0.72), (0.68, 0.64), GREEN, "--")
+    return fig
+
+
 if __name__ == "__main__":
-    record("fig1_overview", "python -m figures.fig1_overview", [Path(__file__)], save(draw(), "fig1_overview"),
+    record("fig1_overview", "python -m figures.fig1_overview", [Path(__file__)],
+           save(draw(), "fig1_overview") + save(draw_column(), "fig1_overview_column"),
            {"feature_extractor_parameters": FEATURE_EXTRACTOR_PARAMETERS})

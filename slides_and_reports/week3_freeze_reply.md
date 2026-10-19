@@ -35,15 +35,17 @@ Code: [`a9aaa30`](https://github.com/UnkindledTwo/perceptual_backbone_ldct/commi
   3. **The source revision of the final seed-42 C8 run is closed by disclosure, without a replay.** The revision was not recorded at run time; the first commit with that code is `a7108c5`. The C8 runs at seeds 123 and 456 ran on clean recorded commits (`094e416`, `5bed4b6`), and the three seeds are shown side by side. It goes into the paper as a limitation: one of the 33 runs has no recorded revision.
   4. The eval-mode validation instability, with the spike counts per seed.
 
-- [x] **Fig 3** (`figures/fig3_qualitative.pdf`). The figure shows one slice at all three seeds in one grid:
-  - Rows: seeds 42, 123 and 456, plus one row of |prediction − NDCT| at seed 42.
+- [x] **Fig 3** (`figures/fig3_qualitative.pdf`). The figure shows one slice at seed 42, with a zoom chosen by a rule:
+  - Rows: the full slice, a 96 × 96 px zoom, and |prediction − NDCT|.
   - Columns: LDCT, C0, C1, C3, C5, C7, **C8** (next to C5), C10 and NDCT.
   - The slice is the first one in `fig3_slices.csv`, chosen by the median rule.
-  - All images use the same grey range [0, 1], and all error maps the same scale (0 to 0.1).
+  - The zoom rule: on the NDCT, take the body (NDCT > 0.05, opened, holes filled, largest component) and call body pixels with NDCT between 0.35 and 0.75 soft tissue. Among the 96 px windows on an 8 px grid that are at least 90% soft tissue, take the one with the median NDCT standard deviation. For this slice that is a liver region at rows 168 to 263, columns 120 to 215, with a few portal vessels. The rule is printed on the figure and recorded in the manifest.
+  - All images and zooms use the same grey range [0, 1], and all error maps the same scale (0 to 0.1).
+  - Seeds 123 and 456 were exported too, but their rows showed nothing new, so they were dropped.
 
   The predictions were exported on Colab from the clean commit `a9aaa30` (`results/week3/fig3/`). The export refuses any checkpoint whose sha256 differs from the record and checks every prediction against the logged PSNR. All 21 checkpoints match. `python -m figures.fig3_qualitative` checks the file hashes and the PSNR again before drawing.
 
-  At full-slice size, the grain differences between the perceptual losses are hard to see in print. The error row shows them more clearly than the images. A zoomed region would help if you want the texture to be visible; it is not done, because the region would have to be chosen by a rule, not by eye.
+  In the zoom, C0 (L1) is visibly smooth. The perceptual losses keep grain, and C10 (CT dose network v2, statistics) has the coarsest grain. C1 (VGG-19, pointwise) shows a faint regular checkerboard pattern. These are observations on one slice, not tested results.
 
 - [x] **Fig 1 final, Table 2 final, LaTeX export.**
   - **Fig 1:** updated to the final protocol: CT dose network v2 with 0.29 M feature-extractor parameters, three seeds, and the per-slice and per-patient tests. It is now built reproducibly and recorded in the manifest.

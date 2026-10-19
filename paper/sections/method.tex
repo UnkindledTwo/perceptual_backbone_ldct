@@ -1,0 +1,70 @@
+% Floats are issued here, one page before they are discussed, so they can land on pages 2 and 3. Fig. 2 comes before
+% Fig. 3 in the source so that the figures are numbered in order.
+\input{tables/table1_paper}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/fig2_screen_column}
+  \caption{Training-free screen (validation split). Every pretrained network orders doses almost perfectly (a); only
+    the CT dose network penalizes blur less than noise of the same pixel error (b).}
+  \label{fig:screen}
+\end{figure}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig3_qualitative}
+  \caption{Test slice closest to the median C0 PSNR, seed 42. Rows: image, zoom, $\lvert \hat{x} - x \rvert$; grey
+    range $[0, 1]$, error scale 0 to 0.1. Zoom: the $96 \times 96$ window with the median NDCT standard deviation
+    among windows that are at least 90\% soft tissue (NDCT 0.35 to 0.75 inside the body mask). L1 smooths the grain
+    away; statistics matching keeps DINOv2-S grain closer to NDCT than pointwise matching does.}
+  \label{fig:qualitative}
+\end{figure*}
+
+\section{Method}
+\label{sec:method}
+
+\textbf{Objective.} A U-Net $f_\theta$ maps a low-dose slice to $\hat{x}$ and is trained against the normal-dose slice
+$x$ with
+\begin{equation*}
+  \mathcal{L}_\phi = \lVert \hat{x} - x \rVert_1 + \lambda_\phi \, d_\phi\big(\mathrm{crop}(\hat{x}), \mathrm{crop}(x)\big),
+\end{equation*}
+where $\mathrm{crop}$ is one random $224 \times 224$ crop shared by prediction and target and $d_\phi$ a distance in
+the features of a frozen network $\phi$. With $\bar{\phi}_l$ the channel-normalized features of
+block $l$ ($C_l$ channels, $H_l \times W_l$ positions), pointwise matching is
+\begin{equation}
+  d^{\mathrm{pt}}_\phi(\hat{x}, x) = \sum_{l} \frac{1}{H_l W_l} \sum_{h, w}
+  \big\lVert \bar{\phi}_l(\hat{x})_{hw} - \bar{\phi}_l(x)_{hw} \big\rVert_2^2 .
+  \label{eq:pointwise}
+\end{equation}
+CT noise is random, so the output cannot copy the reference grain pixel by pixel. Local statistics matching asks
+only that each $4 \times 4$ window $\omega \in \Omega_l$ of each channel has the same feature mean $\mu$ and standard
+deviation $\sigma$:
+\begin{equation}
+  d^{\mathrm{st}}_\phi(\hat{x}, x) = \sum_{l} \frac{1}{C_l \lvert \Omega_l \rvert} \sum_{c, \omega}
+  \big[ 1 - s(\hat{\mu}, \mu, c_1) \, s(\hat{\sigma}, \sigma, c_2) \big],
+  \label{eq:statistics}
+\end{equation}
+with $s(a, b, c) = (2ab + c) / (a^2 + b^2 + c)$ and $c_1 = c_2 = 10^{-6}$: the texture term of
+DISTS~\cite{ding2020dists}, applied to any network.
+
+\textbf{Feature networks} (Table~\ref{tab:networks}): VGG-19 at relu3\_2~\cite{simonyan2015vgg};
+LPIPS-VGG~\cite{zhang2018lpips} and DISTS with their own weights; RadImageNet ResNet-50, layers 1 to
+3~\cite{mei2022radimagenet}; DINOv2-S and DINOv2-B, blocks 3, 6, 9~\cite{oquab2024dinov2}; MedSigLIP-448, layers 7, 14,
+20~\cite{sellergren2025medgemma}. DINOv2-L and CLIP ViT-B/16~\cite{radford2021clip} enter the screen only. C8 and C10
+use~(\ref{eq:statistics}), C1, C4 to C7 and C9 use~(\ref{eq:pointwise}).
+
+\textbf{CT dose network.} A loss network should change its features when the noise level changes. Three
+convolutional blocks (32, 64, 128 channels; 287,328 parameters) with a regression head predict the standardized $\log_{10}$ photon count of $128 \times 128$ training-split patches (normal dose fixed at 7),
+trained with smooth L1 for 10 epochs (lowest validation loss kept) and frozen; its block outputs are the features. This
+version replaced a six-class classifier after a validation screen; the adoption threshold on $M_\phi$ was lowered
+from 0.9 to 0.8 after seeing the screen, and the runs of the first version are an ablation in the repository. Unlike SACNN~\cite{li2020sacnn}, its features
+are trained on dose alone.
+
+\textbf{Matched influence and screen.} As in~\cite{viana2025perceptual}, we set $\lambda_\phi = 19 \, S_1 / S_\phi$,
+so the perceptual term is 95\% of the loss at initialization ($S_1$, $S_\phi$: summed L1 and feature terms of the untrained
+U-Net). Before training, each network is screened on the 182 validation slices: the dose ordering $M_\phi$ is the mean
+Spearman correlation between $d_\phi(x^{(d)}, x)$ and $\log(1/d)$ over five photon counts $d$ from $10^4$ to $10^6$,
+and the blur penalty $B_\phi$ is the summed distance of a Gaussian blur divided by that of the $10^5$ noise at equal
+MSE. $B_\phi < 1$ means a denoiser can lower the loss by smoothing. Every network is trained regardless of its score.
+
+\input{tables/table2_compact}

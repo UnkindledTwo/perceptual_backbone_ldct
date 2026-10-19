@@ -1,0 +1,46 @@
+% ISBI 2027 submission. Built from paper/ISBI_template-master/Template_ISBI_latex.tex.
+% Run ./sync.sh first: it copies figures/, results/week3/table*_final.tex and ../index.bib into paper/.
+% Compile: tectonic root.tex
+\documentclass{article}
+\usepackage{spconf,amsmath,amssymb,graphicx,booktabs}
+\usepackage{iftex}
+\ifXeTeX  % Tectonic: Times is not available as ptm under XeTeX, so use its free clone (pdfLaTeX/Overleaf keep spconf's Times)
+  \usepackage{fontspec}
+  \setmainfont{texgyretermes}[Extension=.otf, UprightFont=*-regular, BoldFont=*-bold, ItalicFont=*-italic, BoldItalicFont=*-bolditalic]
+\fi
+\usepackage{enumitem}
+\setlist{nosep, leftmargin=14pt}
+
+\newcommand{\cfg}[3]{C#1 (#2, #3)}  % configuration ID with network and matching
+
+\title{Which feature network makes a good perceptual loss for low-dose CT denoising?}
+% TODO(authors): names, affiliations, author footnote.
+\name{Author(s) Name(s)}
+\address{Author Affiliation(s)}
+
+% Float placement for a 4-page paper: floats may fill most of a page, and full-width floats are issued early in the source.
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.85}
+\renewcommand{\dblfloatpagefraction}{0.85}
+\setcounter{topnumber}{3}
+\setcounter{dbltopnumber}{3}
+\setlength{\emergencystretch}{1em}  % lets justified 9 pt columns break around long names
+
+\begin{document}
+\ninept  % template option: whole paper in 9 pt (the ISBI minimum), needed for the 4-page limit
+\maketitle
+
+\input{sections/abstract}
+\input{sections/intro}
+\input{sections/method}
+\input{sections/experiments}
+\input{sections/conclusion}
+\input{sections/ethics}
+
+\bibliographystyle{IEEEbib}
+\small  % 9 pt at the 10 pt base: the template's minimum size
+\bibliography{index}
+
+\end{document}

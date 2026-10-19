@@ -1,0 +1,11 @@
+ALDEN (arXiv 2508.07788)
+ Medical Image Computing and Computer Assisted Intervention – MICCAI 2025 
+https://doi.org/10.1007/978-3-032-04937-7_2
+
+LEDA (arXiv 2403.06128) 
+2024 IEEE International Conference on Bioinformatics and Biomedicine (BIBM)
+https://doi.ieeecomputersociety.org/10.1109/BIBM62325.2024.10822519
+
+RadImageNet (Standard ImageNet Normalization) (Lab-Rasool Huggingface)
+RadImageNet: An Open Radiologic Deep Learning Research Dataset for Effective Transfer Learning
+https://doi.org/10.1148/ryai.210315

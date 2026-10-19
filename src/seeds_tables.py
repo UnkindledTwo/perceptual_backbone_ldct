@@ -393,6 +393,12 @@ def split_configuration(frame: pd.DataFrame, ids: list[str]) -> pd.DataFrame:
     return pd.concat([split, frame.drop(columns=["Configuration"]).reset_index(drop=True)], axis=1)
 
 
+def millions(parameters: str) -> str:
+    """'1,145,408' -> '1.15', keeping a trailing mark such as †."""
+    digits = parameters.rstrip("†")
+    return f"{int(digits.replace(',', '')) / 1e6:.2f}" + parameters[len(digits):]
+
+
 def latex_tables(three_seeds: pd.DataFrame, family_a: pd.DataFrame, freeze: dict[str, pd.DataFrame]) -> dict[str, str]:
     marks = (f"Test split (220 slices, 31 patients, 100k). Values: mean ± std over seeds 42, 123 and 456. Bold: best "
              f"trained configuration. † significantly better and ‡ significantly worse than C0 (L1) (paired Wilcoxon on seed-averaged "
@@ -414,6 +420,16 @@ def latex_tables(three_seeds: pd.DataFrame, family_a: pd.DataFrame, freeze: dict
                                  "weight. Dist.: distance on a batch of 8 (Step 1.3 check). Step: U-Net training step; Step and GPU h per "
                                  "run are means over the three seeds. M: dose ordering, B: blur penalty of the training-free screen.",
                                  "tab:networks", "lll" + "r" * 7),
+        "table1_paper": booktabs(split_configuration(formatted_table1(three_seeds, family_a), three_seeds["config"].tolist()),
+                                 "Every perceptual loss costs PSNR against L1; the best LPIPS and DISTS values lie within one seed "
+                                 "spread of each other, and statistics matching gives DINOv2-S its best texture. " + marks,
+                                 "tab:results", "lll" + "c" * 6, size="small"),
+        "table2_compact": booktabs(networks[["ID", "Network", "Matching", "Parameters", "λ", "M ↑", "B"]].assign(
+                                       Parameters=networks["Parameters"].map(millions)).rename(columns={"Parameters": "Params (M)"}),
+                                   "Feature networks. Every pretrained network orders doses (M ≥ 0.95); only the CT dose network "
+                                   "has B < 1. † feature extractor of the CT dose network v2 (three conv blocks). λ: frozen loss "
+                                   "weight. M: dose ordering, B: blur penalty of the training-free screen.",
+                                   "tab:networks", "lll" + "r" * 4, wide=False, size="small"),
         "table_ablation_superseded": booktabs(ablation_frame, "Superseded seed-42 runs next to the final run of the same "
                                               "configuration (ablation, not part of Table 1).", "tab:ablation", "lll" + "r" * 7),
     }

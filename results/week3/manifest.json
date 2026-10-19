@@ -1,7 +1,7 @@
 {
  "steps": {
   "seeds_tables": {
-   "date": "2026-10-15",
+   "date": "2026-10-19",
    "command": "python -m src.seeds_tables",
    "python": "3.12.3",
    "packages": {
@@ -11,8 +11,11 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "66130ab85fb7607554f15b38ffae7fb219660df4",
+    "repo_commit": "7ae3a543e4212ac27441df6bc98942ca95ea4688",
     "uncommitted_or_new_py_files": [
+     "figures/fig1_overview.py",
+     "figures/fig2_screen.py",
+     "figures/fig3_qualitative.py",
      "src/latex.py",
      "src/seeds_tables.py"
     ],
@@ -24,13 +27,13 @@
      "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
      "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
      "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
-     "latex.py": "5be402078ebf9ac749acbd7f9f735cf6c4d8d895414e7d8bf281a2a0b61bf341",
+     "latex.py": "36c15a8d96cb4b3f5d732f252d05cf7c551c1a3360100005778ccee81da3ab6d",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
-     "seeds_tables.py": "e4720022c7f63d4b014139f85a025b36a6efb5791c7cc46fb0e7265650e40515",
+     "seeds_tables.py": "82eb1460f0ee077a1b740342471b3159ecc8425bd881b87b501d2ba83b96d8b7",
      "stats.py": "d4816dc944f205607c2b5bbda3435312997a47f02398a6b6ec7d115192f2bcc8",
      "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
      "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
@@ -233,8 +236,10 @@
     "results/week3/table1_deltas_vs_c0.csv": "abfe092edb895d7156c49cf23c68deffd67aa7b665198d0d9b69b86d563d6dce",
     "results/week3/table1_final.csv": "a149ece4a02792d56276950557ccaefba5041dec6ce3ceed4d7abbd5ec04535a",
     "results/week3/table1_final.tex": "b8ce7ba77f0579cd3485daa5bb23ad85e2e769e659f9f69da7ca7ea6a5814c10",
+    "results/week3/table1_paper.tex": "aa4ae3395224d6beb17a6abc31c5c1d114eb3f53e0ba281725ddec2f1a0b46a7",
     "results/week3/table1_per_seed.csv": "3e08bcfd541d0d0d5e5e00bb5917a8741a1c56b7ea8b7ffd2df9077975bd6441",
     "results/week3/table1_three_seeds.csv": "8bda32ae27def61fac1e02ff797f929ae16dd817bb87c9d4986c3d1d01532654",
+    "results/week3/table2_compact.tex": "33c453cf510ee33427efec61b3c9d8fe8115a32fb4cac62599ca95c6efc5d4c3",
     "results/week3/table2_final.csv": "886886a1003c8c53d64d7f49f105afbcceaca488b5602cde87b9a032aa4d094f",
     "results/week3/table2_final.tex": "2e44bee9721cb2f14fc903553ed8da6815d0099f9f55ac657df3da2b92b36b41",
     "results/week3/table_ablation_superseded.csv": "efa95add8750dc6164d440779def73bff4918d06828df98482b41c073558e538",
@@ -244,7 +249,7 @@
    }
   },
   "fig2_screen": {
-   "date": "2026-10-15",
+   "date": "2026-10-19",
    "command": "python -m figures.fig2_screen",
    "python": "3.12.3",
    "packages": {
@@ -254,8 +259,13 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "a9aaa30835501ea0d9c0dc1957a5502ac260f009",
-    "uncommitted_or_new_py_files": [],
+    "repo_commit": "7ae3a543e4212ac27441df6bc98942ca95ea4688",
+    "uncommitted_or_new_py_files": [
+     "figures/fig2_screen.py",
+     "figures/fig3_qualitative.py",
+     "src/latex.py",
+     "src/seeds_tables.py"
+    ],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
      "config.py": "9cf477642f03c177744f32e81228296b2d24342b29554a6581fecee884e755e5",
@@ -264,13 +274,13 @@
      "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
      "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
      "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
-     "latex.py": "36b79420348d83b586d5e5b71bf71d4f748c1292a9c4346ecce7960eb401c54f",
+     "latex.py": "342842b273c672e707912da2ef7c86ab86dab90a45b5b344311218de9a493271",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
-     "seeds_tables.py": "38446550a3c606c0914e10e755a3b3c244e38fb7c1381dc3a6bd34a9d78f8b53",
+     "seeds_tables.py": "452a27601cde100c64e605caba09866ea2d0c6fe60966402286f36593bbaef71",
      "stats.py": "d4816dc944f205607c2b5bbda3435312997a47f02398a6b6ec7d115192f2bcc8",
      "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
      "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
@@ -287,7 +297,10 @@
    "outputs_sha256": {
     "figures/fig2_screen.pdf": "67f9a0846af00a653a4ea9f3e4038aaf80b960a52b1aaaa1b0800976acee4a8e",
     "figures/fig2_screen.png": "5e00819a47a93c3d95a23381e170af324b21f3b37862459346dcd0f39e1aa183",
-    "figures/fig2_screen.svg": "b18cf03d0b2542014680d17a10d92d429893bdca4d8d07981685527dc9a7c181"
+    "figures/fig2_screen.svg": "b18cf03d0b2542014680d17a10d92d429893bdca4d8d07981685527dc9a7c181",
+    "figures/fig2_screen_column.pdf": "a3e39bd3eef8a5e616fd07aa7f63aecf494c3a2fe840ac4f999a42dd96317c1a",
+    "figures/fig2_screen_column.png": "2cfcd3b7ec75102fe7005768c18a2c50eac5b114b80b3446d5426309bd0d8b3f",
+    "figures/fig2_screen_column.svg": "45645e2f8cb5ff69608dabe9115cb237fb32204d8b93aef96590f662d97803e9"
    }
   },
   "fig4_screen_vs_outcome": {
@@ -341,7 +354,7 @@
    }
   },
   "fig1_overview": {
-   "date": "2026-10-15",
+   "date": "2026-10-19",
    "command": "python -m figures.fig1_overview",
    "python": "3.12.3",
    "packages": {
@@ -351,8 +364,14 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "a9aaa30835501ea0d9c0dc1957a5502ac260f009",
-    "uncommitted_or_new_py_files": [],
+    "repo_commit": "7ae3a543e4212ac27441df6bc98942ca95ea4688",
+    "uncommitted_or_new_py_files": [
+     "figures/fig1_overview.py",
+     "figures/fig2_screen.py",
+     "figures/fig3_qualitative.py",
+     "src/latex.py",
+     "src/seeds_tables.py"
+    ],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
      "config.py": "9cf477642f03c177744f32e81228296b2d24342b29554a6581fecee884e755e5",
@@ -361,13 +380,13 @@
      "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
      "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
      "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
-     "latex.py": "36b79420348d83b586d5e5b71bf71d4f748c1292a9c4346ecce7960eb401c54f",
+     "latex.py": "342842b273c672e707912da2ef7c86ab86dab90a45b5b344311218de9a493271",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
-     "seeds_tables.py": "38446550a3c606c0914e10e755a3b3c244e38fb7c1381dc3a6bd34a9d78f8b53",
+     "seeds_tables.py": "3c5ae18ec0d4e26db44d3cd6e3ced2d547865d4cfe9e330643f7a3f05dcec014",
      "stats.py": "d4816dc944f205607c2b5bbda3435312997a47f02398a6b6ec7d115192f2bcc8",
      "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
      "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
@@ -378,16 +397,19 @@
     "feature_extractor_parameters": 287328
    },
    "inputs_sha256": {
-    "figures/fig1_overview.py": "996b31424bb43b8ee672af6cfb5b6589eecea293b320aab8247a293ce548d3e1"
+    "figures/fig1_overview.py": "66e331cd7037301e299e6127fbe8af5ac499f603e6e48673c7fd826936b51825"
    },
    "outputs_sha256": {
     "figures/fig1_overview.pdf": "b69fdb7cff81b5216bc871bd4d248676478ca916bd390aa726cb4efb6ce10a3d",
     "figures/fig1_overview.png": "d2a734a1aa5a6a12251f26776271af3dffc99c5d361bafae74af568dec722328",
-    "figures/fig1_overview.svg": "b909e2a8b7ee3a3c2e8aecad7c2e284f79fcb0dc897830ba53fb797b16dc327d"
+    "figures/fig1_overview.svg": "b909e2a8b7ee3a3c2e8aecad7c2e284f79fcb0dc897830ba53fb797b16dc327d",
+    "figures/fig1_overview_column.pdf": "e41130c91e61cb83cd2f9c70e745c3e0147d903c784122860ad278d62c58219d",
+    "figures/fig1_overview_column.png": "90a90f930d1a7ccf195a311f294629f6b6d673bb3f196c2195b2ff551d8cdbf6",
+    "figures/fig1_overview_column.svg": "ad1406566f459bd1db7d24d3e723d54e26a80d11646188a4b1595e2131b935ac"
    }
   },
   "fig3_qualitative": {
-   "date": "2026-10-15",
+   "date": "2026-10-19",
    "command": "python -m figures.fig3_qualitative",
    "python": "3.12.3",
    "packages": {
@@ -397,8 +419,10 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "a9aaa30835501ea0d9c0dc1957a5502ac260f009",
-    "uncommitted_or_new_py_files": [],
+    "repo_commit": "7ae3a543e4212ac27441df6bc98942ca95ea4688",
+    "uncommitted_or_new_py_files": [
+     "figures/fig3_qualitative.py"
+    ],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
      "config.py": "9cf477642f03c177744f32e81228296b2d24342b29554a6581fecee884e755e5",
@@ -407,13 +431,13 @@
      "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
      "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
      "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
-     "latex.py": "36b79420348d83b586d5e5b71bf71d4f748c1292a9c4346ecce7960eb401c54f",
+     "latex.py": "5be402078ebf9ac749acbd7f9f735cf6c4d8d895414e7d8bf281a2a0b61bf341",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
-     "seeds_tables.py": "38446550a3c606c0914e10e755a3b3c244e38fb7c1381dc3a6bd34a9d78f8b53",
+     "seeds_tables.py": "e4720022c7f63d4b014139f85a025b36a6efb5791c7cc46fb0e7265650e40515",
      "stats.py": "d4816dc944f205607c2b5bbda3435312997a47f02398a6b6ec7d115192f2bcc8",
      "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
      "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
@@ -422,11 +446,7 @@
    },
    "settings": {
     "slice": "000039_03_01_061.png",
-    "seeds": [
-     42,
-     123,
-     456
-    ],
+    "seed": 42,
     "configurations": [
      "C0",
      "C1",
@@ -441,22 +461,30 @@
      1.0
     ],
     "error_max": 0.1,
-    "error_seed": 42
+    "zoom": {
+     "top": 168,
+     "left": 120,
+     "size": 96,
+     "stride": 8,
+     "min_soft_tissue": 0.9,
+     "soft_tissue_range": [
+      0.35,
+      0.75
+     ],
+     "body_threshold": 0.05,
+     "rule": "median NDCT std among soft-tissue windows"
+    }
    },
    "inputs_sha256": {
-    "results/week3/fig3/seed123/000039_03_01_061.npz": "2924bcf9f6d4040f0fe9e45303a09dcd8f5d5e0c8eeab004c10b160229ac2ef8",
-    "results/week3/fig3/seed123/fig3_export.json": "e4434bea44ff4188931cec08d4691620159667028b85b6878fad11614fe2c330",
     "results/week3/fig3/seed42/000039_03_01_061.npz": "c047859a06afe969723deff7d441fbe8a3c1111285de743eb6c7422dfbd495c0",
     "results/week3/fig3/seed42/fig3_export.json": "3c9560db2abdafbb64ef959e8ef8d0f299111b3f1efb452ba89bce2e04ca4163",
-    "results/week3/fig3/seed456/000039_03_01_061.npz": "f254e362780a39b290641567cb51df8e8095c51e8d8ae32de15b61da8e4ab85b",
-    "results/week3/fig3/seed456/fig3_export.json": "9daa5f11e720522a87bff81e8981e1de8a12e17f55d505c5afdb1edd6f8a5915",
     "results/week3/fig3_slices.csv": "3cd17f55657614014820a25e8d83a442dbe1d3cb6c5e8f0940b7c3b8f7575609",
     "results/week3/per_slice_metrics.csv": "c98bd47f66ae6d67a60f45bf986f7a7afba052f4ae90e7a78057097e246ffec0"
    },
    "outputs_sha256": {
-    "figures/fig3_qualitative.pdf": "423784ef59bddafeb8989ac8b89c0833ef166d7538fb602d663f33bea1d540a0",
-    "figures/fig3_qualitative.png": "76e41ab22ec5685fa45fb69bb66bb028e7c8178a70a08726d04ca352f924eb9a",
-    "figures/fig3_qualitative.svg": "8fdc64814d2986ee62eaffdb5f92113c42a7ceda22f50d1dfeb3e9e8678883fd"
+    "figures/fig3_qualitative.pdf": "0d121de3afbb2763d9a7df363325528dc3028da9cb0f2e0c2aa999557df99393",
+    "figures/fig3_qualitative.png": "a6a8a85fb179bf982d446caf31585371f77f26632f825c987dd13fdcd4026a13",
+    "figures/fig3_qualitative.svg": "0ae0b7768eace97c8ea93b9a4cfcdea672fe72200b3110d5ba596569a9537d3f"
    }
   }
  },
