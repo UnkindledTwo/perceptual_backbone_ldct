@@ -1,6 +1,6 @@
 % Floats are issued here, one page before they are discussed, so they can land on pages 2 and 3. Fig. 2 comes before
 % Fig. 3 in the source so that the figures are numbered in order.
-\input{tables/table1_paper}
+\input{tables/table1_paper_patient}
 
 \begin{figure}[t]
   \centering
@@ -16,7 +16,7 @@
   \caption{Test slice closest to the median C0 PSNR, seed 42. Rows: image, zoom, $\lvert \hat{x} - x \rvert$; grey
     range $[0, 1]$, error scale 0 to 0.1. Zoom: the $96 \times 96$ window with the median NDCT standard deviation
     among windows that are at least 90\% soft tissue (NDCT 0.35 to 0.75 inside the body mask). L1 smooths the grain
-    away; statistics matching keeps DINOv2-S grain closer to NDCT than pointwise matching does.}
+    away; the perceptual losses keep it.}
   \label{fig:qualitative}
 \end{figure*}
 

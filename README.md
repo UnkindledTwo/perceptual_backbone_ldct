@@ -32,7 +32,7 @@ photons. It grows out of Arda's LPIPS, DISTS and DINOv2 loss tickets (#208,
 | C1 (VGG-19, pointwise) | 30.32 ± 0.22‡ | 0.8606 ± 0.0022 | 0.0592 ± 0.0010† | 0.0668 ± 0.0023 | 0.798 ± 0.035 | 0.226 ± 0.030† |
 | C2 (LPIPS-VGG, pointwise) | 30.39 ± 0.31‡ | 0.8630 ± 0.0021 | 0.0563 ± 0.0045†* | **0.0645 ± 0.0024** | 0.777 ± 0.012 | 0.242 ± 0.009† |
 | C3 (DISTS, statistics) | 29.81 ± 0.20‡ | 0.8326 ± 0.0244 | **0.0557 ± 0.0066**† | 0.0664 ± 0.0014* | 0.820 ± 0.014 | 0.222 ± 0.018† |
-| C4 (RadImageNet, pointwise) | 28.70 ± 0.32‡ | 0.8259 ± 0.0075 | 0.0868 ± 0.0055 | 0.0847 ± 0.0009 | 0.798 ± 0.040 | 0.286 ± 0.017† |
+| C4 (RadImageNet, pointwise) | 28.70 ± 0.32‡ | 0.8259 ± 0.0075 | 0.0868 ± 0.0055† | 0.0847 ± 0.0009 | 0.798 ± 0.040 | 0.286 ± 0.017† |
 | C5 (DINOv2-S, pointwise) | 30.10 ± 0.51‡ | 0.8625 ± 0.0063 | 0.0629 ± 0.0078† | 0.0707 ± 0.0068 | 0.682 ± 0.046 | 0.333 ± 0.044† |
 | C6 (DINOv2-B, pointwise) | 30.20 ± 0.44‡ | 0.8618 ± 0.0044 | 0.0614 ± 0.0027† | 0.0713 ± 0.0028 | 0.731 ± 0.027 | 0.291 ± 0.029† |
 | C7 (MedSigLIP, pointwise) | 29.84 ± 0.39‡ | 0.8596 ± 0.0061 | 0.0750 ± 0.0114† | 0.0737 ± 0.0070 | 0.531 ± 0.063 | 0.477 ± 0.060‡ |
@@ -41,9 +41,11 @@ photons. It grows out of Arda's LPIPS, DISTS and DINOv2 loss tickets (#208,
 | C10 (CT dose network v2, statistics) | 29.80 ± 0.19‡ | 0.8475 ± 0.0039 | 0.0721 ± 0.0063† | 0.0982 ± 0.0036 | 0.951 ± 0.058 | **0.167 ± 0.026**† |
 
 Mean ± standard deviation over the three per-seed means. Bold: best trained configuration. † significantly better and
-‡ significantly worse than C0 (L1) (Holm-adjusted p < 0.05, paired Wilcoxon test on seed-averaged per-slice values;
-tested on PSNR, LPIPS and |1 − R_H|). * scored with its own training metric. All tests (per slice as planned, per patient
-as a sensitivity check), signed differences to C0, the screen-versus-outcome correlations, Table 2, the ablation of
+‡ significantly worse than C0 (L1) (Holm-adjusted p < 0.05, paired Wilcoxon test on the 31 patient means of
+seed-averaged per-slice values; tested on PSNR, LPIPS and |1 − R_H|). * scored with its own training metric. Table 1 marks
+are patient level (decided 2026-10-20; `results/week3/table1_final_patient.csv`, `table1_paper_patient.tex`). At slice level
+only one mark differs: C4 (RadImageNet, pointwise) on LPIPS is not significant (Holm p = 0.09, against 0.021 per patient);
+the frozen `table1_final.csv` and `.tex` keep the slice-level marks. All tests (per slice and per patient), signed differences to C0, the screen-versus-outcome correlations, Table 2, the ablation of
 superseded runs and the validation-spike counts are in `results/week3/week3_tables.md`; disclosures in
 `results/week3/disclosures.md`; LaTeX tables in `results/week3/*.tex`. Freeze commit: `a9aaa30` (2026-10-15); Fig 3 was rebuilt with one seed and a zoom row on 2026-10-19.
 
@@ -162,7 +164,7 @@ worse metric" finding. Details, metadata checks and sibling overlap in
 | Fig 2 | Screen: (a) feature distance vs dose, one line per network; (b) equal-MSE blur penalty per network, pointwise vs statistics | 1 col | [Step 1.4](paper_plan.md#step-14-training-free-screen-dose-ordering-and-the-equal-mse-blur-test) data, [Step 3.3](paper_plan.md#step-33-figures-and-table-export) plot | `figures/fig2_screen.py` | "Every pretrained network orders doses almost perfectly; only the CT dose network penalizes blur less than noise of the same pixel error, and statistics matching lowers the blur penalty of every pretrained network." | done |
 | Fig 3 | Qualitative grid, seed 42: LDCT, C0, C1, C3, C5, C7, C8, C10, NDCT; image row, zoom row with a rule-chosen soft-tissue crop, error row; slice chosen by rule (median C0 PSNR) | 2 col | [Step 3.3](paper_plan.md#step-33-figures-and-table-export) | `figures/fig3_qualitative.py` | "L1 smooths the grain away; statistics matching keeps DINOv2-S grain closer to NDCT than pointwise matching does." | done |
 | Fig 4 | Blur penalty vs trained texture error, marker size by parameters, colour by family, DINOv2 S and B joined | 1 col | [Step 3.2](paper_plan.md#step-32-statistics-and-the-screen-vs-outcome-test) data, [Step 3.3](paper_plan.md#step-33-figures-and-table-export) plot | `figures/fig4_screen_vs_outcome.py` | "The screen does not predict the trained result: the blur penalty rises with the trained texture error (ρ = 0.84, exploratory), and larger networks do not give better texture." | done |
-| Table 1 | Main results: LDCT input and C0 to C10 × PSNR, SSIM, LPIPS, DISTS, $R_H$; mean ± std; † Holm p < 0.05 vs L1; * circular metric | 2 col | Rows from [Step 1.2](paper_plan.md#step-12-audit-earlier-runs-and-train-the-l1-reference) and [Step 2.3](paper_plan.md#step-23-seed-42-runs-for-c1-to-c10-and-the-fig-1-draft), final in [Final Tables](paper_plan.md#final-tables) | `src/seeds_tables.py` (`results/week3/table1_final.csv`, `.tex`) | "Every perceptual loss costs PSNR; the best perceptual group is within one seed spread, statistics matching gives the best texture for DINOv2-S, and medical pretraining does not help." | done |
+| Table 1 | Main results: LDCT input and C0 to C10 × PSNR, SSIM, LPIPS, DISTS, $R_H$; mean ± std; † Holm p < 0.05 vs L1; * circular metric | 2 col | Rows from [Step 1.2](paper_plan.md#step-12-audit-earlier-runs-and-train-the-l1-reference) and [Step 2.3](paper_plan.md#step-23-seed-42-runs-for-c1-to-c10-and-the-fig-1-draft), final in [Final Tables](paper_plan.md#final-tables) | `src/seeds_tables.py` (`results/week3/table1_final_patient.csv`, `table1_paper_patient.tex`; † / ‡ patient level) | "Every perceptual loss costs PSNR; the best perceptual group is within one seed spread, statistics matching gives the best texture for DINOv2-S, and medical pretraining does not help." | done |
 | Table 2 | Feature networks: family, parameters, pretraining, layers, input, $\lambda_\phi$, ms per step, screen scores | 1 col | [Step 2.1](paper_plan.md#step-21-calibrate-each-loss-weight-by-perceptual-influence), [Step 1.4](paper_plan.md#step-14-training-free-screen-dose-ordering-and-the-equal-mse-blur-test), [Step 2.2](paper_plan.md#step-22-train-the-ct-dose-network) | `src/seeds_tables.py` (`results/week3/table2_final.csv`, `.tex`) | - | done |
 
 ### Decisions and Open TODOs
@@ -170,12 +172,14 @@ worse metric" finding. Details, metadata checks and sibling overlap in
 - [ ] Advisor, by Fri Oct 2: mark Idea B of `iqa_loss_for_ldct_reconstruction`
       as moved here, and decide whether its Idea A benchmark reuses this
       paper's VGG and LPIPS runs
-- [ ] A dedicated GitHub issue for the ISBI plan (currently #261)
+- [x] Dedicated GitHub issues for the ISBI plan (itu-biai/dlct-docs#296 to
+      #300, one per week)
 - [x] Hugging Face access to `google/medsiglip-448` (C7 trained at all three
       seeds)
-- [ ] Normalization of the RadImageNet ResNet-50 weights (loaded from
-      `Lab-Rasool/RadImageNet` on Hugging Face; `RADIMAGENET_STATS` is `None`,
-      so ImageNet statistics are used)
+- [x] Normalization of the RadImageNet ResNet-50 weights (loaded from
+      `Lab-Rasool/RadImageNet` on Hugging Face): the model card asks for
+      standard ImageNet normalization, which is what the runs use
+      (`RADIMAGENET_STATS = None`)
 - [ ] The Step 1.2 audit table of Arda's #208 and #261 runs is not in the
       outputs; the SSIM drop of those runs is not explained (the runs here use
       `data_range=1.0`, and every output is above the input SSIM of 0.742)

@@ -1,6 +1,13 @@
 \begin{abstract}
-% Wed Oct 21: S1 to S7 of writing_plan.md (150 to 200 words).
-TODO (Wed): abstract.
+Perceptual losses, usually built on ImageNet VGG features, reduce the over-smoothing of low-dose CT (LDCT) denoisers
+trained with pixel losses. Whether larger, self-supervised or medical vision-language networks make better perceptual
+losses for CT has not been tested under one protocol. We compare ten perceptual-loss configurations, seven pretrained
+feature networks from five families and a small CT dose network, with pointwise or local statistics matching, as
+losses for one U-Net with matched loss influence and three seeds, and test a training-free dose and blur screen. Every
+perceptual loss lowers LPIPS but costs PSNR against L1; the best trade-offs nearly halve LPIPS (0.104 to about 0.058)
+at 0.5 to 0.7~dB, with no clear winner. Statistics matching lowers the DINOv2-S texture error from 0.333 to 0.195
+($p = 4.9 \times 10^{-4}$, $r = -0.77$) at no detectable PSNR cost. The screen does not predict the trained outcome,
+and no larger, self-supervised or medical network clearly beats the default VGG.
 \end{abstract}
 
 \begin{keywords}

@@ -41,9 +41,8 @@ class VGGFeatures(FeatureNet):
 
 class ResNetFeatures(FeatureNet):
     def __init__(self, weights_path: Path) -> None:
-        super().__init__(224, IMAGENET)  # TODO: RadImageNet normalization from the weights source
+        super().__init__(224, IMAGENET)
         self.body = resnet50(weights=None)
-        #self.body.load_state_dict(torch.load(weights_path, map_location="cpu"), strict=False)
 
         names = {"0": "conv1", "1": "bn1", "4": "layer1", "5": "layer2", "6": "layer3", "7": "layer4"}
         state = {}

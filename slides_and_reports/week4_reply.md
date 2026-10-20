@@ -1,6 +1,6 @@
 ## Writing week, day 1: paper set up, Method and Setup drafted, 4-page fit, open questions
 
-2026-10-19. Status after the first writing day, the decisions I had to take to fit 4 pages, and what I need from you. Code and draft: `<commit>` (not committed yet; `paper/`, `index.bib` and the generator changes below are local).
+2026-10-19. Status after the first writing day, the decisions I had to take to fit 4 pages, and what I need from you. Code and draft: [`dfb75c5`](https://github.com/UnkindledTwo/perceptual_backbone_ldct/commit/dfb75c5); every table and figure was rebuilt on that clean commit, and `results/week3/manifest.json` records it.
 
 ### Done today
 
@@ -46,7 +46,7 @@ The ISBI 2027 rules allow a paid 5th page (references, ethics and acknowledgment
 
 1. **"Checkpoint selection unaffected"** (Implementation; from `writingweek_reply.md`). This was not tested. For C10 (CT dose network v2, statistics) at seed 42 the best epoch has no failing slice, but we do not know that the selected checkpoint would be the same without the spikes. The draft uses your wording for now, marked for discussion. Should it say only that the spikes occur, with the counts per seed?
 2. **C8 grain in the zoom** (Fig 3 caption and the Fig 3 and Fig 4 paragraph; also from `writingweek_reply.md`). In the final zoom, C5 (DINOv2-S, pointwise) and C8 (DINOv2-S, statistics) look alike, and it is one slice. The caption uses your wording for now. Should the evidence be the Family B result instead (|1 − R_H| 0.333 to 0.195, patient-level p = 4.9e-4, r = −0.77), with the zoom showing only that L1 removes the grain?
-3. **Table 1 marks.** The plan says † and ‡ come from the patient-level tests; `table1_paper.tex` still uses the slice-level marks, and its caption says so. Only one cell changes: C4 (RadImageNet, pointwise) on LPIPS, p = 0.09 at slice level and p = 0.021 at patient level. Should I switch the marks to patient level? That means changing `src/seeds_tables.py` after the freeze, as a new output file.
+3. **Table 1 marks.** Done on 2026-10-20, no answer needed: † and ‡ now come from the patient-level tests, as the plan says (`results/week3/table1_paper_patient.tex`, a new output; the frozen tables keep the slice-level marks). Only one cell changed: C4 (RadImageNet, pointwise) on LPIPS is now † (Holm p = 0.021 per patient, 0.09 per slice).
 4. **Word budget.** Do you agree with about 1,500 words and the 9 pt option, or would you rather drop a float? Can the writing plan be updated to match?
 5. **Deadline.** The ISBI 2027 page gives Monday Oct 26 and does not mention an extension. Do we plan for Oct 26, as the plan's fallback says, or still Nov 2?
 6. **Fang et al.** (withdrawn arXiv paper): cite or not?
@@ -69,7 +69,7 @@ Smaller items:
 - [ ] `index.bib`: Crossref has only the early-access record of DISTS, so its final volume and pages are missing. I did not fill them in from memory.
 - [ ] `index.bib`: arXiv lists the D-PerceptCT first author as "Taifour Yousra Nabila"; the name order may be wrong.
 - [ ] `index.bib`: MedGemma carries year 2026 from its latest arXiv version (first posted 2025).
-- [ ] Commit the work and rerun the figure and table scripts on the clean commit, so `results/week3/manifest.json` records it.
+- [x] Committed (`dfb75c5`); all tables and figures rebuilt on the clean commit, outputs byte-identical, the 347 older result files unchanged.
 - [ ] Post `week3_freeze_reply.md` and `writingweek_reply.md` here.
 
 ### ISBI 2027 compliance (checked today)

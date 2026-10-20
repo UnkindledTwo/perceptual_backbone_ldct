@@ -2,7 +2,7 @@
 
 2026-10-19. Thanks for updating the plan. I will write from [`writing_plan.md`](https://github.com/itu-biai/dlct-docs/blob/main/projects/perceptual_backbone_ldct/writing_plan.md) at `2d79f95`, not from the copy in the issue body.
 
-Code: `<commit>` (Fig 3 change only; `results/week3/manifest.json` records the step).
+Code: [`dfb75c5`](https://github.com/UnkindledTwo/perceptual_backbone_ldct/commit/dfb75c5); `results/week3/manifest.json` records the Fig 3 step on that clean commit.
 
 ### Fig 3
 

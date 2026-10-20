@@ -1,7 +1,7 @@
 {
  "steps": {
   "seeds_tables": {
-   "date": "2026-10-19",
+   "date": "2026-10-20",
    "command": "python -m src.seeds_tables",
    "python": "3.12.3",
    "packages": {
@@ -11,13 +11,9 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "7ae3a543e4212ac27441df6bc98942ca95ea4688",
+    "repo_commit": "dfb75c5067111394a467103df74b26c9a60708db",
     "uncommitted_or_new_py_files": [
-     "figures/fig1_overview.py",
-     "figures/fig2_screen.py",
-     "figures/fig3_qualitative.py",
-     "src/latex.py",
-     "src/seeds_tables.py"
+     "rc/seeds_tables.py"
     ],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
@@ -33,7 +29,7 @@
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
-     "seeds_tables.py": "82eb1460f0ee077a1b740342471b3159ecc8425bd881b87b501d2ba83b96d8b7",
+     "seeds_tables.py": "d42d1d825f67879e252d810c1528f472195087b08da7e9edc06d5ea3f10eb236",
      "stats.py": "d4816dc944f205607c2b5bbda3435312997a47f02398a6b6ec7d115192f2bcc8",
      "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
      "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
@@ -236,7 +232,9 @@
     "results/week3/table1_deltas_vs_c0.csv": "abfe092edb895d7156c49cf23c68deffd67aa7b665198d0d9b69b86d563d6dce",
     "results/week3/table1_final.csv": "a149ece4a02792d56276950557ccaefba5041dec6ce3ceed4d7abbd5ec04535a",
     "results/week3/table1_final.tex": "b8ce7ba77f0579cd3485daa5bb23ad85e2e769e659f9f69da7ca7ea6a5814c10",
+    "results/week3/table1_final_patient.csv": "11c0cf2bf2d752dffe187f08a60983df759285ba3d9094c12ceca0c108bb5cb8",
     "results/week3/table1_paper.tex": "aa4ae3395224d6beb17a6abc31c5c1d114eb3f53e0ba281725ddec2f1a0b46a7",
+    "results/week3/table1_paper_patient.tex": "9cf3702de8ea20a10cb3a43d859fbf9dd2e07208cafb2c1b6a9df084f55da361",
     "results/week3/table1_per_seed.csv": "3e08bcfd541d0d0d5e5e00bb5917a8741a1c56b7ea8b7ffd2df9077975bd6441",
     "results/week3/table1_three_seeds.csv": "8bda32ae27def61fac1e02ff797f929ae16dd817bb87c9d4986c3d1d01532654",
     "results/week3/table2_compact.tex": "33c453cf510ee33427efec61b3c9d8fe8115a32fb4cac62599ca95c6efc5d4c3",
@@ -259,13 +257,8 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "7ae3a543e4212ac27441df6bc98942ca95ea4688",
-    "uncommitted_or_new_py_files": [
-     "figures/fig2_screen.py",
-     "figures/fig3_qualitative.py",
-     "src/latex.py",
-     "src/seeds_tables.py"
-    ],
+    "repo_commit": "dfb75c5067111394a467103df74b26c9a60708db",
+    "uncommitted_or_new_py_files": [],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
      "config.py": "9cf477642f03c177744f32e81228296b2d24342b29554a6581fecee884e755e5",
@@ -274,13 +267,13 @@
      "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
      "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
      "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
-     "latex.py": "342842b273c672e707912da2ef7c86ab86dab90a45b5b344311218de9a493271",
+     "latex.py": "36c15a8d96cb4b3f5d732f252d05cf7c551c1a3360100005778ccee81da3ab6d",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
-     "seeds_tables.py": "452a27601cde100c64e605caba09866ea2d0c6fe60966402286f36593bbaef71",
+     "seeds_tables.py": "82eb1460f0ee077a1b740342471b3159ecc8425bd881b87b501d2ba83b96d8b7",
      "stats.py": "d4816dc944f205607c2b5bbda3435312997a47f02398a6b6ec7d115192f2bcc8",
      "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
      "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
@@ -304,7 +297,7 @@
    }
   },
   "fig4_screen_vs_outcome": {
-   "date": "2026-10-15",
+   "date": "2026-10-19",
    "command": "python -m figures.fig4_screen_vs_outcome",
    "python": "3.12.3",
    "packages": {
@@ -314,7 +307,7 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "a9aaa30835501ea0d9c0dc1957a5502ac260f009",
+    "repo_commit": "dfb75c5067111394a467103df74b26c9a60708db",
     "uncommitted_or_new_py_files": [],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
@@ -324,13 +317,13 @@
      "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
      "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
      "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
-     "latex.py": "36b79420348d83b586d5e5b71bf71d4f748c1292a9c4346ecce7960eb401c54f",
+     "latex.py": "36c15a8d96cb4b3f5d732f252d05cf7c551c1a3360100005778ccee81da3ab6d",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
-     "seeds_tables.py": "38446550a3c606c0914e10e755a3b3c244e38fb7c1381dc3a6bd34a9d78f8b53",
+     "seeds_tables.py": "82eb1460f0ee077a1b740342471b3159ecc8425bd881b87b501d2ba83b96d8b7",
      "stats.py": "d4816dc944f205607c2b5bbda3435312997a47f02398a6b6ec7d115192f2bcc8",
      "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
      "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
@@ -364,14 +357,8 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "7ae3a543e4212ac27441df6bc98942ca95ea4688",
-    "uncommitted_or_new_py_files": [
-     "figures/fig1_overview.py",
-     "figures/fig2_screen.py",
-     "figures/fig3_qualitative.py",
-     "src/latex.py",
-     "src/seeds_tables.py"
-    ],
+    "repo_commit": "dfb75c5067111394a467103df74b26c9a60708db",
+    "uncommitted_or_new_py_files": [],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
      "config.py": "9cf477642f03c177744f32e81228296b2d24342b29554a6581fecee884e755e5",
@@ -380,13 +367,13 @@
      "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
      "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
      "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
-     "latex.py": "342842b273c672e707912da2ef7c86ab86dab90a45b5b344311218de9a493271",
+     "latex.py": "36c15a8d96cb4b3f5d732f252d05cf7c551c1a3360100005778ccee81da3ab6d",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
-     "seeds_tables.py": "3c5ae18ec0d4e26db44d3cd6e3ced2d547865d4cfe9e330643f7a3f05dcec014",
+     "seeds_tables.py": "82eb1460f0ee077a1b740342471b3159ecc8425bd881b87b501d2ba83b96d8b7",
      "stats.py": "d4816dc944f205607c2b5bbda3435312997a47f02398a6b6ec7d115192f2bcc8",
      "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
      "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
@@ -419,10 +406,8 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "7ae3a543e4212ac27441df6bc98942ca95ea4688",
-    "uncommitted_or_new_py_files": [
-     "figures/fig3_qualitative.py"
-    ],
+    "repo_commit": "dfb75c5067111394a467103df74b26c9a60708db",
+    "uncommitted_or_new_py_files": [],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
      "config.py": "9cf477642f03c177744f32e81228296b2d24342b29554a6581fecee884e755e5",
@@ -431,13 +416,13 @@
      "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
      "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
      "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
-     "latex.py": "5be402078ebf9ac749acbd7f9f735cf6c4d8d895414e7d8bf281a2a0b61bf341",
+     "latex.py": "36c15a8d96cb4b3f5d732f252d05cf7c551c1a3360100005778ccee81da3ab6d",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
-     "seeds_tables.py": "e4720022c7f63d4b014139f85a025b36a6efb5791c7cc46fb0e7265650e40515",
+     "seeds_tables.py": "82eb1460f0ee077a1b740342471b3159ecc8425bd881b87b501d2ba83b96d8b7",
      "stats.py": "d4816dc944f205607c2b5bbda3435312997a47f02398a6b6ec7d115192f2bcc8",
      "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
      "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
@@ -489,7 +474,7 @@
   }
  },
  "results_before_week3_unchanged": {
-  "date": "2026-10-15",
+  "date": "2026-10-20",
   "snapshot": "results/week3/results_before_week3.sha256",
   "snapshot_sha256": "f6101c2da58aeef2a3e521d6050addbf98db6923ce3d566746fb6af5dd63aa7f",
   "files_in_snapshot": 347,

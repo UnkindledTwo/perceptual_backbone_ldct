@@ -2,4 +2,9 @@
 \label{sec:conclusion}
 
 % Wed Oct 21: C1 to C3 of writing_plan.md (100 to 150 words).
-TODO (Wed): conclusion.
+Perceptual losses trade PSNR for perceptual quality, and no feature network is best on every metric. ImageNet VGG
+remains a sound default. Local statistics matching improves DINOv2-S grain but costs PSNR for the CT dose network, so
+it should be checked per network. Our training-free screen does not predict the trained result, so a loss network
+should not be chosen by such a screen alone. Limitations: simulated low-dose data from one dataset, one training dose
+and one denoiser. Next are real low-dose data and a CT feature network trained to detect structural distortion rather
+than dose.

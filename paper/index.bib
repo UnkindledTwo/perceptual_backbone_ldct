@@ -1,6 +1,16 @@
 % index.bib: fetched on 2026-10-19 from doi.org (published versions) or arxiv.org/bibtex (preprints).
 % Edits: inbook entries turned into inproceedings, page dashes, url/ISSN/ISBN/month dropped, arXiv note added,
 % author lists longer than six names cut to the first author and others (IEEE style).
+% 2026-10-20: leuschner2021lodopab added (doi.org, article number 109 from Crossref); DeepLesion pages set to its
+% article number 036501 (Crossref gives 1--11); both cited as the dataset README asks.
+% 2026-10-20: DISTS volume, number, pages and year from PubMed 33338012 (Crossref has only the early-access record);
+% D-PerceptCT now the published EUVIP 2025 paper (doi.org), first author written Taifour, Yousra Nabila as in HAL
+% hal-05328719 and her author profile (the IEEE and arXiv records give Nabila as the family name);
+% MedGemma year 2025, first posted 2025-07-07 (latest arXiv version 2026-04-06).
+% 2026-10-20 audit (every DOI entry checked against Crossref): RadImageNet article number e210315 (Crossref);
+% TG-233 pages e735--e756 (PubMed 31408540); published versions instead of arXiv: CLIP ICML 2021, PMLR 139,
+% pp. 8748--8763 (proceedings.mlr.press/v139/radford21a), DINOv2 TMLR 2024 and Kumar et al. TMLR 2022 (OpenReview
+% a68SUt6zFt, qrGKGZZvH0), VGG ICLR 2015 (header of arXiv 1409.1556v6). Viana, MedGemma, Demiroglu: arXiv only.
 
 @inproceedings{wang2025alden,
   title     = {{Anatomy-Aware Low-Dose CT Denoising via Pretrained Vision Models and Semantic-Guided Contrastive Learning}},
@@ -38,7 +48,10 @@
   journal   = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
   publisher = {Institute of Electrical and Electronics Engineers (IEEE)},
   author    = {Ding, Keyan and Ma, Kede and Wang, Shiqi and Simoncelli, Eero P.},
-  year      = {2020}
+  volume    = {44},
+  number    = {5},
+  pages     = {2567--2581},
+  year      = {2022}
 }
 
 @article{mei2022radimagenet,
@@ -49,7 +62,8 @@
   journal   = {Radiology: Artificial Intelligence},
   publisher = {Radiological Society of North America (RSNA)},
   author    = {Mei, Xueyan and others},
-  year      = {2022}
+  year      = {2022},
+  pages     = {e210315}
 }
 
 @inproceedings{skorniewska2025retinal,
@@ -76,12 +90,24 @@
   title     = {{DeepLesion: automated mining of large-scale lesion annotations and universal lesion detection with deep learning}},
   volume    = {5},
   doi       = {10.1117/1.jmi.5.3.036501},
-  number    = {03},
+  number    = {3},
   journal   = {Journal of Medical Imaging},
   publisher = {SPIE-Intl Soc Optical Eng},
   author    = {Yan, Ke and Wang, Xiaosong and Lu, Le and Summers, Ronald M.},
   year      = {2018},
-  pages     = {1--11}
+  pages     = {036501}
+}
+
+@article{leuschner2021lodopab,
+  title     = {{LoDoPaB-CT, a benchmark dataset for low-dose computed tomography reconstruction}},
+  volume    = {8},
+  doi       = {10.1038/s41597-021-00893-z},
+  number    = {1},
+  journal   = {Scientific Data},
+  publisher = {Springer Science and Business Media LLC},
+  author    = {Leuschner, Johannes and Schmidt, Maximilian and Baguer, Daniel Otero and Maass, Peter},
+  year      = {2021},
+  pages     = {109}
 }
 
 @article{samei2019tg233,
@@ -92,7 +118,8 @@
   journal   = {Medical Physics},
   publisher = {Wiley},
   author    = {Samei, Ehsan and others},
-  year      = {2019}
+  year      = {2019},
+  pages     = {e735--e756}
 }
 
 @article{yang2018wganvgg,
@@ -138,38 +165,45 @@
   note   = {arXiv preprint arXiv:2509.23025}
 }
 
-@misc{taifour2025dperceptct,
-  title  = {{D-PerceptCT: Deep Perceptual Enhancement for Low-Dose CT Images}},
-  author = {Taifour Yousra Nabila and Azeddine Beghdadi and Marie Luong and Zuheng Ming and Habib Zaidi and Faouzi Alaya Cheikh},
-  year   = {2025},
-  note   = {arXiv preprint arXiv:2511.14518}
+@inproceedings{taifour2025dperceptct,
+  title     = {{D-PerceptCT: Deep Perceptual Enhancement for Low-Dose CT Images}},
+  doi       = {10.1109/euvip66349.2025.11238425},
+  booktitle = {2025 13th European Workshop on Visual Information Processing (EUVIP)},
+  publisher = {IEEE},
+  author    = {Taifour, Yousra Nabila and Beghdadi, Azeddine and Luong, Marie and Ming, Zuheng and Zaidi, Habib and Cheikh, Faouzi Alaya},
+  year      = {2025},
+  pages     = {1--6}
 }
 
-@misc{kumar2022imagenet,
-  title  = {{Do better ImageNet classifiers assess perceptual similarity better?}},
-  author = {Manoj Kumar and Neil Houlsby and Nal Kalchbrenner and Ekin D. Cubuk},
-  year   = {2022},
-  note   = {arXiv preprint arXiv:2203.04946}
+@article{kumar2022imagenet,
+  title   = {{Do better ImageNet classifiers assess perceptual similarity better?}},
+  journal = {Transactions on Machine Learning Research},
+  author  = {Kumar, Manoj and Houlsby, Neil and Kalchbrenner, Nal and Cubuk, Ekin Dogus},
+  year    = {2022}
 }
 
-@misc{oquab2024dinov2,
-  title  = {{DINOv2: Learning Robust Visual Features without Supervision}},
-  author = {Maxime Oquab and others},
-  year   = {2024},
-  note   = {arXiv preprint arXiv:2304.07193}
+@article{oquab2024dinov2,
+  title   = {{DINOv2: Learning Robust Visual Features without Supervision}},
+  journal = {Transactions on Machine Learning Research},
+  author  = {Oquab, Maxime and others},
+  year    = {2024}
 }
 
-@misc{radford2021clip,
-  title  = {{Learning Transferable Visual Models From Natural Language Supervision}},
-  author = {Alec Radford and others},
-  year   = {2021},
-  note   = {arXiv preprint arXiv:2103.00020}
+@inproceedings{radford2021clip,
+  title     = {{Learning Transferable Visual Models From Natural Language Supervision}},
+  booktitle = {International Conference on Machine Learning (ICML)},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {139},
+  publisher = {PMLR},
+  author    = {Radford, Alec and others},
+  year      = {2021},
+  pages     = {8748--8763}
 }
 
 @misc{sellergren2025medgemma,
   title  = {{MedGemma Technical Report}},
   author = {Andrew Sellergren and others},
-  year   = {2026},
+  year   = {2025},
   note   = {arXiv preprint arXiv:2507.05201}
 }
 
@@ -180,9 +214,9 @@
   note   = {arXiv preprint arXiv:2511.12256}
 }
 
-@misc{simonyan2015vgg,
-  title  = {{Very Deep Convolutional Networks for Large-Scale Image Recognition}},
-  author = {Karen Simonyan and Andrew Zisserman},
-  year   = {2015},
-  note   = {arXiv preprint arXiv:1409.1556}
+@inproceedings{simonyan2015vgg,
+  title     = {{Very Deep Convolutional Networks for Large-Scale Image Recognition}},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  author    = {Simonyan, Karen and Zisserman, Andrew},
+  year      = {2015}
 }

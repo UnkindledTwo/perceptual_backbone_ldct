@@ -2,13 +2,12 @@
 \label{sec:experiments}
 
 \textbf{Setup.} I2I 2025v1 slices from DeepLesion~\cite{yan2018deeplesion} ($512 \times 512$, $[0, 1]$) with
-Poisson-simulated low-dose versions~[TODO cite]; training input $10^5$ photons; patient-level split of 899, 182 and 220
+Poisson-simulated low-dose versions~\cite{leuschner2021lodopab}; training input $10^5$ photons; patient-level split of 899, 182 and 220
 slices (115, 34, 31 patients). All eleven configurations (C0 is L1 only) train the same U-Net~\cite{ronneberger2015unet}
 with AdamW ($10^{-4}$), batch 8, 30 epochs and mixed precision, keeping the checkpoint with the lowest validation L1.
 Seeds 42, 123 and 456 vary the denoiser training only; $\lambda_\phi$ and the CT dose network are fixed. Code:
-TODO(link).
-% DISCUSS (pending supervisor reply): "checkpoint selection unaffected" is the writing plan's wording.
-Validation L1 in eval mode spikes in some runs (up to 8 of 30 epochs), which leaves checkpoint selection unaffected;
+\url{https://github.com/UnkindledTwo/perceptual_backbone_ldct}.
+Validation L1 in eval mode spikes in some runs (up to 8 of 30 epochs), so checkpoint selection on it is noisy;
 one run (C8, seed 42) has no recorded code revision. Metrics: PSNR, SSIM, LPIPS (AlexNet)~\cite{zhang2018lpips},
 DISTS, and the high-band noise power ratio $R_H$ at 0.25 to 0.5 cycles per pixel~\cite{samei2019tg233}, tested as
 $\lvert 1 - R_H \rvert$. Family A compares C1 to C10 with C0, Family B C8 with C5, C10 with C9 and C6 with C5, on
@@ -18,7 +17,38 @@ repository. Screen-versus-outcome Spearman correlations are exploratory: C5 and 
 feature networks.
 
 % Tue Oct 20: screen paragraph (Fig. 2), Table 1 paragraph, Fig. 3 and Fig. 4 paragraph (about 280 words).
-TODO (Tue): results.
+% The C8-versus-C5 grain claim goes here, not in the Fig. 3 caption (C5 and C8 look alike in the zoom): Family B,
+% |1 - R_H| 0.333 (C5) to 0.195 (C8), patient-level Holm p = 4.9e-4, r = -0.77.
+\textbf{Screen.} Every pretrained network orders the doses almost perfectly ($M_\phi$ 0.93 to 1.00;
+Fig.~\ref{fig:screen}), so ordering does not separate them. Among the feature networks, only the CT dose network has
+$B_\phi < 1$ (0.34 pointwise, 0.86 statistics), that is, it penalizes blur less than noise of equal MSE. Statistics
+matching lowers $B_\phi$ for every pretrained network except MedSigLIP (1.535 to 1.537) but raises it for the CT dose
+network.
+% Optional, from the plan: compare MedSigLIP and CLIP vs DINOv2 vs the CT dose network; v1 vs v2 of the CT dose
+% network (M up, trained metrics not uniformly better).
+
+% Table 1 paragraph (notes): each configuration vs L1 with deltas and patient-level Holm p; every configuration loses
+% PSNR; name the best group on every metric; medical pretraining does not help (RadImageNet); the CT dose network
+% matches grain but stays behind on texture (DISTS); mark the direction of the texture effect.
+\textbf{Table~\ref{tab:results}.} Against L1, every configuration loses PSNR (patient medians $-0.50$ to
+$-2.26$~dB, Holm $p < 10^{-4}$, $\lvert r \rvert \geq 0.93$, seed spread 0.1 to 0.5~dB) and lowers LPIPS (all ten
+significant, Holm $p \leq 0.021$). L1 keeps the best PSNR and SSIM. C1 to C3 (VGG-based) and
+\cfg{8}{DINOv2-S}{statistics} form the best LPIPS and DISTS group, within one seed spread of each other (DISTS 0.065
+to 0.067), and \cfg{10}{CT dose network}{statistics} has the best $\lvert 1 - R_H \rvert$ (0.168 against 0.352 for
+L1). Medical pretraining does not help: \cfg{4}{RadImageNet}{pointwise} has the worst PSNR and LPIPS of the
+perceptual losses, and \cfg{7}{MedSigLIP}{pointwise} is the only configuration with worse texture than L1
+($\lvert 1 - R_H \rvert$ 0.477, $R_H$ 0.53, smoother). The CT dose network matches grain but stays far behind on DISTS
+(0.097 to 0.098).
+
+\textbf{Fig.~\ref{fig:qualitative} and Fig.~\ref{fig:screen-outcome}.} L1 smooths the grain away
+(Fig.~\ref{fig:qualitative}). Statistics matching brings DINOv2-S grain closer to normal dose: $\lvert 1 - R_H \rvert$
+falls from 0.333 for \cfg{5}{DINOv2-S}{pointwise} to 0.195 for C8 (Holm $p = 4.9 \times 10^{-4}$, $r = -0.77$, seed
+spread 0.04), with no detectable PSNR or LPIPS change. The screen does not predict the outcome: $B_\phi$ correlates with
+$\lvert 1 - R_H \rvert$ at $\rho = 0.84$ ($p = 0.004$; 0.71 without C2 and C3), the opposite sign to its premise,
+probably because the statistics configurations have both low $B_\phi$ and good texture. Size brings no reliable gain:
+DINOv2-B and DINOv2-S differ in neither PSNR nor LPIPS, and their texture difference, though significant when pooled,
+changes sign across seeds. Within pointwise configurations, more parameters even go with worse texture ($\rho = 0.89$,
+post hoc), consistent with~\cite{kumar2022imagenet}.
 
 \begin{figure}[t]
   \centering

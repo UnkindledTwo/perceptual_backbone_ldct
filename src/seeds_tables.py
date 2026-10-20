@@ -136,6 +136,13 @@ def family_a_marks(family_a: pd.DataFrame) -> dict[tuple[str, str], str]:
     return marks
 
 
+def patient_family_a(levels: pd.DataFrame) -> pd.DataFrame:
+    """Family A on the 31 patient means, in the columns family_a_marks reads."""
+    family_a = levels[levels["family"] == "A"].rename(columns={"patient_median_difference": "median_difference",
+                                                              "patient_p_holm": "p_holm"})
+    return family_a[["comparison", "metric", "median_difference", "p_holm"]].reset_index(drop=True)
+
+
 def formatted_table1(three_seeds: pd.DataFrame, family_a: pd.DataFrame) -> pd.DataFrame:
     trained = three_seeds[three_seeds["n_seeds"] > 0].set_index("config")
     best = {m: trained[m].idxmax() if higher else trained[m].idxmin() for m, higher in HIGHER_IS_BETTER.items()}
@@ -400,10 +407,15 @@ def millions(parameters: str) -> str:
 
 
 def latex_tables(three_seeds: pd.DataFrame, family_a: pd.DataFrame, freeze: dict[str, pd.DataFrame]) -> dict[str, str]:
-    marks = (f"Test split (220 slices, 31 patients, 100k). Values: mean ± std over seeds 42, 123 and 456. Bold: best "
-             f"trained configuration. † significantly better and ‡ significantly worse than C0 (L1) (paired Wilcoxon on seed-averaged "
-             f"slices, Holm over 30 tests, p < {ALPHA}; PSNR, LPIPS and |1 − R_H| only). * scored with its own training metric. "
-             "point.: pointwise, stat.: local statistics matching.")
+    def marks(unit: str) -> str:
+        return (f"Test split (220 slices, 31 patients, 100k). Values: mean ± std over seeds 42, 123 and 456. Bold: best "
+                f"trained configuration. † significantly better and ‡ significantly worse than C0 (L1) (paired Wilcoxon on {unit}, "
+                f"Holm over 30 tests, p < {ALPHA}; PSNR, LPIPS and |1 − R_H| only). * scored with its own training metric. "
+                "point.: pointwise, stat.: local statistics matching.")
+
+    takeaway = ("Every perceptual loss costs PSNR against L1; the best LPIPS and DISTS values lie within one seed "
+                "spread of each other, and statistics matching gives DINOv2-S its best texture. ")
+    patient_family = patient_family_a(freeze["stats_families_slice_and_patient"])
     table2 = freeze["table2_final"]
     networks = split_configuration(formatted_table2(table2).drop(columns=["Network", "Matching"]), table2["config"].tolist())
     networks = networks.rename(columns={"Distance, ms per batch of 8": "Dist. (ms)", "Training step, ms": "Step (ms)"})
@@ -413,7 +425,7 @@ def latex_tables(three_seeds: pd.DataFrame, family_a: pd.DataFrame, freeze: dict
     ablation_frame = ablation_frame.drop(columns=["Network"])
     return {
         "table1_final": booktabs(split_configuration(formatted_table1(three_seeds, family_a), three_seeds["config"].tolist()),
-                                 marks, "tab:results", "lll" + "c" * 6),
+                                 marks("seed-averaged slices"), "tab:results", "lll" + "c" * 6),
         "table2_final": booktabs(networks,
                                  "Feature networks. † feature extractor of the CT dose network v2 (three conv blocks; "
                                  f"{int(table2['Parameters_with_head'].dropna().iloc[0]):,} with the regression head). λ: frozen loss "
@@ -421,9 +433,11 @@ def latex_tables(three_seeds: pd.DataFrame, family_a: pd.DataFrame, freeze: dict
                                  "run are means over the three seeds. M: dose ordering, B: blur penalty of the training-free screen.",
                                  "tab:networks", "lll" + "r" * 7),
         "table1_paper": booktabs(split_configuration(formatted_table1(three_seeds, family_a), three_seeds["config"].tolist()),
-                                 "Every perceptual loss costs PSNR against L1; the best LPIPS and DISTS values lie within one seed "
-                                 "spread of each other, and statistics matching gives DINOv2-S its best texture. " + marks,
-                                 "tab:results", "lll" + "c" * 6, size="small"),
+                                 takeaway + marks("seed-averaged slices"), "tab:results", "lll" + "c" * 6, size="small"),
+        "table1_paper_patient": booktabs(split_configuration(formatted_table1(three_seeds, patient_family),
+                                                             three_seeds["config"].tolist()),
+                                         takeaway + marks("the 31 patient means of seed-averaged slices"), "tab:results",
+                                         "lll" + "c" * 6, size="small"),
         "table2_compact": booktabs(networks[["ID", "Network", "Matching", "Parameters", "λ", "M ↑", "B"]].assign(
                                        Parameters=networks["Parameters"].map(millions)).rename(columns={"Parameters": "Params (M)"}),
                                    "Feature networks. Every pretrained network orders doses (M ≥ 0.95); only the CT dose network "
@@ -448,7 +462,8 @@ def main() -> None:
               "table2_final": table2_final(per_seed, table2), "table_ablation_superseded": ablation(per_seed)}
     tables = {"per_slice_metrics": frame, "table1_per_seed": per_seed, "table1_three_seeds": three_seeds,
               "validation_spikes": spikes, "fig3_slices": fig3_slices(frame), **tests,
-              "table1_final": formatted_table1(three_seeds, tests["stats_family_a"]), **freeze}
+              "table1_final": formatted_table1(three_seeds, tests["stats_family_a"]), **freeze,
+              "table1_final_patient": formatted_table1(three_seeds, patient_family_a(freeze["stats_families_slice_and_patient"]))}
     outputs = []
     for name, table in tables.items():
         outputs.append(guarded(OUT / f"{name}.csv"))
