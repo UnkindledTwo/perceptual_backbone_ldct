@@ -16,25 +16,17 @@ patients (seeds averaged per slice, slices per patient), effect size $r$ and see
 repository. Screen-versus-outcome Spearman correlations are exploratory: C5 and C8, C9 and C10, and C1 to C3 share
 feature networks.
 
-% Tue Oct 20: screen paragraph (Fig. 2), Table 1 paragraph, Fig. 3 and Fig. 4 paragraph (about 280 words).
-% The C8-versus-C5 grain claim goes here, not in the Fig. 3 caption (C5 and C8 look alike in the zoom): Family B,
-% |1 - R_H| 0.333 (C5) to 0.195 (C8), patient-level Holm p = 4.9e-4, r = -0.77.
 \textbf{Screen.} Every pretrained network orders the doses almost perfectly ($M_\phi$ 0.93 to 1.00;
 Fig.~\ref{fig:screen}), so ordering does not separate them. Among the feature networks, only the CT dose network has
 $B_\phi < 1$ (0.34 pointwise, 0.86 statistics), that is, it penalizes blur less than noise of equal MSE. Statistics
 matching lowers $B_\phi$ for every pretrained network except MedSigLIP (1.535 to 1.537) but raises it for the CT dose
 network.
-% Optional, from the plan: compare MedSigLIP and CLIP vs DINOv2 vs the CT dose network; v1 vs v2 of the CT dose
-% network (M up, trained metrics not uniformly better).
 
-% Table 1 paragraph (notes): each configuration vs L1 with deltas and patient-level Holm p; every configuration loses
-% PSNR; name the best group on every metric; medical pretraining does not help (RadImageNet); the CT dose network
-% matches grain but stays behind on texture (DISTS); mark the direction of the texture effect.
 \textbf{Table~\ref{tab:results}.} Against L1, every configuration loses PSNR (patient medians $-0.50$ to
 $-2.26$~dB, Holm $p < 10^{-4}$, $\lvert r \rvert \geq 0.93$, seed spread 0.1 to 0.5~dB) and lowers LPIPS (all ten
 significant, Holm $p \leq 0.021$). L1 keeps the best PSNR and SSIM. C1 to C3 (VGG-based) and
 \cfg{8}{DINOv2-S}{statistics} form the best LPIPS and DISTS group, within one seed spread of each other (DISTS 0.065
-to 0.067), and \cfg{10}{CT dose network}{statistics} has the best $\lvert 1 - R_H \rvert$ (0.168 against 0.352 for
+to 0.067), and \cfg{10}{CT dose network}{statistics} has the best $\lvert 1 - R_H \rvert$ (0.167 against 0.352 for
 L1). Medical pretraining does not help: \cfg{4}{RadImageNet}{pointwise} has the worst PSNR and LPIPS of the
 perceptual losses, and \cfg{7}{MedSigLIP}{pointwise} is the only configuration with worse texture than L1
 ($\lvert 1 - R_H \rvert$ 0.477, $R_H$ 0.53, smoother). The CT dose network matches grain but stays far behind on DISTS

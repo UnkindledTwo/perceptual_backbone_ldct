@@ -1,7 +1,6 @@
 \section{Introduction}
 \label{sec:intro}
 
-% Tue Oct 20: P1 to P5 of writing_plan.md. Fig. 1 is referenced in P4 or P5.
 In low-dose CT (LDCT) denoising, pixel losses such as L1 over-smooth the output and erase the noise texture that
 radiologists read. Perceptual losses are the common fix: the denoiser learns to match the features of the normal-dose
 image in a pretrained network, which keeps the texture~\cite{yang2018wganvgg}.
@@ -19,13 +18,13 @@ may also reward blur, so our screen tests for it directly.
 
 The closest study~\cite{viana2025perceptual} varies only the VGG-19 layer and its pretraining set, with one seed and
 pixel metrics (PSNR, SSIM, NRMSE). We keep its loss-weight calibration and compare networks of different families and
-sizes, with pointwise or local statistics matching, over three seeds and with perceptual (LPIPS, DISTS) and texture
+sizes, with pointwise or local statistics matching, over three seeds and with perceptual (LPIPS~\cite{zhang2018lpips}, DISTS~\cite{ding2020dists}) and texture
 ($R_H$) metrics (Fig.~\ref{fig:overview}).
 
 Our contributions are: (i) a controlled comparison of ten configurations of the perceptual loss, which finds no network best
-on every metric (Table~\ref{tab:results}); (ii) evidence that local statistics matching brings \mbox{DINOv2-S} grain closer to
+on every metric (Table~\ref{tab:results}); (ii) evidence that local statistics matching brings \mbox{DINOv2-S}~\cite{oquab2024dinov2} grain closer to
 normal dose at no detectable PSNR cost; and (iii) a training-free screen of the networks, which does not predict the
-trained result (Fig.~\ref{fig:screen}, Fig.~\ref{fig:screen-outcome}).
+trained result (Fig.~\ref{fig:screen}).
 
 \begin{figure}[t]
   \centering

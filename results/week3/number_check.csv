@@ -1,0 +1,108 @@
+file,claim,printed,source,value,rule,status
+abstract,ten perceptual-loss configurations,,table2_final.csv rows,True,true,PASS
+abstract,seven pretrained feature networks from five families,,table2_final.csv distinct pretrained networks (five families: Fig 1 / figures/style.py FAMILIES),True,true,PASS
+abstract,three seeds,,per_slice_metrics.csv seeds,True,true,PASS
+abstract,LPIPS (0.104 to,0.104,table1_three_seeds C0 lpips,0.104293,round,PASS
+abstract,to about 0.058),0.058,"table1_three_seeds mean lpips of C1, C2, C8",0.0577857,round,PASS
+abstract,at 0.5 to 0.7~dB,0.5,"table1_three_seeds C0 minus C1/C2/C8 psnr, min",0.530632,round,PASS
+abstract,at 0.5 to 0.7~dB,0.7,"table1_three_seeds C0 minus C1/C2/C8 psnr, max",0.659817,round,PASS
+abstract,texture error from 0.333 to 0.195,0.333,table1_three_seeds C5,0.333498,round,PASS
+abstract,texture error from 0.333 to 0.195,0.195,table1_three_seeds C8,0.19468,round,PASS
+abstract,"($p = 4.9 \times 10^{-4}$, $r = -0.77$)",4.9e-4,Family B C8 vs C5 |1-R_H| patient Holm p,4.9e-04,sci,PASS
+abstract,"($p = 4.9 \times 10^{-4}$, $r = -0.77$)",-0.77,Family B C8 vs C5 |1-R_H| patient r,-0.766129,round,PASS
+abstract,at no detectable PSNR cost,,Family B C8 vs C5 PSNR not significant,True,true,PASS
+method,"median C0 PSNR, seed 42.",42,figures/fig3_qualitative.py SEED,42,eq,PASS
+method,"image (grey range $[0, 1]$)","(0.0, 1.0)",figures/fig3_qualitative.py DISPLAY,"(0.0, 1.0)",eq,PASS
+method,window 0.35 to 0.75),"(0.35, 0.75)",figures/fig3_qualitative.py SOFT_TISSUE (= ZOOM_DISPLAY),"(0.35, 0.75)",eq,PASS
+method,window 0.35 to 0.75),SOFT_TISSUE,figures/fig3_qualitative.py ZOOM_DISPLAY,SOFT_TISSUE,eq,PASS
+method,\rvert$ (0 to 0.1).,0.10,figures/fig3_qualitative.py ERROR_MAX,0.10,eq,PASS
+method,the $96 \times 96$ window,"96, 8, 0.9",figures/fig3_qualitative.py ZOOM_SIZE,"96, 8, 0.9",eq,PASS
+method,at least 90\% soft tissue,"96, 8, 0.9",figures/fig3_qualitative.py ZOOM_MIN_SOFT,"96, 8, 0.9",eq,PASS
+method,random $224 \times 224$ crop,224,src/config.py crop_size,224,eq,PASS
+method,each $4 \times 4$ window,,src/distances.py window,True,true,PASS
+method,$c_1 = c_2 = 10^{-6}$,,"src/distances.py c1, c2",True,true,PASS
+method,VGG-19 at relu3\_2,,src/feature_nets.py VGG layer 13 = relu3_2,True,true,PASS
+method,layers 1 to 3,,src/feature_nets.py ResNetFeatures,True,true,PASS
+method,"blocks 3, 6, 9",,src/feature_nets.py DINOv2 blocks,True,true,PASS
+method,"layers 7, 14, 20",,src/feature_nets.py MedSigLIP layers,True,true,PASS
+method,"C8 and C10 use~(\ref{eq:statistics}), C1, C4 to C7 and C9 use~(\ref{eq:pointwise})",,"table2_final.csv Matching (C2, C3 use LPIPS and DISTS with their own weights)",True,true,PASS
+method,"(32, 64, 128 channels; 287,328 parameters)",,src/ct_dose_net.py blocks,True,true,PASS
+method,"(32, 64, 128 channels; 287,328 parameters)",287328,ct_dose_net_v2_regression/report.json,287328,eq,PASS
+method,$128 \times 128$ training-split patches,,src/dose_net_train.py patch,True,true,PASS
+method,(normal dose fixed at 7),,src/dose_net_train.py CLEAN_LOG_DOSE,True,true,PASS
+method,smooth L1 for 10 epochs,10,ct_dose_net_v2_regression/report.json epochs,10,eq,PASS
+method,lowered from 0.9 to 0.8,,results/decision.json,True,true,PASS
+method,"$\lambda_\phi = 19 \, S_1 / S_\phi$",,src/calibrate_lambda.py 0.95 / 0.05 = 19,True,true,PASS
+method,95\% of the loss at initialization,,src/calibrate_lambda.py,True,true,PASS
+method,on the 182 validation slices,182,step1_1_checks.csv,182,eq,PASS
+method,five photon counts $d$ from $10^4$ to $10^6$,,src/screen.py DOSES,True,true,PASS
+method,that of the $10^5$ noise,,src/screen.py matched_blur,True,true,PASS
+experiments,"($512 \times 512$, $[0, 1]$)",,"fig3 export shape, step1_1_checks.csv range",True,true,PASS
+experiments,training input $10^5$ photons,noisy_clipped_100k,src/config.py input_key,noisy_clipped_100k,eq,PASS
+experiments,"split of 899, 182 and 220 slices (115, 34, 31 patients)",899 / 182 / 220,step1_1_checks.csv,899 / 182 / 220,eq,PASS
+experiments,"split of 899, 182 and 220 slices (115, 34, 31 patients)",115 / 34 / 31,step1_1_checks.csv,115 / 34 / 31,eq,PASS
+experiments,All eleven configurations,,C0 plus table2_final.csv rows,True,true,PASS
+experiments,"AdamW ($10^{-4}$), batch 8, 30 epochs","(0.0001, 8, 30)",src/config.py,"(0.0001, 8, 30)",eq,PASS
+experiments,"Seeds 42, 123 and 456","[42, 123, 456]",per_slice_metrics.csv,"[42, 123, 456]",eq,PASS
+experiments,(up to 8 of 30 epochs),8,validation_spikes.csv max,8,eq,PASS
+experiments,(up to 8 of 30 epochs),30,src/config.py epochs,30,eq,PASS
+experiments,"one run (C8, seed 42) has no recorded code revision",,results/week3/disclosures.md item 3,True,true,PASS
+experiments,$R_H$ at 0.25 to 0.5 cycles per pixel,,src/metrics.py high_band_ratio,True,true,PASS
+experiments,(Holm over 30 and 9 tests),30,"stats_families rows, Family A",30,eq,PASS
+experiments,(Holm over 30 and 9 tests),9,"stats_families rows, Family B",9,eq,PASS
+experiments,over the 31 test patients,31,stats_families patient_n,31,eq,PASS
+experiments,over the 31 test patients,31,stats_families patient_n,31,eq,PASS
+experiments,($M_\phi$ 0.93 to 1.00;,0.93,"zoo_screen_report pretrained rows, min M",0.932967,round,PASS
+experiments,($M_\phi$ 0.93 to 1.00;,1.00,"zoo_screen_report pretrained rows, max M",1,round,PASS
+experiments,only the CT dose network has $B_\phi < 1$,,zoo_screen_report: every pretrained B >= 1,True,true,PASS
+experiments,"(0.34 pointwise, 0.86 statistics)",0.34,dose_net_validation_screen v2,0.343388,round,PASS
+experiments,"(0.34 pointwise, 0.86 statistics)",0.86,dose_net_validation_screen v2,0.863251,round,PASS
+experiments,except MedSigLIP (1.535 to 1.537),1.535,zoo_screen_report MedSigLIP,1.53455,round,PASS
+experiments,except MedSigLIP (1.535 to 1.537),1.537,zoo_screen_report MedSigLIP,1.53694,round,PASS
+experiments,lowers $B_\phi$ for every pretrained network except MedSigLIP,,zoo_screen_report,True,true,PASS
+experiments,but raises it for the CT dose network,,dose_net_validation_screen v2,True,true,PASS
+experiments,(patient medians $-0.50$ to $-2.26$~dB,-0.50,"Family A PSNR patient median difference, max",-0.497945,round,PASS
+experiments,(patient medians $-0.50$ to $-2.26$~dB,-2.26,"Family A PSNR patient median difference, min",-2.26221,round,PASS
+experiments,Holm $p < 10^{-4}$,1e-4,"Family A PSNR patient Holm p, max",2.83e-06,lt,PASS
+experiments,$\lvert r \rvert \geq 0.93$,0.93,"Family A PSNR |r|, min",0.935484,ge,PASS
+experiments,seed spread 0.1 to 0.5~dB,0.1,"Family A PSNR seed std of the difference, min",0.116204,round,PASS
+experiments,seed spread 0.1 to 0.5~dB,0.5,"Family A PSNR seed std of the difference, max",0.457876,round,PASS
+experiments,every configuration loses PSNR,,Family A PSNR,True,true,PASS
+experiments,"(all ten significant, Holm $p \leq 0.021$)",,Family A LPIPS,True,true,PASS
+experiments,"(all ten significant, Holm $p \leq 0.021$)",0.021,"Family A LPIPS Holm p, max",0.0209089,le,PASS
+experiments,L1 keeps the best PSNR and SSIM,,table1_three_seeds,True,true,PASS
+experiments,form the best LPIPS and DISTS group,,"table1_three_seeds, four lowest",True,true,PASS
+experiments,within one seed spread of each other,,table1_three_seeds: range within the group <= largest seed std,True,true,PASS
+experiments,(DISTS 0.065 to 0.067),0.065,table1_three_seeds,0.0645472,round,PASS
+experiments,(DISTS 0.065 to 0.067),0.067,table1_three_seeds,0.0668462,round,PASS
+experiments,has the best $\lvert 1 - R_H \rvert$ (0.167 against 0.352 for L1),,table1_three_seeds,True,true,PASS
+experiments,(0.167 against 0.352 for L1),0.167,table1_three_seeds,0.167472,round,PASS
+experiments,(0.167 against 0.352 for L1),0.352,table1_three_seeds,0.351547,round,PASS
+experiments,has the worst PSNR and LPIPS of the perceptual losses,,table1_three_seeds,True,true,PASS
+experiments,is the only configuration with worse texture than L1,,table1_three_seeds and Family A,True,true,PASS
+experiments,"\rvert$ 0.477, $R_H$ 0.53, smoother)",0.477,table1_three_seeds,0.476977,round,PASS
+experiments,"\rvert$ 0.477, $R_H$ 0.53, smoother)",0.53,table1_three_seeds,0.531433,round,PASS
+experiments,stays far behind on DISTS (0.097 to 0.098),0.097,table1_three_seeds,0.097316,round,PASS
+experiments,stays far behind on DISTS (0.097 to 0.098),0.098,table1_three_seeds,0.098162,round,PASS
+experiments,falls from 0.333 for,0.333,table1_three_seeds C5,0.333498,round,PASS
+experiments,to 0.195 for C8,0.195,table1_three_seeds C8,0.19468,round,PASS
+experiments,"(Holm $p = 4.9 \times 10^{-4}$, $r = -0.77$, seed spread 0.04)",4.9e-4,Family B,4.9e-04,sci,PASS
+experiments,"(Holm $p = 4.9 \times 10^{-4}$, $r = -0.77$, seed spread 0.04)",-0.77,Family B,-0.766129,round,PASS
+experiments,"(Holm $p = 4.9 \times 10^{-4}$, $r = -0.77$, seed spread 0.04)",0.04,Family B seed std of the difference,0.0361759,round,PASS
+experiments,with no detectable PSNR or LPIPS change,,Family B,True,true,PASS
+experiments,at $\rho = 0.84$ ($p = 0.004$; 0.71 without C2 and C3),0.84,screen_vs_outcome,0.842424,round,PASS
+experiments,at $\rho = 0.84$ ($p = 0.004$; 0.71 without C2 and C3),0.004,screen_vs_outcome permutation p,0.0035,round,PASS
+experiments,at $\rho = 0.84$ ($p = 0.004$; 0.71 without C2 and C3),0.71,screen_vs_outcome,0.714286,round,PASS
+experiments,DINOv2-B and DINOv2-S differ in neither PSNR nor LPIPS,,Family B C6 vs C5,True,true,PASS
+experiments,"though significant when pooled, changes sign across seeds",,"Family B C6 vs C5 |1-R_H|, per-seed differences",True,true,PASS
+experiments,"worse texture ($\rho = 0.89$, post hoc)",0.89,"screen_vs_outcome_exploratory, pointwise only",0.892857,round,PASS
+experiments,"the trained result ($\rho = 0.84$, exploratory)",0.84,screen_vs_outcome (Fig 4 caption),0.842424,round,PASS
+ethics,"drafts of Sections 1 to 4, check",,\section order in root.tex inputs,True,true,PASS
+ethics,"complete parts of Section 3,",,\section order,True,true,PASS
+table1_paper_patient,"Test split (220 slices, 31 patients, 100k)",220 / 31,step1_1_checks.csv,220 / 31,eq,PASS
+table1_paper_patient,"over seeds 42, 123 and 456","[42, 123, 456]",per_slice_metrics.csv,"[42, 123, 456]",eq,PASS
+table1_paper_patient,on the 31 patient means,31,stats_families patient_n,31,eq,PASS
+table1_paper_patient,"Holm over 30 tests, p < 0.05",30,"stats_families rows, Family A",30,eq,PASS
+table1_paper_patient,"Holm over 30 tests, p < 0.05",,src/seeds_tables.py ALPHA,True,true,PASS
+table2_compact,(M ≥ 0.95),0.95,"table2_final.csv pretrained M, min",0.953846,ge,PASS
+table2_compact,only the CT dose network has B < 1,,table2_final.csv,True,true,PASS

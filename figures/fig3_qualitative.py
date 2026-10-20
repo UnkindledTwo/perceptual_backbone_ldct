@@ -8,6 +8,9 @@ results/week3/fig3/seed{S}/). Rows: full slice, zoom, |prediction - NDCT|. Every
 every error map the same scale. The slice is the first row of fig3_slices.csv (closest to the median seed-averaged C0
 PSNR) and the zoom is chosen by `zoom_window` on the NDCT, neither by eye. Hashes and PSNR values are checked against the
 export and the logged metrics. Seeds 123 and 456 were exported too but add nothing visible, so the figure shows seed 42.
+
+fig3_qualitative_texture is the paper version: the same figure with the zoom row in the soft-tissue window, so the
+grain is visible. fig3_qualitative is unchanged.
 """
 import json
 
@@ -36,6 +39,7 @@ PSNR_TOLERANCE = 1e-3
 BODY_THRESHOLD = 0.05         # NDCT above this, opened, holes filled, largest component
 SOFT_TISSUE = (0.35, 0.75)    # NDCT grey values of the soft-tissue peak (between fat and contrast or bone)
 ZOOM_SIZE, ZOOM_STRIDE, ZOOM_MIN_SOFT = 96, 8, 0.9
+ZOOM_DISPLAY = SOFT_TISSUE     # texture version: zoom row in the soft-tissue window
 
 
 def slice_id() -> str:
@@ -77,11 +81,12 @@ def psnr(prediction: np.ndarray, target: np.ndarray) -> float:
     return float(10 * np.log10(1.0 / np.mean((prediction.astype(np.float64) - target) ** 2)))
 
 
-def draw(stem: str) -> tuple[plt.Figure, tuple[int, int]]:
+def draw(stem: str, texture: bool = False) -> tuple[plt.Figure, tuple[int, int]]:
     setup()
     arrays = load(SEED, stem)[0]
     top, left = zoom_window(arrays["NDCT"])
     zoom = (slice(top, top + ZOOM_SIZE), slice(left, left + ZOOM_SIZE))
+    zoom_range = ZOOM_DISPLAY if texture else DISPLAY
     figure, axes = plt.subplots(3, len(COLUMNS), figsize=(7.0, 2.85), gridspec_kw={"wspace": 0.03, "hspace": 0.06})
     figure.subplots_adjust(left=0.05, right=0.925, top=0.82, bottom=0.01)
     for ax in axes.flat:
@@ -90,14 +95,15 @@ def draw(stem: str) -> tuple[plt.Figure, tuple[int, int]]:
         ax.grid(False)
         for spine in ax.spines.values():
             spine.set_visible(False)
-    for row, label in enumerate(["image", f"zoom\n{ZOOM_SIZE} px", "|error|"]):
+    zoom_label = f"zoom\n{zoom_range[0]:g} to {zoom_range[1]:g}" if texture else f"zoom\n{ZOOM_SIZE} px"
+    for row, label in enumerate(["image", zoom_label, "|error|"]):
         axes[row, 0].set_ylabel(label, fontsize=6.5, color=SECONDARY)
     for column, name in enumerate(COLUMNS):
         image, zoomed, error = axes[:, column]
         image.set_title(TITLES[name], fontsize=6, color=INK, pad=3)
         image.imshow(arrays[name], cmap="gray", vmin=DISPLAY[0], vmax=DISPLAY[1], interpolation="nearest")
         image.add_patch(Rectangle((left - 0.5, top - 0.5), ZOOM_SIZE, ZOOM_SIZE, fill=False, edgecolor=STATISTICS, linewidth=0.6))
-        zoomed.imshow(arrays[name][zoom], cmap="gray", vmin=DISPLAY[0], vmax=DISPLAY[1], interpolation="nearest")
+        zoomed.imshow(arrays[name][zoom], cmap="gray", vmin=zoom_range[0], vmax=zoom_range[1], interpolation="nearest")
         if name == "NDCT":
             error.set_visible(False)
             continue
@@ -106,10 +112,11 @@ def draw(stem: str) -> tuple[plt.Figure, tuple[int, int]]:
         error.imshow(np.abs(arrays[name] - arrays["NDCT"]), cmap="magma", vmin=0, vmax=ERROR_MAX, interpolation="nearest")
     bar = figure.add_axes([0.93, 0.02, 0.008, 0.25])
     figure.colorbar(ScalarMappable(Normalize(0, ERROR_MAX), "magma"), cax=bar).ax.tick_params(labelsize=5, length=2)
+    zoom_text = f" Zoom grey range {zoom_range[0]:g} to {zoom_range[1]:g}." if texture else ""
     figure.suptitle(f"Test slice {stem} (closest to the median C0 PSNR), seed {SEED}. Grey range {DISPLAY[0]:g} to "
-                    f"{DISPLAY[1]:g}, error scale 0 to {ERROR_MAX:g}.\nZoom (box): the {ZOOM_SIZE} px window with the "
-                    f"median NDCT std among windows at least {ZOOM_MIN_SOFT:.0%} soft tissue (NDCT {SOFT_TISSUE[0]:g} to "
-                    f"{SOFT_TISSUE[1]:g} in the body)", fontsize=6, color=SECONDARY, y=0.99)
+                    f"{DISPLAY[1]:g}, error scale 0 to {ERROR_MAX:g}.{zoom_text}\nZoom (box): the {ZOOM_SIZE} px window "
+                    f"with the median NDCT std among windows at least {ZOOM_MIN_SOFT:.0%} soft tissue (NDCT "
+                    f"{SOFT_TISSUE[0]:g} to {SOFT_TISSUE[1]:g} in the body)", fontsize=6, color=SECONDARY, y=0.99)
     return figure, (top, left)
 
 
@@ -118,8 +125,11 @@ if __name__ == "__main__":
     inputs = [OUT / "fig3_slices.csv", OUT / "per_slice_metrics.csv",
               *[FIG3 / f"seed{SEED}" / name for name in ("fig3_export.json", f"{stem.removesuffix('.png')}.npz")]]
     figure, (top, left) = draw(stem)
-    record("fig3_qualitative", "python -m figures.fig3_qualitative", inputs, save(figure, "fig3_qualitative"),
-           {"slice": stem, "seed": SEED, "configurations": CONFIGS, "display_range": DISPLAY, "error_max": ERROR_MAX,
-            "zoom": {"top": top, "left": left, "size": ZOOM_SIZE, "stride": ZOOM_STRIDE, "min_soft_tissue": ZOOM_MIN_SOFT,
-                     "soft_tissue_range": SOFT_TISSUE, "body_threshold": BODY_THRESHOLD,
-                     "rule": "median NDCT std among soft-tissue windows"}})
+    settings = {"slice": stem, "seed": SEED, "configurations": CONFIGS, "display_range": DISPLAY, "error_max": ERROR_MAX,
+                "zoom": {"top": top, "left": left, "size": ZOOM_SIZE, "stride": ZOOM_STRIDE,
+                         "min_soft_tissue": ZOOM_MIN_SOFT, "soft_tissue_range": SOFT_TISSUE,
+                         "body_threshold": BODY_THRESHOLD, "rule": "median NDCT std among soft-tissue windows"}}
+    record("fig3_qualitative", "python -m figures.fig3_qualitative", inputs, save(figure, "fig3_qualitative"), settings)
+    figure, _ = draw(stem, texture=True)
+    record("fig3_qualitative_texture", "python -m figures.fig3_qualitative", inputs,
+           save(figure, "fig3_qualitative_texture"), {**settings, "zoom_display_range": ZOOM_DISPLAY})

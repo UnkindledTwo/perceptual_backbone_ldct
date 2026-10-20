@@ -12,11 +12,11 @@
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=\textwidth]{figures/fig3_qualitative}
-  \caption{Test slice closest to the median C0 PSNR, seed 42. Rows: image, zoom, $\lvert \hat{x} - x \rvert$; grey
-    range $[0, 1]$, error scale 0 to 0.1. Zoom: the $96 \times 96$ window with the median NDCT standard deviation
-    among windows that are at least 90\% soft tissue (NDCT 0.35 to 0.75 inside the body mask). L1 smooths the grain
-    away; the perceptual losses keep it.}
+  \includegraphics[width=\textwidth]{figures/fig3_qualitative_texture}
+  \caption{Test slice closest to the median C0 PSNR, seed 42. Rows: image (grey range $[0, 1]$), zoom (soft-tissue
+    window 0.35 to 0.75), $\lvert \hat{x} - x \rvert$ (0 to 0.1). Zoom: the $96 \times 96$ window with the median NDCT
+    standard deviation among windows at least 90\% soft tissue. L1 smooths the grain away; the perceptual losses keep
+    it.}
   \label{fig:qualitative}
 \end{figure*}
 
