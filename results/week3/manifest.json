@@ -11,10 +11,8 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "dfb75c5067111394a467103df74b26c9a60708db",
-    "uncommitted_or_new_py_files": [
-     "rc/seeds_tables.py"
-    ],
+    "repo_commit": "cb2c68f1d2f215aa0688c941abdb03c1bd2ded2a",
+    "uncommitted_or_new_py_files": [],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
      "config.py": "9cf477642f03c177744f32e81228296b2d24342b29554a6581fecee884e755e5",
@@ -22,10 +20,11 @@
      "data.py": "486e6d342af9d45092cac85e42ee4819ed09f41b034393d687c6d50561aa5293",
      "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
      "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
-     "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
+     "feature_nets.py": "f11f7f1a0b36a6bc819a136d0ee4e2fefc5d396338b80a226453ade8e5dd1d62",
      "latex.py": "36c15a8d96cb4b3f5d732f252d05cf7c551c1a3360100005778ccee81da3ab6d",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
+     "number_check.py": "7548713f9412594af239e8bc206c599d82d4e37bc34f3ac6f15edc66cf4eff15",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
@@ -247,7 +246,7 @@
    }
   },
   "fig2_screen": {
-   "date": "2026-10-19",
+   "date": "2026-10-20",
    "command": "python -m figures.fig2_screen",
    "python": "3.12.3",
    "packages": {
@@ -257,7 +256,7 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "dfb75c5067111394a467103df74b26c9a60708db",
+    "repo_commit": "cb2c68f1d2f215aa0688c941abdb03c1bd2ded2a",
     "uncommitted_or_new_py_files": [],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
@@ -266,14 +265,15 @@
      "data.py": "486e6d342af9d45092cac85e42ee4819ed09f41b034393d687c6d50561aa5293",
      "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
      "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
-     "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
+     "feature_nets.py": "f11f7f1a0b36a6bc819a136d0ee4e2fefc5d396338b80a226453ade8e5dd1d62",
      "latex.py": "36c15a8d96cb4b3f5d732f252d05cf7c551c1a3360100005778ccee81da3ab6d",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
+     "number_check.py": "7548713f9412594af239e8bc206c599d82d4e37bc34f3ac6f15edc66cf4eff15",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
-     "seeds_tables.py": "82eb1460f0ee077a1b740342471b3159ecc8425bd881b87b501d2ba83b96d8b7",
+     "seeds_tables.py": "d42d1d825f67879e252d810c1528f472195087b08da7e9edc06d5ea3f10eb236",
      "stats.py": "d4816dc944f205607c2b5bbda3435312997a47f02398a6b6ec7d115192f2bcc8",
      "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
      "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
@@ -297,7 +297,7 @@
    }
   },
   "fig4_screen_vs_outcome": {
-   "date": "2026-10-19",
+   "date": "2026-10-20",
    "command": "python -m figures.fig4_screen_vs_outcome",
    "python": "3.12.3",
    "packages": {
@@ -307,7 +307,7 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "dfb75c5067111394a467103df74b26c9a60708db",
+    "repo_commit": "cb2c68f1d2f215aa0688c941abdb03c1bd2ded2a",
     "uncommitted_or_new_py_files": [],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
@@ -316,14 +316,15 @@
      "data.py": "486e6d342af9d45092cac85e42ee4819ed09f41b034393d687c6d50561aa5293",
      "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
      "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
-     "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
+     "feature_nets.py": "f11f7f1a0b36a6bc819a136d0ee4e2fefc5d396338b80a226453ade8e5dd1d62",
      "latex.py": "36c15a8d96cb4b3f5d732f252d05cf7c551c1a3360100005778ccee81da3ab6d",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
+     "number_check.py": "7548713f9412594af239e8bc206c599d82d4e37bc34f3ac6f15edc66cf4eff15",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
-     "seeds_tables.py": "82eb1460f0ee077a1b740342471b3159ecc8425bd881b87b501d2ba83b96d8b7",
+     "seeds_tables.py": "d42d1d825f67879e252d810c1528f472195087b08da7e9edc06d5ea3f10eb236",
      "stats.py": "d4816dc944f205607c2b5bbda3435312997a47f02398a6b6ec7d115192f2bcc8",
      "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
      "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
@@ -347,7 +348,7 @@
    }
   },
   "fig1_overview": {
-   "date": "2026-10-19",
+   "date": "2026-10-20",
    "command": "python -m figures.fig1_overview",
    "python": "3.12.3",
    "packages": {
@@ -357,7 +358,7 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "dfb75c5067111394a467103df74b26c9a60708db",
+    "repo_commit": "cb2c68f1d2f215aa0688c941abdb03c1bd2ded2a",
     "uncommitted_or_new_py_files": [],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
@@ -366,14 +367,15 @@
      "data.py": "486e6d342af9d45092cac85e42ee4819ed09f41b034393d687c6d50561aa5293",
      "distances.py": "99bbbdab83110012fd0dadce0625423e2c953ff8be626d76c03cb7e394372451",
      "dose_net_train.py": "b8e7a765285de2aaf78f061e77619b332ac4b41c151ed6e0d143a0b78e105e5c",
-     "feature_nets.py": "7f4cee3fdf989340ac6247da07f7b3135996cb835193ab2bf5a16ec51c3f55f8",
+     "feature_nets.py": "f11f7f1a0b36a6bc819a136d0ee4e2fefc5d396338b80a226453ade8e5dd1d62",
      "latex.py": "36c15a8d96cb4b3f5d732f252d05cf7c551c1a3360100005778ccee81da3ab6d",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
+     "number_check.py": "7548713f9412594af239e8bc206c599d82d4e37bc34f3ac6f15edc66cf4eff15",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
-     "seeds_tables.py": "82eb1460f0ee077a1b740342471b3159ecc8425bd881b87b501d2ba83b96d8b7",
+     "seeds_tables.py": "d42d1d825f67879e252d810c1528f472195087b08da7e9edc06d5ea3f10eb236",
      "stats.py": "d4816dc944f205607c2b5bbda3435312997a47f02398a6b6ec7d115192f2bcc8",
      "tables.py": "c8758c63d563a4f036d7bb07539d9d21799ea1c065bcae4a1243f33d5170a55e",
      "train.py": "e45f66493ea3811cb7a7a2389c5d9c5faf47d6f2e910a74354e801b0f3fae9f3",
@@ -406,10 +408,8 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "0ab8bcb359279e7b888d32f1602fdd331cce16c2",
-    "uncommitted_or_new_py_files": [
-     "igures/fig3_qualitative.py"
-    ],
+    "repo_commit": "cb2c68f1d2f215aa0688c941abdb03c1bd2ded2a",
+    "uncommitted_or_new_py_files": [],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
      "config.py": "9cf477642f03c177744f32e81228296b2d24342b29554a6581fecee884e755e5",
@@ -421,6 +421,7 @@
      "latex.py": "36c15a8d96cb4b3f5d732f252d05cf7c551c1a3360100005778ccee81da3ab6d",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
+     "number_check.py": "7548713f9412594af239e8bc206c599d82d4e37bc34f3ac6f15edc66cf4eff15",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
@@ -485,10 +486,8 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "0ab8bcb359279e7b888d32f1602fdd331cce16c2",
-    "uncommitted_or_new_py_files": [
-     "igures/fig3_qualitative.py"
-    ],
+    "repo_commit": "cb2c68f1d2f215aa0688c941abdb03c1bd2ded2a",
+    "uncommitted_or_new_py_files": [],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
      "config.py": "9cf477642f03c177744f32e81228296b2d24342b29554a6581fecee884e755e5",
@@ -500,6 +499,7 @@
      "latex.py": "36c15a8d96cb4b3f5d732f252d05cf7c551c1a3360100005778ccee81da3ab6d",
      "metrics.py": "3447a35f2084756b01f0393cbf2a522b5afdd5bfc21df59681512332f3924639",
      "model.py": "14286cd5c1f8c76ed25aaca202da30fc70034b34afb9c95e97fe5025297210fd",
+     "number_check.py": "7548713f9412594af239e8bc206c599d82d4e37bc34f3ac6f15edc66cf4eff15",
      "record.py": "e982d752397fbef6e9d34fac10b9b71d37d2be645fff969bf091112a86f5bf91",
      "run_config.py": "571813b34c3bacdedb4a721fce1e29d27717b9f51df036dda66b57923e04e9a9",
      "screen.py": "7cf542f0fd3f98c919a7f96dd986c76abd15681f8dd6a0f0da9486d9eaa04d92",
@@ -568,11 +568,8 @@
     "matplotlib": "3.11.2"
    },
    "source": {
-    "repo_commit": "0ab8bcb359279e7b888d32f1602fdd331cce16c2",
-    "uncommitted_or_new_py_files": [
-     "igures/fig3_qualitative.py",
-     "src/number_check.py"
-    ],
+    "repo_commit": "cb2c68f1d2f215aa0688c941abdb03c1bd2ded2a",
+    "uncommitted_or_new_py_files": [],
     "src_sha256": {
      "calibrate_lambda.py": "9f9edc990b26132ed63e1248b25a312d47af0a80165a6e9ab17e80ae20a8fb7d",
      "config.py": "9cf477642f03c177744f32e81228296b2d24342b29554a6581fecee884e755e5",
